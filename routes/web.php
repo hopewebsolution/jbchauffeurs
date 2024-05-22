@@ -203,7 +203,7 @@ Route::group(['prefix' =>'admin'],function(){
 		    Route::get('/sidebar-blocks/edit/{block_id?}',[SidebarBlocksController::class,'addBlock'])->name("admin.sideBlocks.edit");  
 		    Route::post('/sidebar-blocks/create/{block_id?}',[SidebarBlocksController::class,'createSidebarBlock'])->name("admin.sideBlocks.create");
 		    Route::post('/sidebar-blocks/delete',[SidebarBlocksController::class,'deleteBlock'])->name("admin.sideBlocks.delete");
-		    Route::post('/sidebar-blocks/deletesrdtfgyuh',[SidebarBlocksController::class,'deleteBlock'])->name("admin.sideBlocks.delete");
+		    
 	    });  
 	});
 });
