@@ -19,6 +19,7 @@ use App\Http\Controllers\AirportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\OperatorRegistersController;
+use App\Http\Controllers\OperatorLoginController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\VehiclesController;
@@ -56,6 +57,7 @@ Route::group(['middleware' =>'countryCheck'],function(){
 		Route::post('/send-contact-us',[ContactUsController::class,'webSendContactUs'])->name('user.webSendContactUs');
 	    Route::post('/operator-registers',[OperatorRegistersController::class,'AddRegisters'])->name('user.makeOperatorRegisters');
 		Route::post('/register', [OperatorRegistersController::class, 'AddRegisters'])->name('register.store');
+		Route::get('/operator/login', [OperatorLoginController::class, 'showLoginForm'])->name('operator.login');
 		Route::get('/operator-registers',[OperatorRegistersController::class,'operatorRegisters'])->name('user.operatorRegisters');
 		Route::get('/privacy-policy',[HomeController::class,'privacyPolicy'])->name('user.privacyPolicy');
 		Route::get('/terms-conditions',[HomeController::class,'termsConditions'])->name('user.terms');
@@ -210,4 +212,9 @@ Route::group(['prefix' =>'admin'],function(){
 /*** Admin Routes End ****/
 /*** Admin Routes End ****/
 /*** Admin Routes End ****/
+/*** Admin Routes End ****/
+/*** Admin Routes End ****/
+/*** Admin Routes End ****/
+
+
 
