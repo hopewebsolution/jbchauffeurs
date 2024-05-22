@@ -70,7 +70,7 @@ Route::group(['middleware' =>'countryCheck'],function(){
 		Route::get('/checkout',[CartController::class,'checkout'])->name('user.checkout');
 		Route::post('/book-vehicle',[BookingController::class,'placeBooking'])->name('user.placeBooking');
 
-//
+
 		Route::group(['middleware' =>'guest:web'],function(){
 		    /*Route::post('/password-email',[UserController::class,'pwdEmail'])->name('user.pwdEmail');
 		    Route::get('/foregt-password',[UserController::class,'forgetPwdForm'])->name('user.forgetPwd');*/ 
@@ -205,13 +205,13 @@ Route::group(['prefix' =>'admin'],function(){
 		    Route::get('/sidebar-blocks/edit/{block_id?}',[SidebarBlocksController::class,'addBlock'])->name("admin.sideBlocks.edit");  
 		    Route::post('/sidebar-blocks/create/{block_id?}',[SidebarBlocksController::class,'createSidebarBlock'])->name("admin.sideBlocks.create");
 		    Route::post('/sidebar-blocks/delete',[SidebarBlocksController::class,'deleteBlock'])->name("admin.sideBlocks.delete");
+		    
 	    });  
 	});
 });
 /*** Admin Routes End ****/
 /*** Admin Routes End ****/
-/*** Admin Routes End ****/
-/*** Admin Routes End ****/
+
 
 
 
