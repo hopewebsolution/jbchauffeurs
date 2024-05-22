@@ -1,0 +1,184 @@
+
+
+/*Display the dropdown on hover*/
+ul li a:hover + .hidden, .hidden:hover {
+	display: block;
+}
+
+/*Style 'show menu' label button and hide it by default*/
+.show-menu {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+	color: #fff;
+	background: #353535;
+	text-align: left;
+	padding: 10px;
+	display: none;
+	border-radius:10px;
+}
+
+/*Hide checkbox*/
+/*
+input[type=checkbox]{
+    display: none;
+    -webkit-appearance: none;
+}
+*/
+
+/*Show menu when invisible checkbox is checked*/
+input[type=checkbox]:checked ~ #menu{
+    display: block;
+	background-color: #353535;
+	color: #fff;
+}
+
+
+/*Responsive Styles*/
+
+@media screen and (max-width : 760px){
+	.navigation-mobile input {
+		display: none;
+		}
+	/*Make dropdown links appear inline*/
+	ul#menu {
+		position: static;
+		display: none;
+	}
+	/*Create vertical spacing*/
+	li {
+		margin-bottom: 1px;
+	}
+	/*Make all menu links full width*/
+	ul#menu li, #menu li a {
+		width: 100%;
+		color: #fff;
+		padding: 10px;
+	}
+	/*Display 'show menu' link*/
+	.show-menu {
+		display:block;
+	}
+	.show-menu {
+		position: relative;
+		}
+	.menu-line {
+		width: 25px;
+		position: absolute;
+		right: 10px;
+		top: 15px;
+		}
+	.line {
+		border-bottom: 3px solid #fff;
+		border-radius: 1px;
+		width: 25px;
+		margin-bottom: 3px;
+		display:block;
+		}
+}
+
+label.error {
+	display: none !important;
+}
+
+#distance{
+	padding: 10px 36px;
+	background: #13b5c7;
+	display: inline-block;
+	border-radius: 0;
+	color: #fff;
+	font-size: 16px;
+	position: relative;
+	margin-bottom: 10px;
+}
+#distance:after{
+	width: 0;
+	height: 0;
+	content: '';
+	position: absolute;
+	top: 100%;
+	left: calc(50% - 5px);
+	border-style: solid;
+	border-width: 5px 5px 0 5px;
+	border-color: #13b5c7 transparent transparent transparent;
+}
+
+
+
+/********************************* DEEPAK CSS ********************/
+
+#bannerform input[type="text"] {
+    margin: 0;
+}
+
+
+.nopadding { margin-bottom: 0px;
+    padding: 0px;
+}
+
+.w19 { width: 15%; float: left; margin: 0 1% 0 0; display: none; }
+
+.w25 {
+    margin: 0 1% 0 0;
+    padding: 0;
+    width: 39%;
+    float: left;
+}
+.getmore { margin-right: 5px; }
+.btn-plus { background: #edc20b; color: #fff; padding: 10px 12px; }
+.btn-minus { background: red; color: #fff; padding: 10px 12px; }
+.customw { width: 90%; float: left; }
+.getgap { margin: 3px 0; }
+#banform { paddin-top: 110px; }
+
+@media screen and (max-width : 990px){
+    .w25 {
+    margin: 2px 1% 2px 0;
+    width: 100%;
+}
+   #banform { padding-top: 0px !important; }
+}
+
+@media screen and (max-width : 768px){
+    #bannerform { width: 100%; margin: 0 auto; }
+   
+    .left-addon input { padding-left: 10px !important; }
+    form .row .cstm-col { width: 100% !important; }
+    .w25 i.fa { display: none; }
+    
+   #bannerform .submit { margin: 20px auto 0 !important;
+width: 45% !important;
+float: none !important;
+}
+}
+
+@media screen and (max-width : 596px){
+ .customw { width: 86%; } 
+ .getmore { min-width: 87% !important; }
+ #additional-stops-form {
+    width: 100%;
+    display: inline-block;
+}
+.innerPagesection .customw { width: 80%; } 
+.innerPagesection #additional-stops-form { padding: 0 17px; }
+ .btn-plus, .btn-minus {  }
+ .getgap {
+    margin: 3px 0;
+    float: left;
+    width: 100%;
+}
+    
+}
+
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1400px) {
+    
+    .footer-wrap{
+        /*position: fixed;*/
+        /*bottom: 0;*/
+        position: absolute;
+          bottom: 0;
+          width: 100%;
+    }
+}

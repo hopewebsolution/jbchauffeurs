@@ -1,0 +1,79 @@
+ /********** for paging
+*****************/
+.pgnum {
+display:block;
+line-height:25px;
+width:98%;
+text-align:center;
+margin:15px;
+}
+.pgnum a {
+color:#333;
+padding:5px;
+text-decoration:none;
+border:1px solid #CCCCCC;
+}
+.pgnum a:hover {
+background:#0A4B85;
+color:#fff;
+padding:5px;
+text-decoration:none;
+}
+.pgnum .current {
+background:#0A4B85;
+border:1px solid #1FBBF6;
+color:#fff;
+padding:5px;
+}
+/*******************Form*****************/
+/**************** Validate error *********************/
+div.error {
+color:#ed1c24;
+font-size:12px;
+margin:5px;
+}
+input.error, select.error, textarea.error {
+border:1px solid #ed1c24;
+background-color:#ffe6e7;
+
+}
+input[type="radio"].error, input[type="checkbox"].error {
+	-webkit-box-shadow: 0px 2px 5px 0px rgba(255, 0, 0, 0.75);
+-moz-box-shadow:    0px 2px 5px 0px rgba(255, 0, 0, 0.75);
+box-shadow:         0px 2px 5px 0px rgba(255, 0, 0, 0.75);
+	
+}
+
+.success {
+color:#28ff28;
+font-size:12px;
+margin:5px;
+}
+/* Messages */
+.notification {
+display: block;
+padding: 10px 10px 10px 30px;
+border: 1px solid;
+margin-bottom: 5px;
+background-repeat: no-repeat;
+background-position: 10px 10px;
+color:#0f0f0f;
+}
+.n-success {
+background-color: #a3e6bd;
+border-color: #68d59b;
+margin:5px;
+padding:12px 0 12px 12px;
+}
+.n-information {
+background-color: #fdedc8;
+border-color: #e3a54e;
+margin:5px;
+padding:12px 0 12px 12px;
+}
+.n-error {
+background-color: #ffc6ca;
+border-color: #FF3333;
+margin:5px 0;
+padding:12px 0 12px 12px;
+}

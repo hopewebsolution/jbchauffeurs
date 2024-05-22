@@ -1,0 +1,10 @@
+[21-Dec-2021 03:02:04 America/New_York] PHP Warning:  require(/home/flyioabt/staging.jbchauffeurs.com/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/flyioabt/staging.jbchauffeurs.com/public/index.php on line 34
+[21-Dec-2021 03:02:04 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/flyioabt/staging.jbchauffeurs.com/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/flyioabt/staging.jbchauffeurs.com/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/flyioabt/staging.jbchauffeurs.com/public/index.php on line 34
+[21-Dec-2021 04:21:05 America/New_York] PHP Warning:  require(/home/flyioabt/staging.jbchauffeurs.com/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/flyioabt/staging.jbchauffeurs.com/public/index.php on line 34
+[21-Dec-2021 04:21:05 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/flyioabt/staging.jbchauffeurs.com/public/../vendor/autoload.php' (include_path='.:/opt/alt/php80/usr/share/pear:/opt/alt/php80/usr/share/php:/usr/share/pear:/usr/share/php') in /home/flyioabt/staging.jbchauffeurs.com/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/flyioabt/staging.jbchauffeurs.com/public/index.php on line 34
