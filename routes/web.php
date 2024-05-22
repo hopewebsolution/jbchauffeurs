@@ -207,4 +207,6 @@ Route::group(['prefix' =>'admin'],function(){
 	});
 });
 /*** Admin Routes End ****/
+/*** Admin Routes End ****/
+/*** Admin Routes End ****/
 
