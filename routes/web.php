@@ -70,7 +70,7 @@ Route::group(['middleware' =>'countryCheck'],function(){
 		Route::get('/checkout',[CartController::class,'checkout'])->name('user.checkout');
 		Route::post('/book-vehicle',[BookingController::class,'placeBooking'])->name('user.placeBooking');
 
-
+//
 		Route::group(['middleware' =>'guest:web'],function(){
 		    /*Route::post('/password-email',[UserController::class,'pwdEmail'])->name('user.pwdEmail');
 		    Route::get('/foregt-password',[UserController::class,'forgetPwdForm'])->name('user.forgetPwd');*/ 
