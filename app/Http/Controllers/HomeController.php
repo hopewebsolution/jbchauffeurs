@@ -97,8 +97,8 @@ class HomeController extends Controller{
                 return redirect()->route('user.howItWorks');                 
             }else if($page_type=="faq"){
                 return redirect()->route('user.faq');                 
-            }else if($page_type=="operator-registers"){
-                return redirect()->route('user.makeOperatorRegisters');                 
+            }else if($page_type=="operator"){
+                return redirect()->route('operator.login');                 
             }else if($page_type=="contact-us"){
                 return redirect()->route('user.contactUs');                 
             }else{
