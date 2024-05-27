@@ -52,7 +52,10 @@ class OperatorRegistersController extends Controller{
              'upload_operator_licence' => 'required|file|mimes:pdf,jpg,png',
              'upload_public_liability_Insurance' => 'required|file|mimes:pdf,jpg,png',
         ]);
-        
+        $validatedData['password'] = Hash::make($validatedData['password']);
+
+
+
         if ($request->hasFile('upload_operator_licence')) {
             $validatedData['upload_operator_licence'] = $request->file('upload_operator_licence')->store('uploads');
         }
@@ -60,6 +63,7 @@ class OperatorRegistersController extends Controller{
         if ($request->hasFile('upload_public_liability_Insurance')) {
             $validatedData['upload_public_liability_Insurance'] = $request->file('upload_public_liability_Insurance')->store('uploads');
         }
+
         $operator = Operator::create($validatedData);
         $fleetTypes = implode(',', $request->input('fleet_type', []));
         FleetDetails::create([
@@ -73,7 +77,7 @@ class OperatorRegistersController extends Controller{
             'fleet_type' => $fleetTypes,
            
             'dispatch_system' =>$validatedData['dispatch_system'],
-            'password' => Hash::make($validatedData['password']),
+            
 
 
         ]);

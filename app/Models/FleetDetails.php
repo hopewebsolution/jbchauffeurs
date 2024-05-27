@@ -21,7 +21,6 @@ class FleetDetails extends Model
         'fleet_type',
         'fleet_size',
         'dispatch_system',
-        'password',
         'confirm_password',
         'upload_operator_licence'
     ]; 
