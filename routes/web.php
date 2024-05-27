@@ -45,6 +45,9 @@ Route::group(['middleware' =>'countryCheck'],function(){
 			$segment="aus";
 		}
 	}
+
+	Route::post('/operator-otp',['OperatorForgotPasswordController@sendResetLinkEmail']);
+	Route::get('/operator-otp',['OperatorForgotPasswordController@operator_otp']);
 	Route::group(['prefix' => $segment], function(){
 		Auth::routes();
 		Route::get('password/reset', [ForgotPasswordController::class,'showLinkRequestForm'])->name('user.forgetPwd');
@@ -63,7 +66,8 @@ Route::group(['middleware' =>'countryCheck'],function(){
 		Route::get('/operator/dashboard', [OperatorDashboardController::class, 'dashboard'])->name('operator.dashboard');
 		Route::post('/operator/login/submit', [OperatorLoginController::class, 'operatorloginsubmit'])->name('operator.login.submit');
 		Route::post('/operator/logout', [OperatorLoginController::class, 'operatorlogout'])->name('operator.logout');
-		Route::get('/operator/password/reset', [OperatorForgotPasswordController::class, 'operatorforgotpassword'])->name('operator.password.request');
+		Route::get('/operator/password/reset', [OperatorForgotPasswordController::class, 'showLinkRequestForm'])->name('operator.password.request');
+		Route::post('/forgot-password-link', [OperatorForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email.link');
 		Route::get('/operator-registers',[OperatorRegistersController::class,'operatorRegisters'])->name('user.operatorRegisters');
 		Route::get('/privacy-policy',[HomeController::class,'privacyPolicy'])->name('user.privacyPolicy');
 		Route::get('/terms-conditions',[HomeController::class,'termsConditions'])->name('user.terms');

@@ -312,6 +312,11 @@
 
                                                 <div class="row">
                                                     <div class="form-group col-md-6 text-left">
+                                                        <label for="email" class="mt-2">Email<span class="text-danger">*</span></label>
+                                                        <input type="email" name="email" class="form-control required" placeholder="Email" required>
+                                                        <span class="invalid-feedback">This field is required.</span>
+                                                    </div>
+                                                    <div class="form-group col-md-6 text-left">
                                                         <label for="password" class="mt-2">Password <span
                                                                 class="text-danger">*</span></label>
                                                         <input type="password" id="password" name="password"

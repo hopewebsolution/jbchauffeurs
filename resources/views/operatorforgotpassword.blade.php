@@ -8,13 +8,14 @@
                 <div class="login-box form-heading">
                     <h3>Password recovery</h3>
                     
-                    <form id="form">
+                    <form action="{{ route('password.email.link') }}" method="post">
+                        @csrf
                         <div class="form-group text-left">
                             <label for="account-id">Please enter your Account ID</label>
-                            <input type="text" class="form-control" id="account-id" name="account-id" required>
+                            <input type="text" class="form-control" id="email" name="email" required>
                         </div>
                         
-                        <button type="submit" class="login-btn">Submit</button>
+                        <button type="submit" class="login-btn">Send OTP</button>
                     </form>
                   
                 </div>
