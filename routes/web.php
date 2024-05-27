@@ -37,6 +37,7 @@ use App\Http\Controllers\BookWithUsControlloer;
 /*Route::get('password/reset', [ForgotPasswordController::class,'showLinkRequestForm'])->name('user.forgetPwd');
 Route::post('password/email', [ForgotPasswordController::class,'sendResetLinkEmail']);
 Route::get('password/reset/{token}',[ResetPasswordController::class,'showResetForm']);
+Route::get('password/reset/{token}',[ResetPasswordController::class,'showResetForm']);
 Route::post('password/reset',[ResetPasswordController::class,'reset']);*/
 Route::group(['middleware' =>'countryCheck'],function(){
 	$segment = Request::segment('1');
