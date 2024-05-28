@@ -21,6 +21,7 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\OperatorRegistersController;
 use App\Http\Controllers\OperatorLoginController;
 use App\Http\Controllers\OperatorDashboardController;
+use App\Http\Controllers\OperatorBookingController;
 use App\Http\Controllers\OperatorForgotPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -37,6 +38,7 @@ use App\Http\Controllers\BookWithUsControlloer;
 /*Route::get('password/reset', [ForgotPasswordController::class,'showLinkRequestForm'])->name('user.forgetPwd');
 Route::post('password/email', [ForgotPasswordController::class,'sendResetLinkEmail']);
 Route::get('password/reset/{token}',[ResetPasswordController::class,'showResetForm']);
+Route::get('password/reset/{token}',[ResetPasswordController::class,'showResetForm']);
 Route::post('password/reset',[ResetPasswordController::class,'reset']);*/
 Route::group(['middleware' =>'countryCheck'],function(){
 	$segment = Request::segment('1');
@@ -45,9 +47,6 @@ Route::group(['middleware' =>'countryCheck'],function(){
 			$segment="aus";
 		}
 	}
-
-	Route::post('/operator-otp',['OperatorForgotPasswordController@sendResetLinkEmail']);
-	Route::get('/operator-otp',['OperatorForgotPasswordController@operator_otp']);
 	Route::group(['prefix' => $segment], function(){
 		Auth::routes();
 		Route::get('password/reset', [ForgotPasswordController::class,'showLinkRequestForm'])->name('user.forgetPwd');
@@ -62,12 +61,14 @@ Route::group(['middleware' =>'countryCheck'],function(){
 		Route::post('/send-contact-us',[ContactUsController::class,'webSendContactUs'])->name('user.webSendContactUs');
 	    Route::post('/operator-registers',[OperatorRegistersController::class,'AddRegisters'])->name('user.makeOperatorRegisters');
 		Route::post('/register', [OperatorRegistersController::class, 'AddRegisters'])->name('register.store');
+		Route::get('/dashboardss', [OperatorDashboardController::class, 'homedashBoard'])->name('dashboard');
+		Route::get('/booking', [OperatorBookingController::class, 'booking'])->name('booking');
+		Route::get('/profile', [OperatorDashboardController::class, 'profile'])->name('profile');
+		Route::get('/changePassword', [OperatorDashboardController::class, 'changePassword'])->name('changePassword');
 		Route::get('/operator/login', [OperatorLoginController::class, 'operatorlogin'])->name('operator.login');
-		Route::get('/operator/dashboard', [OperatorDashboardController::class, 'dashboard'])->name('operator.dashboard');
 		Route::post('/operator/login/submit', [OperatorLoginController::class, 'operatorloginsubmit'])->name('operator.login.submit');
 		Route::post('/operator/logout', [OperatorLoginController::class, 'operatorlogout'])->name('operator.logout');
-		Route::get('/operator/password/reset', [OperatorForgotPasswordController::class, 'showLinkRequestForm'])->name('operator.password.request');
-		Route::post('/forgot-password-link', [OperatorForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email.link');
+		Route::get('/operator/password/reset', [OperatorForgotPasswordController::class, 'operatorforgotpassword'])->name('operator.password.request');
 		Route::get('/operator-registers',[OperatorRegistersController::class,'operatorRegisters'])->name('user.operatorRegisters');
 		Route::get('/privacy-policy',[HomeController::class,'privacyPolicy'])->name('user.privacyPolicy');
 		Route::get('/terms-conditions',[HomeController::class,'termsConditions'])->name('user.terms');
@@ -92,7 +93,12 @@ Route::group(['middleware' =>'countryCheck'],function(){
 		});
 
 		Route::group(['middleware' =>'auth:web'],function(){
+
+
+			Route::get('/operator/dashboard', [OperatorDashboardController::class, 'dashboard'])->name('operator.dashboard');
+
 			Route::get('/dashboard',[UserController::class,'dashboard'])->name('user.dashboard');
+
 			Route::get('/logout',[UserController::class,'logout'])->name('user.logout');
 			Route::get('/edit-profile',[UserController::class,'editProfile'])->name('user.editProfile');
 			Route::post('/update-profile',[UserController::class,'updateProfile'])->name('user.updateProfile');
