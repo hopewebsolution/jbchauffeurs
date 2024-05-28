@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Operator extends Model
 {
-    protected $table = 'operators'; // Define the table name explicitly
+    protected $table = 'operators';
     
     protected $fillable = [
         'email',
@@ -29,9 +29,5 @@ class Operator extends Model
         'office_phone_number'
     ]; 
 
-   
-    // protected $hidden = [
-    //     'password', 'remember_token',
-    // ];
 
 }

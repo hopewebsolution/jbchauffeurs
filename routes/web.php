@@ -66,7 +66,7 @@ Route::group(['middleware' =>'countryCheck'],function(){
 		Route::get('/profile', [OperatorDashboardController::class, 'profile'])->name('profile');
 		Route::get('/changePassword', [OperatorDashboardController::class, 'changePassword'])->name('changePassword');
 		Route::get('/operator/login', [OperatorLoginController::class, 'operatorlogin'])->name('operator.login');
-		Route::get('/operator/dashboard', [OperatorDashboardController::class, 'dashboard'])->name('operator.dashboard');
+		
 		Route::post('/operator/login/submit', [OperatorLoginController::class, 'operatorloginsubmit'])->name('operator.login.submit');
 		Route::post('/operator/logout', [OperatorLoginController::class, 'operatorlogout'])->name('operator.logout');
 		Route::get('/operator/password/reset', [OperatorForgotPasswordController::class, 'operatorforgotpassword'])->name('operator.password.request');
@@ -94,7 +94,12 @@ Route::group(['middleware' =>'countryCheck'],function(){
 		});
 
 		Route::group(['middleware' =>'auth:web'],function(){
+
+
+			Route::get('/operator/dashboard', [OperatorDashboardController::class, 'dashboard'])->name('operator.dashboard');
+
 			Route::get('/dashboard',[UserController::class,'dashboard'])->name('user.dashboard');
+
 			Route::get('/logout',[UserController::class,'logout'])->name('user.logout');
 			Route::get('/edit-profile',[UserController::class,'editProfile'])->name('user.editProfile');
 			Route::post('/update-profile',[UserController::class,'updateProfile'])->name('user.updateProfile');
