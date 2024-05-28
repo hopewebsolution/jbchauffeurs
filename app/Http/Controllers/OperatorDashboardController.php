@@ -12,4 +12,28 @@ class OperatorDashboardController extends Controller
         return view('operatordashboard');
     }
 
+
+    public function homedashBoard()
+    {
+         
+        return view('indexdashboard'); 
+
+    }
+
+
+
+    public function profile()
+    {
+      
+        return view('operatorProfile');
+
+
+
+    }
+
+
+    public function changePassword()
+    {
+        return view('changePassword');
+    }
 }

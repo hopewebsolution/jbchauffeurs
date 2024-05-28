@@ -11,13 +11,13 @@
                     <form method="POST" action="{{ route('operator.login.submit') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group text-left">
-                            <label for="account-id">Email</label>
-                            <input type="text" class="form-control" id="email" placeholder="Enter the Email"  name="email" required>
+                            <label for="account-id">Account ID</label>
+                            <input type="text" class="form-control" id="email" name="email" required>
                         </div>
                         <div class="form-group text-left">
                             <label for="password">Password</label>
                             <div class="password-container">
-                                <input type="password" class="form-control" id="password" name="password"  placeholder="Enter the Password" required>
+                                <input type="password" class="form-control" id="password" name="password" required>
                                 <span class="toggle-password"><svg xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 576 512">
                                         <path
