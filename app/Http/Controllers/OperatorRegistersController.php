@@ -49,17 +49,26 @@ class OperatorRegistersController extends Controller{
             'authorised_contact_mobile_number' => 'required|string|max:20',
             'about_us' => 'required|string|max:255',
             'revenue' => 'required|string|max:255',
-             'upload_operator_licence' => 'required|file|mimes:pdf,jpg,png',
-             'upload_public_liability_Insurance' => 'required|file|mimes:pdf,jpg,png',
+            'upload_operator_licence' => 'required|file|mimes:pdf,jpg,png',
+            'upload_public_liability_Insurance' => 'required|file|mimes:pdf,jpg,png',
         ]);
+        $validatedData['password'] = Hash::make($validatedData['password']);
+
         
-        if ($request->hasFile('upload_operator_licence')) {
-            $validatedData['upload_operator_licence'] = $request->file('upload_operator_licence')->store('uploads');
+        if($request->upload_operator_licence){
+            $fileName=$this->fileUpload($request,"upload_operator_licence",$this->OperatorLicencePath);
+            if($fileName!=""){
+                $validatedData['upload_operator_licence']=$fileName;
+            } 
         }
 
-        if ($request->hasFile('upload_public_liability_Insurance')) {
-            $validatedData['upload_public_liability_Insurance'] = $request->file('upload_public_liability_Insurance')->store('uploads');
+        if($request->upload_public_liability_Insurance){
+            $fileName=$this->fileUpload($request,"upload_public_liability_Insurance",$this->OperatorLicencePath);
+            if($fileName!=""){
+                $validatedData['upload_public_liability_Insurance']=$fileName;
+            } 
         }
+        
         $operator = Operator::create($validatedData);
         $fleetTypes = implode(',', $request->input('fleet_type', []));
         FleetDetails::create([
@@ -68,12 +77,12 @@ class OperatorRegistersController extends Controller{
             'private_hire_operator_licence_number' =>$validatedData['private_hire_operator_licence_number'],
             'licence_expiry_date' => $validatedData['licence_expiry_date'],
             'upload_operator_licence' =>$validatedData['upload_operator_licence'],
-            'upload_public_liability_Insurance' =>$validatedData['upload_public_liability_Insurance'],
+            // 'upload_public_liability_Insurance' =>$validatedData['upload_public_liability_Insurance'],
             'fleet_size' => $validatedData['fleet_size'],
             'fleet_type' => $fleetTypes,
            
             'dispatch_system' =>$validatedData['dispatch_system'],
-            'password' => Hash::make($validatedData['password']),
+            
 
 
         ]);

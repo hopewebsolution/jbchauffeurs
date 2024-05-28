@@ -66,6 +66,7 @@ Route::group(['middleware' =>'countryCheck'],function(){
 		Route::get('/profile', [OperatorDashboardController::class, 'profile'])->name('profile');
 		Route::get('/changePassword', [OperatorDashboardController::class, 'changePassword'])->name('changePassword');
 		Route::get('/operator/login', [OperatorLoginController::class, 'operatorlogin'])->name('operator.login');
+		Route::get('/operator/dashboard', [OperatorDashboardController::class, 'dashboard'])->name('operator.dashboard');
 		Route::post('/operator/login/submit', [OperatorLoginController::class, 'operatorloginsubmit'])->name('operator.login.submit');
 		Route::post('/operator/logout', [OperatorLoginController::class, 'operatorlogout'])->name('operator.logout');
 		Route::get('/operator/password/reset', [OperatorForgotPasswordController::class, 'operatorforgotpassword'])->name('operator.password.request');

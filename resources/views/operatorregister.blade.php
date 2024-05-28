@@ -108,9 +108,9 @@
                                                     <div class="form-group col-md-6 text-left">
                                                         <label for="office_phone_number" class="mt-2">Office phone
                                                             number<span class="text-danger">*</span></label>
-                                                        <input type="number" name="office_phone_number"
-                                                            class="form-control required"
-                                                            placeholder="Office phone number" required>
+
+                                                  <input type="text" placeholder="Office phone number" class="form-control required" required name="office_phone_number" value="" minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}"  class="ys-field">
+                                                        
                                                         <span class="invalid-feedback">This field is required.</span>
                                                     </div>
                                                 </div>
@@ -308,7 +308,17 @@
                                                         <span class="invalid-feedback">This field is required.</span>
                                                     </div>
                                                 </div>
-
+                                                <div class="row">
+                                                    <div class="form-group col-md-6 text-left">
+                                                        <label for="Email"
+                                                            class="mt-2">Email <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="email" name="email"
+                                                            class="form-control required"
+                                                            placeholder="Enter the Email" required>
+                                                        <span class="invalid-feedback">This field is required.</span>
+                                                    </div>
+                                                </div>
 
                                                 <div class="row">
                                                     <div class="form-group col-md-6 text-left">
@@ -342,10 +352,6 @@
                                                     </div>
                                                 </div>
 
-
-
-
-
                                                 <div class="backbutton">
                                                     <input type="button" name="previous-step" class="previous-step"
                                                         value="Previous Step" />
@@ -373,9 +379,10 @@
                                                     <div class="form-group col-md-6 text-left">
                                                         <label for="authorised_contact_person" class="mt-2">Authorised
                                                             contact person <span class="text-danger">*</span></label>
-                                                        <input type="number" name="authorised_contact_person"
+                                                        <!-- <input type="number" name="authorised_contact_person"
                                                             class="form-control required"
-                                                            placeholder="Authorised contact person" required>
+                                                            placeholder="Authorised contact person" required> -->
+                                                            <input type="text" placeholder="Authorised contact person" class="form-control required" required name="authorised_contact_person" value="" minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}"  class="ys-field">
                                                         <span class="invalid-feedback">This field is required.</span>
                                                     </div>
                                                     <div class="form-group col-md-6 text-left">
@@ -395,9 +402,10 @@
                                                         <label for="authorised_contact_mobile_number"
                                                             class="mt-2">Authorised contact’s mobile number  <span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="number" name="authorised_contact_mobile_number"
-                                                            class="form-control required"
-                                                            placeholder="Authorised contact’s mobile number " required>
+
+                                                                <input type="text" placeholder="Authorised contact’s mobile number " class="form-control required" required name="authorised_contact_mobile_number" value="" minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}"  class="ys-field">
+
+                                                     
                                                         <span class="invalid-feedback">This field is required.</span>
                                                     </div>
                                                     <div class="form-group col-md-6 text-left">
