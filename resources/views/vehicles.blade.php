@@ -2,6 +2,7 @@
 @section('title', 'Vehicles')
 @section('content')
 <div id="midwrap1">
+    
     <div class="container">
         <div class="cntblock">
             <div class="row">
