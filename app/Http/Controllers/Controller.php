@@ -13,6 +13,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     public $mapKey  = 'AIzaSyAUyoYHMKgjoMLJ35qSgMnGD9uGYPHWyj4';
     public $sliderPath="/assets/front_assets/uploads/sliders";
+    public $OperatorLicencePath="/assets/front_assets/uploads/OperatorLicence";
     public $servicePath="/assets/front_assets/uploads/services";
     public $vehiclePath="/assets/front_assets/uploads/vehicles";
     public $airportPath="/assets/front_assets/uploads/airports";
@@ -81,7 +82,9 @@ class Controller extends BaseController
             $image = $request->file($image_key);
             $fileName= $name = time().'_'.$image_key.'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path($upload_path);
+
             $image->move($destinationPath, $name);
+            // dd($image);
         }
         return $fileName;
     }

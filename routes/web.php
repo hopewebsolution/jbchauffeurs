@@ -21,6 +21,7 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\OperatorRegistersController;
 use App\Http\Controllers\OperatorLoginController;
 use App\Http\Controllers\OperatorDashboardController;
+use App\Http\Controllers\OperatorBookingController;
 use App\Http\Controllers\OperatorForgotPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -60,6 +61,10 @@ Route::group(['middleware' =>'countryCheck'],function(){
 		Route::post('/send-contact-us',[ContactUsController::class,'webSendContactUs'])->name('user.webSendContactUs');
 	    Route::post('/operator-registers',[OperatorRegistersController::class,'AddRegisters'])->name('user.makeOperatorRegisters');
 		Route::post('/register', [OperatorRegistersController::class, 'AddRegisters'])->name('register.store');
+		Route::get('/dashboardss', [OperatorDashboardController::class, 'homedashBoard'])->name('dashboard');
+		Route::get('/booking', [OperatorBookingController::class, 'booking'])->name('booking');
+		Route::get('/profile', [OperatorDashboardController::class, 'profile'])->name('profile');
+		Route::get('/changePassword', [OperatorDashboardController::class, 'changePassword'])->name('changePassword');
 		Route::get('/operator/login', [OperatorLoginController::class, 'operatorlogin'])->name('operator.login');
 		Route::get('/operator/dashboard', [OperatorDashboardController::class, 'dashboard'])->name('operator.dashboard');
 		Route::post('/operator/login/submit', [OperatorLoginController::class, 'operatorloginsubmit'])->name('operator.login.submit');

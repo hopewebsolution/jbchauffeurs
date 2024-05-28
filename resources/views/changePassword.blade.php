@@ -1,59 +1,49 @@
-@extends('masters/master')
-@section('title', 'Change Password')
+@extends('app.master')
 @section('content')
-<div id="midwrap1">
-    <div class="container">
-        
-        @include('customerNav')
-        <div class="search-holder">&nbsp;&nbsp;<strong>Change Password</strong></div>
-        @if(session()->has('success'))
-            <div class="row justify-content-center">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="alert alert-success">
-                        <strong>{{ session('success') }}</strong>
-                    </div>
+<main id="main" class="main">
+<div class="container">
+    <div class="row login-container recovery-password">
+        <div class="col-lg-8 col-md-12">
+            <div class="member-login-center">
+                <div class="login-box form-heading">
+                    <h3>Change Password</h3>
+                    
+                    <form id="form">
+                        <div class="form-group text-left">
+                            <label for="account-id">Current Password</label>
+                            <div class="password-container">
+                            <input type="text" class="form-control" id="account-id" name="account-id" required>
+                            <span class="toggle-password"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                        <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"></path>
+                                    </svg></span>
+                        </div>
+                        </div>
+                        <div class="form-group text-left">
+                            <label for="account-id">New Password</label>
+                            <div class="password-container">
+                            <input type="text" class="form-control" id="account-id" name="account-id" required>
+                            <span class="toggle-password"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                        <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"></path>
+                                    </svg></span>
+                        </div>
+                        </div>
+                        <div class="form-group text-left">
+                            <label for="account-id">Confirm Password</label>
+                            <div class="password-container">
+                            <input type="text" class="form-control" id="account-id" name="account-id" required>
+                            <span class="toggle-password"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                        <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"></path>
+                                    </svg></span>
+                        </div>
+                        </div>
+                        
+                        <button type="submit" class="login-btn">Submit</button>
+                    </form>
+                  
                 </div>
             </div>
-        @endif 
-        @if(session()->has('error'))
-            <div class="row justify-content-center">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="alert alert-danger">
-                        <strong>{{ session('error') }}</strong>
-                    </div>
-                </div>
-            </div>
-        @endif    
-        {!! Form::open(['route'=>['user.updatePwd'],'class'=>'form-horizontal bookfrm','id'=>'register']) !!}
-        <div class="row" id="frm-holder">
-            <div class="col-sm-6">
-            <div class="form-group">
-                <label for="inputPasswordCurrent">Old Password:</label>
-                <input type="password" class="form-control"  name="old_password" value="">
-                <span class="hws_error text-right text-danger">{{ $errors->first('old_password') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="inputPasswordCurrent">New Password:</label>
-                <input type="password" class="form-control" name="password" value="">
-                <span class="hws_error text-right text-danger">{{ $errors->first('password') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="inputPasswordCurrent">Confirm Password:</label>
-                <input type="password" class="form-control" name="conf_password" value="">
-                <span class="hws_error text-right text-danger">{{ $errors->first('conf_password') }}</span>
-            </div>
-            <div class="form-group">
-                <input type="submit" name="submit" class="submit" value="Submit">
-            </div>
-            </div>
         </div>
-        {!! Form::close() !!}
-           
-        </div>
-        
     </div>
 </div>
+</main>
 @endsection
-@push('footer-scripts')
-    
-@endpush
