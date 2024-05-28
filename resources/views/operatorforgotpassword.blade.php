@@ -15,7 +15,7 @@
                             <input type="text" class="form-control" id="email" name="email" required>
                         </div>
                         
-                        <button type="submit" class="login-btn">Send OTP</button>
+                        <button type="submit" class="login-btn">Submit</button>
                     </form>
                   
                 </div>
