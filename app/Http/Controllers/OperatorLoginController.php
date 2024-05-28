@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Operator;
+use Validator;
+
 
 class OperatorLoginController extends Controller
 {
@@ -34,22 +36,45 @@ class OperatorLoginController extends Controller
 
 
     public function operatorloginsubmit(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
+    { 
+        $validator = Validator::make($request->all(), [
+            'password' => 'required',
+            'email'=>'required|email',
         ]);
-
-        $operator = Operator::where('email', $request->email)->first();
-
-        if ($operator && Hash::check($request->password, $operator->password)) {
-            return redirect()->route('operator.dashboard');
-
+        if ($validator->fails()) {
+            return  back()
+                    ->withErrors($validator)
+                    ->withInput();
         }
 
-        return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
-            'email' => 'These credentials do not match our records.',
-        ]);
+        if(!$this->validateUser($request)){
+            return back()->withErrors(['message'=>'invalid email or password!']);
+        }else{
+            $userData=Auth::user();
+            if($userData->status=='active'){
+                return redirect()->route('operator.dashboard');
+            }else if($userData->status!='active'){
+                $this->makeLogout();
+                return back()->withErrors(['message'=>'Your account is block by Admin, please contact with customer support']);
+            }
+        }
+        
+        // $request->validate([
+        //     'email' => 'required|email',
+        //     'password' => 'required|min:6',
+        // ]);
+
+        // $operator = Operator::where('email', $request->email)->first();
+        
+        // if ($operator && Hash::check($request->password, $operator->password)) {
+             
+        //     return redirect()->route('operator.dashboard');
+
+        // }
+        // return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
+        //     'email' => 'These credentials do not match our records.',
+        // ]);
+
     }
 
 
@@ -60,6 +85,11 @@ class OperatorLoginController extends Controller
         return redirect('/operator/login');
     }
 
-
+   public function validateUser(Request $request){
+        if (!Auth::guard('web')->attempt(['email'=>$request->email,'password'=>$request->password])) {
+            return false;
+        }
+        return true;
+    }
 }
 

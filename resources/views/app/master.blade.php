@@ -120,7 +120,7 @@
       &copy; Copyright <strong><span>Jbchauffeurs</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
-      Designed by <a href="#">Webrockmedia</a>
+      <!-- Designed by <a href="#">Webrockmedia</a> -->
     </div>
   </footer><!-- End Footer -->
 

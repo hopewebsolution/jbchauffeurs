@@ -18,18 +18,23 @@
     </a>
   </li><!-- End Tables Nav -->
 
+
   <li class="nav-item">
     <a class="nav-link collapsed" href="{{route('profile')}}">
       <i class="bi bi-person"></i><span>Profile</span></i>
     </a>
   </li>
+  
+
+
   <!-- End Profile Nav -->
   <li class="nav-item">
     <a class="nav-link collapsed" href="{{route('changePassword')}}">
       <i class="bi bi-box-arrow-in-right"></i>
       <span>Sign Out</span>
     </a>
-  </li><!-- End Login Page Nav -->
+  </li>
+  <!-- End Login Page Nav -->
 </ul>
 
 </aside><!-- End Sidebar-->
