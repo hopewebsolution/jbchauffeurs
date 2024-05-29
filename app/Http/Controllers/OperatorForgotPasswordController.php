@@ -79,7 +79,7 @@ public function forgetPasswordstore(Request $request)
     'email' => 'required|email|exists:operators,email',
     'password' => 'required|string|min:4|max:8|confirmed',
     'password_confirmation' => 'required',
-    'token' => 'required'
+    // 'token' => 'required'
 ]);
 
 // Find the password reset token
@@ -87,7 +87,7 @@ $updatePassword = PasswordReset::where([
     'email' => $request->email,
     'token' => $request->token
 ])->first();
-
+//  dd($updatePassword);
 // If token data is not found, return with an error message
 if (!$updatePassword) {
     return back()->with('fail', 'Invalid token or email.');
@@ -102,7 +102,7 @@ $operator->save();
 PasswordReset::where('email', $request->email)->delete();
 
 // Redirect to login with a success message
-return redirect('/operator/login')->with('message', 'Your password has been changed!');
+return redirect()->route('operator.login')->with('message', 'Your password has been changed!');
 
 
 }

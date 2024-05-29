@@ -20,7 +20,7 @@
                             <br>
                             <br>
                             <label for="account-id">Please confirm your  Password</label>
-                            <input type="password" class="form-control mt-3" id="confirm_password" name="confirm_password" required>
+                            <input type="password" class="form-control mt-3" id="password_confirmation" name="password_confirmation" required>
                         </div>
                         
                         <button type="submit" class="login-btn">Submit</button>
