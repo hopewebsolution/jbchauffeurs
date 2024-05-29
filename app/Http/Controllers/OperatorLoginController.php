@@ -48,7 +48,7 @@ class OperatorLoginController extends Controller
         }
 
         if(!$this->validateUser($request)){
-            return back()->withErrors(['message'=>'invalid email or password!']);
+            return redirect()->back()->withErrors(['operatorloginsubmit' => 'Invalid email or password!'])->withInput($request->except('password'));
         }else{
             $userData=Auth::user();
             if($userData->status=='active'){

@@ -7,12 +7,21 @@
             <div class="member-login-center">
                 <div class="login-box form-heading">
                     <h3>Password recovery</h3>
+                    @if ($errors->has('sendResetLinkEmail'))
+                    <div class="alert alert-danger">
+                        {{ $errors->first('sendResetLinkEmail') }}
+                    </div>
+                @endif
                     
                     <form action="{{ route('password.email.link') }}" method="post">
                         @csrf
                         <div class="form-group text-left">
                             <label for="account-id">Please enter your Account ID</label>
-                            <input type="text" class="form-control" id="email" name="email" required>
+                            <input type="text" class="form-control" id="email" name="email">
+                            <span class="invalid-feedback">This field is required.</span>
+                            @error('email')
+                           <strong class="text-danger" style="font-size: 15px;">{{ $message }}</strong>
+                           @enderror 
                         </div>
                         
                         <button type="submit" class="login-btn">Submit</button>

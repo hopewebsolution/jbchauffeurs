@@ -9,22 +9,20 @@
               
                     <h3>Login</h3>
                     <p class="text-center">Already Registered?</p>
-                    @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    @foreach ($errors->all() as $error)
-                                        {{ $error }}
-                                    @endforeach   
-                                </div>
-                            @endif
+                    @if ($errors->has('operatorloginsubmit'))
+                    <div class="alert alert-danger">
+                        {{ $errors->first('operatorloginsubmit') }}
+                    </div>
+                @endif
                     <form method="POST" action="{{ route('operator.login.submit') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group text-left">
                             <label for="account-id">Email</label>
                             <input type="text" class="form-control" value="{{old('email')}}" placeholder= "Enter the Email" id="email" name="email" >
                             <span class="invalid-feedback">This field is required.</span>
-                            <!-- @error('email')
-                         <strong class="text-danger">{{ $message }}</strong>
-                            @enderror -->
+                            @error('email')
+                            <strong class="text-danger" style="font-size: 15px;">{{ $message }}</strong>
+                        @enderror                        
                         </div>
                         
                         <div class="form-group text-left">
@@ -38,9 +36,9 @@
                                     </svg></span>
                                     <span class="invalid-feedback">This field is required.</span>
                             </div>
-                            <!-- @error('password')
-                           <strong class="text-danger">{{ $message }}</strong>
-                            @enderror -->
+                             @error('password')
+                           <strong class="text-danger" style="font-size: 15px;">{{ $message }}</strong>
+                            @enderror
                         </div>
                         <div class="form-group check-boxs text-left">
                             <input type="checkbox" id="remember-me" name="remember-me">

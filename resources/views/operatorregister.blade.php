@@ -308,17 +308,6 @@
                                                         <span class="invalid-feedback">This field is required.</span>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="form-group col-md-6 text-left">
-                                                        <label for="Email"
-                                                            class="mt-2">Email <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="email" name="email"
-                                                            class="form-control required"
-                                                            placeholder="Enter the Email" required>
-                                                        <span class="invalid-feedback">This field is required.</span>
-                                                    </div>
-                                                </div>
 
                                                 <div class="row">
                                                     <div class="form-group col-md-6 text-left">
