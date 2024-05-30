@@ -17,35 +17,16 @@ class OperatorLoginController extends Controller
         return view('operatorlogin');
     }
 
-
-    // public function operatorloginsubmit(Request $request)
-    // {
-    //     $request->validate([
-    //         'email' => 'required|email',
-    //         'password' => 'required|min:6',
-    //     ]);
-
-    //     if (Auth::guard('operator')->attempt(['email' => $request->email, 'password' => $request->password])) {
-    //         return redirect()->intended('/operator/dashboard');
-    //     }
-
-    //     return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
-    //         'email' => 'These credentials do not match our records.',
-    //     ]);
-    // }
-
-
     public function operatorloginsubmit(Request $request)
     {  
-        // return $request;
+        
+    
         $validator = Validator::make($request->all(), [
             'password' => 'required',
             'email'=>'required|email',
         ]);
         if ($validator->fails()) {
-            return  back()
-                    ->withErrors($validator)
-                    ->withInput();
+            return  back()->withErrors($validator)->withInput();
         }
 
         if(!$this->validateUser($request)){
@@ -64,32 +45,13 @@ class OperatorLoginController extends Controller
             
         }
         
-        // $request->validate([
-        //     'email' => 'required|email',
-        //     'password' => 'required|min:6',
-        // ]);
-
-        // $operator = Operator::where('email', $request->email)->first();
         
-        // if ($operator && Hash::check($request->password, $operator->password)) {
-             
-        //     return redirect()->route('operator.dashboard');
-
-        // }
-        // return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
-        //     'email' => 'These credentials do not match our records.',
-        // ]);
 
     }
 
-
- 
-
-   public function validateUser(Request $request){
-    //  dd(Auth::guard('weboperator'));
-    
-        if (Auth::guard('weboperator')->attempt(['email'=>$request->email,'password'=>$request->password])) {
-            
+   public function validateUser(Request $request)
+   { 
+            if (!Auth::guard('weboperator')->attempt(['email'=>$request->email,'password'=>$request->password])) {
             return false;
         }
         return true;
@@ -99,10 +61,8 @@ class OperatorLoginController extends Controller
     public function logout(Request $request)
     {
         Auth::guard('weboperator')->logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
         return redirect()->route('operator.login'); 
     }
 }
