@@ -7,6 +7,11 @@
             <div class="member-login-center">
                 <div class="login-box form-heading">
                     <h3>Password recovery</h3>
+                    @if ($errors->has('sendResetLinkEmail'))
+                    <div class="alert alert-danger">
+                        {{ $errors->first('sendResetLinkEmail') }}
+                    </div>
+                @endif
                     
                     <form action="{{ route('password.email.link') }}" method="post">
                         @csrf
