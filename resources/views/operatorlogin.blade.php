@@ -13,7 +13,12 @@
                     <div class="alert alert-danger">
                         {{ $errors->first('operatorloginsubmit') }}
                     </div>
-                @endif
+                 @endif
+                 @if(session()->has('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
                     <form method="POST" action="{{ route('operator.login.submit') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group text-left">
