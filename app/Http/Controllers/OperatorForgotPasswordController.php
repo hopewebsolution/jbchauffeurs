@@ -10,7 +10,10 @@ use Illuminate\Support\Str;
 use App\Models\Operator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\PasswordReset;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Validator;
+
 
 class OperatorForgotPasswordController extends Controller
 {
@@ -23,23 +26,64 @@ class OperatorForgotPasswordController extends Controller
 
     public function sendResetLinkEmail(Request $request)
     {
-        $request->validate([
-            'email' => 'required|exists:operators,email',
+        // $request->validate([
+        //     'email' => 'required|exists:operators,email',
+        // ]);
+        $validator = Validator::make($request->all(), [
+            'email'=>'required|email',
         ]);
+        if ($validator->fails()) {
+            return  back()->withErrors($validator)->withInput();
+        }
 
+
+        // if(!$this->validateUser($request)){
+        //     return redirect()->back()->withErrors(['operatorloginsubmit' => 'Invalid email Please correct email'])->withInput($request->except('password'));
+        // }
+        $login = Operator ::where('email',$request->email)->get();
+        $login = Operator::where('email', $request->email)->get();
+
+        if ($login->isEmpty()) {
+            return redirect()->back()->withErrors(['operatorloginsubmit' => 'Invalid email Please correct email'])->withInput($request->except('password'));
+        } else {
+            $token = Str::random(6);
+            PasswordReset::create([
+                'token' => $token,
+                'email' => $request->email,
+                'created_at' => Carbon::now(),
+            
+            ]);
+            Mail::send('operator-otp-emailPage', ['token' => $token], function ($message) use ($request) {
+                $message->to($request->email);
+                $message->subject('Reset Password');
+            });
+            return back()->with('success', 'Please check your email ');
+           
+        }
+
+
+
+        // if($login){
+        //     $token = Str::random(6);
+        //     PasswordReset::create([
+        //         'token' => $token,
+        //         'email' => $request->email,
+        //         'created_at' => Carbon::now(),
+            
+        //     ]);
+        //     Mail::send('operator-otp-emailPage', ['token' => $token], function ($message) use ($request) {
+        //         $message->to($request->email);
+        //         $message->subject('Reset Password');
+        //     });
+        //     return back()->with('success', 'Please check your email');
+            
+        // }
+        // else{
+        //     return redirect()->back()->withErrors(['operatorloginsubmit' => 'Invalid email Please correct email'])->withInput($request->except('password'));
+            
+        // }
         
-        $token = Str::random(6);
-        PasswordReset::create([
-            'token' => $token,
-            'email' => $request->email,
-            'created_at' => Carbon::now(),
-        
-        ]);
-        Mail::send('operator-otp-emailPage', ['token' => $token], function ($message) use ($request) {
-            $message->to($request->email);
-            $message->subject('Reset Password');
-        });
-        return back()->with('success', 'Please check your email');
+       
     }
 
     public function forgetPasswordLink($token)
@@ -72,5 +116,18 @@ class OperatorForgotPasswordController extends Controller
             return redirect()->route('operator.login')->with('message', 'Your password has been changed!');
     }
 
+    public function validateUser(Request $request)
+    {   
 
+        $login = Operator ::where('email',$request->email)->get();
+        if($login){
+            return false;
+        }else{
+            return true;
+        }
+        //      if (!Auth::guard('weboperator')->attempt(['email'=>$request->email,'password'=>$request->password])) {
+        //      return false;
+        //  }
+        //  return true;
+     }
 }
