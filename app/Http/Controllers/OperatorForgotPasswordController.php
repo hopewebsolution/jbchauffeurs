@@ -93,27 +93,44 @@ class OperatorForgotPasswordController extends Controller
 
     public function forgetPasswordstore(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email|exists:operators,email',
-            'password' => 'required|string|min:4|max:8|confirmed',
-            'password_confirmation' => 'required',
 
-            ]);
+        $validator = Validator::make($request->all(), [
+            'email'=>'required|email',
+            'password' => 'required|string|min:4|max:8|',
+            'password_confirmation' => 'required|same:password',
+        ]);
+        if ($validator->fails()) {
+            return  back()->withErrors($validator)->withInput();
+        }
+
+        // $request->validate([
+        //     'email' => 'required|email|exists:operators,email',
+
+        //     'password' => 'required|string|min:8',
+        //     'password_confirmation' => 'required|same:password',
+        //     // 'password' => 'required|string|min:4|max:8|confirmed',
+        //     // 'password_confirmation' => 'required',
+
+        //     ]);
 
             $updatePassword = PasswordReset::where([
                 'email' => $request->email,
                 'token' => $request->token
             ])->first();
 
-            if (!$updatePassword) {
-                return back()->with('fail', 'Invalid token or email.');
-            }
+           
 
-            $operator = Operator::where('email', $request->email)->first();
-            $operator->password = Hash::make($request->password);
-            $operator->save();
-            PasswordReset::where('email', $request->email)->delete();
-            return redirect()->route('operator.login')->with('message', 'Your password has been changed!');
+            if (!$updatePassword) {
+                return redirect()->back()->withErrors(['operatorloginsubmit' => 'Invalid email Please correct email'])->withInput($request->except('password'));
+            } else {
+                $operator = Operator::where('email', $request->email)->first();
+                $operator->password = Hash::make($request->password);
+                $operator->save();
+                PasswordReset::where('email', $request->email)->delete();
+                return redirect()->route('operator.login')->with('success', 'Your password has been changed!');
+            }
+            
+            // return redirect()->route('operator.login')->with('message', 'Your password has been changed!');
     }
 
     public function validateUser(Request $request)

@@ -6,11 +6,16 @@
             <div class="member-login-center">
                 <div class="login-box form-heading">
                     <h3>Reset Password</h3>
-                    @if ($errors->has('forgetPasswordstore'))
+                    @if ($errors->has('operatorloginsubmit'))
                     <div class="alert alert-danger">
-                        {{ $errors->first('forgetPasswordstore') }}
+                        {{ $errors->first('operatorloginsubmit') }}
                     </div>
                 @endif
+                @if(session()->has('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
                     
                     <form action="{{route('forget.password.store')}}" method="post">
                         @csrf
