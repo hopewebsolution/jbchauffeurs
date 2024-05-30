@@ -55,7 +55,7 @@ class OperatorForgotPasswordController extends Controller
             ]);
             Mail::send('operator-otp-emailPage', ['token' => $token], function ($message) use ($request) {
                 $message->to($request->email);
-                $message->subject('Reset Password');
+                $message->subject('Operator Reset Password');
             });
             return back()->with('success', 'Please check your email ');
            
@@ -127,7 +127,7 @@ class OperatorForgotPasswordController extends Controller
                 $operator->password = Hash::make($request->password);
                 $operator->save();
                 PasswordReset::where('email', $request->email)->delete();
-                return redirect()->route('operator.login')->with('success', 'Your password has been changed!');
+                return redirect()->route('operator.login')->with('success', 'Your password has been reset successfully!');
             }
             
             // return redirect()->route('operator.login')->with('message', 'Your password has been changed!');
