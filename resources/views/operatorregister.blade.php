@@ -65,6 +65,9 @@
                                                             class="form-control required"
                                                             placeholder="office email address" required>
                                                         <span class="invalid-feedback">This field is required.</span>
+                                                        @error('office_email')
+                                                            <strong class="text-danger" style="font-size: 15px;">{{ $message }}</strong>
+                                                        @enderror 
                                                     </div>
                                                     <div class="form-group col-md-6 text-left">
                                                         <label for="first_name" class="mt-2">First Name <span
@@ -504,7 +507,7 @@ $(document).ready(function() {
                 var opacity = 1 - now;
                 current_fs.css({
                     'transform': 'scale(' + scale + ')',
-                    'position': 'absolute'
+                    
                 });
                 next_fs.css({
                     'left': left,
