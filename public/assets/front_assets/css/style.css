@@ -1,3 +1,4 @@
+[11:29 AM] Ashok Yadav
 /*Display the dropdown on hover*/
 ul li a:hover+.hidden,
 .hidden:hover {
@@ -309,7 +310,16 @@ label.error {
     border: 1px solid #BFBFBF !important;
     border-radius: 5px !important;
 }
- 
+.member-login-center form .form-control {
+    display: block;
+    width: 100%;
+    height: 40px !important;
+    color: #000;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #BFBFBF !important;
+    border-radius: 5px !important;
+}
 .member-login-center #form .text-danger {
     color: #ff0500 !important;
     font-size: 18px !important;
@@ -456,7 +466,6 @@ label.error {
     margin-bottom: 20px;
     color: #000;
     font-size: 19px;
-    text-align: center;
 }
  
 .check-boxs {
@@ -504,18 +513,22 @@ label.error {
 .login-btn:hover {
     background-color: #008000;
 }
+ 
 .login-box p {
     margin-bottom: 20px;
     color: #000;
     font-size: 18px;
 }
+ 
 .signup-prompt a {
     color: #007bff;
     text-decoration: none;
 }
+ 
 .signup-prompt a:hover {
     text-decoration: underline;
 }
+ 
 .password-container {
     position: relative;
 }
@@ -528,9 +541,12 @@ label.error {
     cursor: pointer;
     user-select: none;
 }
-.password-container .toggle-password svg{
+ 
+.password-container .toggle-password svg {
     width: 20px;
+    fill: #858282;
 }
+ 
 .signup-prompt {
     margin-top: 20px;
     color: #333;
@@ -539,6 +555,19 @@ label.error {
 .recovery-password .form-group {
     margin: 50px 0px;
 }
+ 
+.member-login-center form label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 10px;
+}
+ 
+.member-login-center form .check-boxs label {
+    margin-bottom: 0px !important;
+    font-size: 14px;
+}
+ 
 @media screen and (max-width : 990px) {
     .w25 {
         margin: 2px 1% 2px 0;
@@ -547,6 +576,11 @@ label.error {
  
     #banform {
         padding-top: 0px !important;
+    }
+ 
+    .member-login-center .check-box {
+        border: 1px solid #c3c3c3;
+        padding: 11px 30px;
     }
 }
  
@@ -606,6 +640,10 @@ label.error {
         width: 100%;
     }
  
+    .member-login-center .box-all {
+        gap: 20px;
+        flex-wrap: wrap;
+    }
 }
  
  
@@ -619,5 +657,117 @@ label.error {
         position: absolute;
         bottom: 0;
         width: 100%;
+    }
+}
+ 
+ 
+ 
+/* Responsive css */
+@media (max-width:480px) {
+    .form-heading h3 {
+        font-size: 25px;
+        line-height: 35px;
+    }
+ 
+    .recovery-password .member-login-center {
+        padding: 20px;
+    }
+ 
+    .member-login-center #form label {
+        margin-bottom: 5px;
+    }
+ 
+    .member-login-center {
+        padding: 20px 20px;
+    }
+ 
+    .member-login-center .check-box {
+        padding: 10px 15px;
+    }
+ 
+    .member-login-center .box-all {
+        gap: 15px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+ 
+}
+ 
+@media (max-width:420px) {
+    .member-loginsss {
+        padding: 15px 15px;
+    }
+ 
+    .member-login-center #form .previous-step,
+    .member-login-center .next-step {
+        padding: 12px 18px;
+        font-size: 16px;
+    }
+ 
+}
+ 
+@media (max-width:360px) {
+    .progressbar #step2::before {
+        width: 27%;
+        left: 56px;
+        top: 15px;
+    }
+ 
+    .progressbar #step3::before {
+        width: 33%;
+        right: 44px;
+        top: 15px;
+    }
+ 
+    .member-loginsss {
+        padding: 15px 10px;
+    }
+ 
+    .progressbar .active h5 {
+        font-size: 13px;
+    }
+ 
+    .progressbar .round {
+        width: 30px;
+        height: 30px;
+        font-size: 15px;
+    }
+ 
+    .progressbar h5 {
+        font-size: 13px;
+    }
+ 
+    .form-heading h3 {
+        font-size: 23px;
+        line-height: 30px;
+    }
+ 
+    .member-login-center #form .previous-step,
+    .member-login-center .next-step {
+        padding: 12px 13px;
+        font-size: 16px;
+    }
+ 
+    .signup-prompt {
+        font-size: 16px !important;
+    }
+ 
+    .login-container {
+        margin: 30px 0px;
+        display: inline-block;
+    }
+ 
+    .login-container .form-heading h3 {
+        font-size: 23px;
+        line-height: 30px;
+        margin-bottom: 10px;
+    }
+ 
+    .member-login-center form label {
+        margin-bottom: 5px;
+    }
+ 
+    .login-container .col-lg-8 {
+        padding: 0;
     }
 }

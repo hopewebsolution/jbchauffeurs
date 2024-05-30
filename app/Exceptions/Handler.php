@@ -62,6 +62,9 @@ class Handler extends ExceptionHandler
             case 'web':
                 $login = 'user.loginForm';
                 break;
+            case 'weboperator':
+                $login = 'operator.login';
+                break;
             default:
                 $login = 'login';
                 break;

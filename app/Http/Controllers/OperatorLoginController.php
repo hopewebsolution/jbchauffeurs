@@ -36,7 +36,8 @@ class OperatorLoginController extends Controller
 
 
     public function operatorloginsubmit(Request $request)
-    { 
+    {  
+        // return $request;
         $validator = Validator::make($request->all(), [
             'password' => 'required',
             'email'=>'required|email',
@@ -50,13 +51,17 @@ class OperatorLoginController extends Controller
         if(!$this->validateUser($request)){
             return back()->withErrors(['message'=>'invalid email or password!']);
         }else{
-            $userData=Auth::user();
-            if($userData->status=='active'){
-                return redirect()->route('operator.dashboard');
-            }else if($userData->status!='active'){
-                $this->makeLogout();
-                return back()->withErrors(['message'=>'Your account is block by Admin, please contact with customer support']);
-            }
+             
+            return redirect()->route('operator.dashboard');
+
+            // $userData=Auth::user();
+            // if($userData->status=='active'){
+            //     return redirect()->route('operator.dashboard');
+            // }else if($userData->status!='active'){
+            //     $this->makeLogout();
+            //     return back()->withErrors(['message'=>'Your account is block by Admin, please contact with customer support']);
+            // }
+            
         }
         
         // $request->validate([
@@ -78,18 +83,27 @@ class OperatorLoginController extends Controller
     }
 
 
-    // Handle logout
-    public function operatorlogout()
-    {
-        Auth::logout();
-        return redirect('/operator/login');
-    }
+ 
 
    public function validateUser(Request $request){
-        if (!Auth::guard('web')->attempt(['email'=>$request->email,'password'=>$request->password])) {
+    //  dd(Auth::guard('weboperator'));
+    
+        if (Auth::guard('weboperator')->attempt(['email'=>$request->email,'password'=>$request->password])) {
+            
             return false;
         }
         return true;
+    }
+
+
+    public function logout(Request $request)
+    {
+        Auth::guard('weboperator')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('operator.login'); 
     }
 }
 

@@ -25,15 +25,22 @@
     </a>
   </li>
   
-
+  @if(Auth::guard('weboperator')->check())
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="bi bi-box-arrow-in-right"></i>
+            <span>Sign Out</span>
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    </li>
+@else
+    
+@endif
 
   <!-- End Profile Nav -->
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="{{route('changePassword')}}">
-      <i class="bi bi-box-arrow-in-right"></i>
-      <span>Sign Out</span>
-    </a>
-  </li>
+ 
   <!-- End Login Page Nav -->
 </ul>
 

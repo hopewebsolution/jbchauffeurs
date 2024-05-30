@@ -82,7 +82,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="{{route('changePassword')}}">
                 <i class="bi bi-lock-fill"></i>
                 <span>Change Password</span>
               </a>
@@ -120,7 +120,7 @@
       &copy; Copyright <strong><span>Jbchauffeurs</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
-      <!-- Designed by <a href="#">Webrockmedia</a> -->
+     
     </div>
   </footer><!-- End Footer -->
 
@@ -129,7 +129,7 @@
 
   <!-- Vendor JS Files -->
   <script src=""></script>
-  <script src="{{ asset('public/assets/operator_dashboard_asset/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('public/assets/operator_dashboard_asset/vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
   <script src="{{ asset('public/assets/operator_dashboard_asset/js/jquery.js') }}"></script>
   <!-- Template Main JS File -->
   <script src="{{ asset('public/assets/operator_dashboard_asset/js/main.js') }}"></script>

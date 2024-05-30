@@ -12,7 +12,7 @@
                         @csrf
                         <div class="form-group text-left">
                             <label for="account-id">Please enter your Account ID</label>
-                            <input type="text" class="form-control" id="email" name="email" required>
+                            <input type="text" class="form-control" id="email" name="email" >
                         </div>
                         
                         <button type="submit" class="login-btn">Submit</button>

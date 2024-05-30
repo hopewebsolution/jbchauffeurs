@@ -6,11 +6,11 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Operator extends Model
+class Operator extends Authenticatable
 {
     protected $table = 'operators';
-    
     protected $fillable = [
         'email',
         'password', 

@@ -33,6 +33,11 @@ class RedirectIfAuthenticated
                         return redirect()->route('user.dashboard');
                     }
                     break;
+                case 'weboperator':
+                    if (Auth::guard($guard)->check()) {
+                        return redirect()->route('operator.dashboard');
+                    }
+                    break;
                 default:
                     if (Auth::guard($guard)->check()) {
                         return redirect('/');

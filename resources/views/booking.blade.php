@@ -18,7 +18,9 @@
                 <div class="card">
                     <div class="card-body p-0">
                         <!-- Table with stripped rows -->
-                        <table class="table table-striped">
+                        <div class="table-responsive">
+
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Booking Id</th>
@@ -114,6 +116,7 @@
                                 </tr>
                             </tbody>
                         </table>
+</div>
                         <!-- End Table with stripped rows -->
 
                     </div>
