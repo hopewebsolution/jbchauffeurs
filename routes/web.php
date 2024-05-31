@@ -19,11 +19,8 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\AirportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContactUsController;
-use App\Http\Controllers\OperatorRegistersController;
-use App\Http\Controllers\OperatorLoginController;
-use App\Http\Controllers\OperatorDashboardController;
+use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\OperatorBookingController;
-use App\Http\Controllers\OperatorForgotPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\VehiclesController;
@@ -61,13 +58,15 @@ Route::group(['middleware' =>'countryCheck'],function(){
         Route::get('/contact-us',[ContactUsController::class,'contactUs'])->name('user.contactUs');
         Route::post('/send-contact-us',[ContactUsController::class,'webSendContactUs'])->name('user.webSendContactUs');
 
-         Route::post('/operator-registers',[OperatorRegistersController::class,'AddRegisters'])->name('user.makeOperatorRegisters');
-         Route::post('/register', [OperatorRegistersController::class, 'AddRegisters'])->name('register.store');
-        
 
-        Route::get('/forget-password-link/{token}',[OperatorForgotPasswordController::class , 'forgetPasswordLink'])->name('forget.password.link');
-        Route::post('/forget-password-store',[OperatorForgotPasswordController::class , 'forgetPasswordstore'])->name('forget.password.store');
-        Route::get('/operator-registers',[OperatorRegistersController::class,'operatorRegisters'])->name('user.operatorRegisters');
+         Route::post('/operator-registers',[OperatorController::class,'AddRegisters'])->name('user.makeOperatorRegisters');
+         Route::post('/register', [OperatorController::class, 'AddRegisters'])->name('register.store');
+         Route::get('/operator-registers',[OperatorController::class,'operatorRegisters'])->name('user.operatorRegisters');
+
+
+
+
+
         Route::get('/privacy-policy',[HomeController::class,'privacyPolicy'])->name('user.privacyPolicy');
         Route::get('/terms-conditions',[HomeController::class,'termsConditions'])->name('user.terms');
         Route::get('/page/{page_slug}',[HomeController::class,'cmsPage'])->name('user.cmsPage');
@@ -92,23 +91,24 @@ Route::group(['middleware' =>'countryCheck'],function(){
 		/* Operator Route  Start  */
 
 		Route::group(['middleware' =>'guest:weboperator'],function(){
-		    Route::get('/operator/login', [OperatorLoginController::class, 'operatorlogin'])->name('operator.login');
-		    Route::post('/operator/login/submit', [OperatorLoginController::class, 'operatorloginsubmit'])->name('operator.login.submit');
-			Route::get('/operator/password/reset', [OperatorForgotPasswordController::class, 'showLinkRequestFormEmail'])->name('operator.password.request');
-			Route::post('/forgot-password-link', [OperatorForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email.link');
-			Route::get('/forget-password-link/{token}',[OperatorForgotPasswordController::class , 'forgetPasswordLink'])->name('forget.password.link');
-			Route::post('/forget-password-store',[OperatorForgotPasswordController::class , 'forgetPasswordstore'])->name('forget.password.store');
+
+		    Route::get('/operator/login', [OperatorController::class, 'operatorlogin'])->name('operator.login');
+		    Route::post('/operator/login/submit', [OperatorController::class, 'operatorloginsubmit'])->name('operator.login.submit');
+            Route::get('/operator/password/reset', [OperatorController::class, 'showLinkRequestFormEmail'])->name('operator.password.request');
+			Route::post('/forgot-password-link', [OperatorController::class, 'sendResetLinkEmail'])->name('password.email.link');
+			Route::get('/forget-password-link/{token}',[OperatorController::class , 'forgetPasswordLink'])->name('forget.password.link');
+			Route::post('/forget-password-store',[OperatorController::class , 'forgetPasswordstore'])->name('forget.password.store');
 
 		});
 
 		Route::group(['middleware' =>'auth:weboperator'],function(){
 			Route::get('/booking', [OperatorBookingController::class, 'booking'])->name('booking');
-			Route::get('/profile/edit', [OperatorDashboardController::class, 'profileEdit'])->name('profile.edit');
-            Route::post('/profile/update', [OperatorDashboardController::class, 'update'])->name('profile.update');
-			Route::get('/changePassword', [OperatorDashboardController::class, 'changePassword'])->name('changePassword');
-			Route::Post('/updatePassword', [OperatorDashboardController::class, 'OperatorChangePassword'])->name('change.password');
-		    Route::get('/operator/dashboard', [OperatorDashboardController::class, 'dashboard'])->name('operator.dashboard');
-	        Route::post('/operator/logout', [OperatorLoginController::class, 'logout'])->name('logout');
+			Route::get('/profile/edit', [OperatorController::class, 'profileEdit'])->name('profile.edit');
+            Route::post('/profile/update', [OperatorController::class, 'update'])->name('profile.update');
+			Route::get('/changePassword', [OperatorController::class, 'changePassword'])->name('changePassword');
+			Route::Post('/updatePassword', [OperatorController::class, 'OperatorChangePassword'])->name('change.password');
+		    Route::get('/operator/dashboard', [OperatorController::class, 'dashboard'])->name('operator.dashboard');
+	        Route::post('/operator/logout', [OperatorController::class, 'logout'])->name('logout');
 		   
 		});
 

@@ -3,7 +3,7 @@
 @section('content')
 <style>
     .spinner-border {
-        display: none; /* Hide the spinner initially */
+        display: none;
         width: 3rem;
         height: 3rem;
         border: 0.25rem solid currentColor;
@@ -153,12 +153,7 @@
                                                     value="Next Step" />
 
                                             </fieldset>
-
-
-
-
-
-
+                                            
                                             <fieldset>
                                                 <div class="form-heading">
                                                     <h3>We just need a few more details from you</h3>
@@ -296,17 +291,6 @@
                                                     </div>
                                                 </div>
 
-
-                                                <!-- <div class="row">
-                                                    <div class="form-group col-md-6 text-left">
-                                                        <label for="email" class="mt-2">Email<span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="email" name="email" class="form-control required"
-                                                            placeholder="Email" required>
-                                                        <span class="invalid-feedback">This field is required.</span>
-                                                    </div>
-                                                </div> -->
-
                                                 <div class="row">
                                                     <div class="form-group col-md-6 text-left">
                                                         <label for="fleet_size" class="mt-2">Fleet size    <span
@@ -369,16 +353,7 @@
 
 
 
-
-
-
-
                                             <fieldset>
-
-
-
-
-
                                                 <div class="form-heading">
                                                     <h3> Let’s set up your account</h3>
                                                 </div>
@@ -386,12 +361,7 @@
                                                     <div class="form-group col-md-6 text-left">
                                                         <label for="authorised_contact_person" class="mt-2">Authorised
                                                             contact person <span class="text-danger">*</span></label>
-                                                        <!-- <input type="number" name="authorised_contact_person"
-                                                            class="form-control required"
-                                                            placeholder="Authorised contact person" required> -->
                                                             <input type="text" placeholder="Authorised contact person" class="form-control required" required name="authorised_contact_person" value="" minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}"  class="ys-field">
-
-                                                           
                                                         <span class="invalid-feedback">This field is required.</span>
                                                     </div>
                                                     <div class="form-group col-md-6 text-left">
@@ -483,13 +453,11 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 <script>
 $(document).ready(function() {
-    var current_fs, next_fs, previous_fs; //fieldsets
-    var animating; //flag to prevent quick multi-click glitches
+    var current_fs, next_fs, previous_fs;
+    var animating;
 
     $(".next-step").click(function() {
         current_fs = $(this).closest("fieldset");
-
-        // Validation check for required fields
         var valid = true;
         current_fs.find('input:required').each(function() {
             if ($(this).val() === '') {
@@ -501,7 +469,6 @@ $(document).ready(function() {
         });
 
         if (!valid) {
-            //  alert('Please fill all required fields.');
             return false;
         }
 

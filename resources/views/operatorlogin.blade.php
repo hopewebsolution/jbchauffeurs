@@ -15,11 +15,11 @@
                     </div>
                  @endif
                  @if(session()->has('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
-                    <form method="POST" action="{{ route('operator.login.submit') }}" enctype="multipart/form-data">
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                <form method="POST" action="{{ route('operator.login.submit') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group text-left">
                             <label for="account-id">Email</label>
