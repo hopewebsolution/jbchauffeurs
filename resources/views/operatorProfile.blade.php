@@ -52,107 +52,122 @@
                                 <h5 class="card-title">Account Details</h5>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                                    <div class="col-lg-3 col-md-4 label ">Office Email Address</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->office_email }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Company</div>
-                                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                                    <div class="col-lg-3 col-md-4 label">First Name</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->first_name }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Job</div>
-                                    <div class="col-lg-9 col-md-8">Web Designer</div>
+                                    <div class="col-lg-3 col-md-4 label">Your Surname </div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->sur_name }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Country</div>
-                                    <div class="col-lg-9 col-md-8">USA</div>
+                                    <div class="col-lg-3 col-md-4 label">Operator Name</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->cab_operator_name }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Address</div>
-                                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                                    <div class="col-lg-3 col-md-4 label">Legal Company Name</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->legal_company_name }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                                    <div class="col-lg-3 col-md-4 label">Office phone number</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->office_phone_number }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Postcode</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->postcode }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Website</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->website }}</div>
                                 </div>
                                 <h5 class="card-title">Licence & insurance</h5>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                                    <div class="col-lg-3 col-md-4 label ">Licensing Local Authority </div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->licensing_local_authority}}</div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                                    <div class="col-lg-3 col-md-4 label ">Private Hire Operator Licence Number</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->private_hire_operator_licence_number}}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Company</div>
-                                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                                    <div class="col-lg-3 col-md-4 label">Licence expiry date</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->licence_expiry_date}}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Job</div>
-                                    <div class="col-lg-9 col-md-8">Web Designer</div>
+                                    <div class="col-lg-3 col-md-4 label">Upload Operator Licence</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->upload_operator_licence}}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Country</div>
-                                    <div class="col-lg-9 col-md-8">USA</div>
+                                    <div class="col-lg-3 col-md-4 label">Upload Public Liability Insurance </div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->upload_public_liability_Insurance}}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Address</div>
-                                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                                    <div class="col-lg-3 col-md-4 label">Petrol, Diesel & Hybrid</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->fleet_type}}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                                    <div class="col-lg-3 col-md-4 label">Electric (EV)</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->fleet_type}}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Email</div>
-                                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                                    <div class="col-lg-3 col-md-4 label">Wheelchair Accessible (WAV)</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->fleet_type}}</div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Email</div>
-                                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                                    <div class="col-lg-3 col-md-4 label">Fleet size</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->fleet_size}}</div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Email</div>
-                                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                                    <div class="col-lg-3 col-md-4 label">Dispatch system </div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->dispatch_system}}</div>
+                                    
                                 </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Email</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->email}}</div>
+                                </div>
+                               
+                
                                 <h5 class="card-title">Fleet</h5>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                                    <div class="col-lg-3 col-md-4 label ">Authorised contact person</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->authorised_contact_person }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Company</div>
-                                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                                    <div class="col-lg-3 col-md-4 label">Authorised contact’s email address</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->authorised_contact_email_address }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Job</div>
-                                    <div class="col-lg-9 col-md-8">Web Designer</div>
+                                    <div class="col-lg-3 col-md-4 label">Authorised contact’s mobile number</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->authorised_contact_mobile_number }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Country</div>
-                                    <div class="col-lg-9 col-md-8">USA</div>
+                                    <div class="col-lg-3 col-md-4 label">How did you hear about us?</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->about_us }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Address</div>
-                                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                                    <div class="col-lg-3 col-md-4 label">How much £ revenue each week would you like to earn from</div>
+                                    <div class="col-lg-9 col-md-8">{{$operator->revenue }}</div>
                                 </div>
 
                             </div>
@@ -220,8 +235,8 @@
                                                                                 class="mt-2">Office Email Address
                                                                                 <span
                                                                                     class="text-danger">*</span></label>
-                                                                            <input type="email" name="office_email"
-                                                                                class="form-control required"
+                                                                            <input type="text" name="office_email"
+                                                                                class="form-control required" value="{{ $operator->office_email }} "
                                                                                 placeholder="Office email address"
                                                                                 required>
                                                                             <span class="invalid-feedback">This
@@ -233,7 +248,7 @@
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="first_name"
                                                                                 class="form-control required"
-                                                                                placeholder="First Name" required>
+                                                                                placeholder="First Name" value="{{$operator->first_name }}"required>
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>
                                                                         </div>
@@ -246,7 +261,7 @@
                                                                                 Surname <span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="sur_name"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->sur_name }}" 
                                                                                 placeholder="Your Surname" required>
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>
@@ -256,7 +271,7 @@
                                                                                 class="mt-2">Operator Name<span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="cab_operator_name"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->cab_operator_name }} "
                                                                                 placeholder="Operator Name" required>
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>
@@ -271,7 +286,7 @@
                                                                                 Name<span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="legal_company_name"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->legal_company_name }}"
                                                                                 placeholder="Legal Company Name"
                                                                                 required>
                                                                             <span class="invalid-feedback">This
@@ -284,7 +299,7 @@
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="number"
                                                                                 name="office_phone_number"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->office_phone_number }}"
                                                                                 placeholder="Office phone number"
                                                                                 required>
                                                                             <span class="invalid-feedback">This
@@ -299,7 +314,7 @@
                                                                                 class="mt-2">Postcode<span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="postcode"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->postcode }}"
                                                                                 placeholder="Postcode" required>
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>
@@ -309,7 +324,7 @@
                                                                                 class="mt-2">Website<span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="website"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->website }}"
                                                                                 placeholder="Website" required>
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>
@@ -339,7 +354,7 @@
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text"
                                                                                 name="licensing_local_authority"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->fleetDetail->licensing_local_authority}}"
                                                                                 placeholder="Licensing Local Authority"
                                                                                 required>
                                                                             <span class="invalid-feedback">This
@@ -353,7 +368,7 @@
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="number"
                                                                                 name="private_hire_operator_licence_number"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->fleetDetail->private_hire_operator_licence_number}}"
                                                                                 placeholder="Operator Licence Number "
                                                                                 required>
                                                                             <span class="invalid-feedback">This
@@ -371,7 +386,7 @@
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="date"
                                                                                 name="licence_expiry_date"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->fleetDetail->licence_expiry_date}}"
                                                                                 placeholder="Licence Expiry Date"
                                                                                 required>
                                                                             <span class="invalid-feedback">This
@@ -389,9 +404,9 @@
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="file"
                                                                                 name="upload_operator_licence"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->fleetDetail->upload_operator_licence}}"
                                                                                 placeholder="Upload Operator Licence "
-                                                                                required>
+                                                                                >
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>
                                                                         </div>
@@ -402,10 +417,10 @@
                                                                                 Public Liability Insurance  <span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="file"
-                                                                                name="upload_public_liability_Insurance"
+                                                                                name="upload_public_liability_Insurance" value="{{$operator->fleetDetail->upload_public_liability_Insurance}}"
                                                                                 class="form-control required"
                                                                                 placeholder="Upload Public Liability Insurance"
-                                                                                required>
+                                                                                >
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>
                                                                         </div>
@@ -522,15 +537,6 @@
                                                                     </div>
 
 
-                                                                    <!-- <div class="row">
-                                                    <div class="form-group col-md-6 text-left">
-                                                        <label for="email" class="mt-2">Email<span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="email" name="email" class="form-control required"
-                                                            placeholder="Email" required>
-                                                        <span class="invalid-feedback">This field is required.</span>
-                                                    </div>
-                                                </div> -->
 
                                                                     <div class="row">
                                                                         <div class="form-group col-md-6 text-left">
@@ -538,7 +544,7 @@
                                                                                 size    <span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="fleet_size"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->fleetDetail->fleet_size}}"
                                                                                 placeholder="Fleet size " required>
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>
@@ -548,7 +554,7 @@
                                                                                 class="mt-2">Dispatch system <span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="dispatch_system"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value= "{{$operator->fleetDetail->dispatch_system}}"
                                                                                 placeholder="Dispatch system" required>
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>
@@ -556,37 +562,7 @@
                                                                     </div>
 
 
-                                                                    <div class="row">
-                                                                        <div class="form-group col-md-6 text-left">
-                                                                            <label for="password" class="mt-2">Password
-                                                                                <span
-                                                                                    class="text-danger">*</span></label>
-                                                                            <input type="password" id="password"
-                                                                                name="password"
-                                                                                class="form-control required"
-                                                                                placeholder="Password" required>
-                                                                            @error('password')
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $message }}</strong>
-                                                                            </span>
-                                                                            @enderror
-                                                                        </div>
-                                                                        <div class="form-group col-md-6 text-left">
-                                                                            <label for="confirm_password"
-                                                                                class="mt-2">Confirm Password
-                                                                                <span
-                                                                                    class="text-danger">*</span></label>
-                                                                            <input type="password" id="confirm_password"
-                                                                                name="password_confirmation"
-                                                                                class="form-control required"
-                                                                                placeholder="Confirm Password" required>
-                                                                            @error('password_confirmation')
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $message }}</strong>
-                                                                            </span>
-                                                                            @enderror
-                                                                        </div>
-                                                                    </div>
+                                                                    
 
 
 
@@ -737,7 +713,6 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const checkboxes = document.querySelectorAll('.colorToggle');
-
     checkboxes.forEach(function(checkbox) {
         checkbox.addEventListener('change', function() {
             const colorBox = checkbox.closest('.check-box');
@@ -750,15 +725,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
 <script>
 $(document).ready(function() {
-    var current_fs, next_fs, previous_fs; //fieldsets
-    var animating; //flag to prevent quick multi-click glitches
+    var current_fs, next_fs, previous_fs; 
+    var animating;
 
     $(".next-step").click(function() {
         current_fs = $(this).closest("fieldset");
-
-        // Validation check for required fields
         var valid = true;
         current_fs.find('input:required').each(function() {
             if ($(this).val() === '') {
@@ -770,7 +744,6 @@ $(document).ready(function() {
         });
 
         if (!valid) {
-            //  alert('Please fill all required fields.');
             return false;
         }
 
@@ -791,7 +764,7 @@ $(document).ready(function() {
                 var opacity = 1 - now;
                 current_fs.css({
                     'transform': 'scale(' + scale + ')',
-                    'position': 'absolute'
+                    
                 });
                 next_fs.css({
                     'left': left,
@@ -816,6 +789,7 @@ $(document).ready(function() {
 
         $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
 
+    
         previous_fs.show();
         current_fs.animate({
             opacity: 0

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Operator;
+use App\Models\FleetDetails;
+
 
 class OperatorDashboardController extends Controller
 {
@@ -23,10 +27,14 @@ class OperatorDashboardController extends Controller
 
 
 
-    public function profile()
+    public function profileEdit()
     {
-      
-        return view('operatorProfile');
+        $userId = Auth::guard('weboperator')->user()->id;
+        $operator = Operator::with('fleetDetail')->where('id',$userId)->first();
+        
+        //  dd($data);
+        return view('operatorProfile', compact('operator'));
+        // return view('operatorProfile');
 
 
 

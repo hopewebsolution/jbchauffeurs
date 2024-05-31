@@ -29,5 +29,9 @@ class Operator extends Authenticatable
         'office_phone_number'
     ]; 
 
+    public function fleetDetail()
+    {
+        return $this->hasOne(FleetDetails::class);
+    }
 
 }
