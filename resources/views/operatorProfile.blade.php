@@ -114,20 +114,7 @@
                                     <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->upload_public_liability_Insurance}}</div>
                                 </div>
 
-                                <!-- <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Petrol, Diesel & Hybrid</div>
-                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->fleet_type}}</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Electric (EV)</div>
-                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->fleet_type}}</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Wheelchair Accessible (WAV)</div>
-                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->fleet_type}}</div>
-                                </div> -->
+                              
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Fleet size</div>
@@ -453,33 +440,20 @@
 
                                                                                     <div class="check-box"
                                                                                         data-checkbox="1">
-                                                                                        <!-- <input type="checkbox"
-                                                                                            class="colorToggle"
-                                                                                            name="fleet_type[]"
-                                                                                            value="petrol_standard"> -->
-                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="petrol_standard" {{ (strpos($operator->fleetDetail->fleet_type, 'petrol_standard') !== false) ? 'checked' : '' }}>
+                                                                                        <input type="checkbox" class="colorToggle" name="fleet_type[]" value="petrol_standard" {{ (strpos($operator->fleetDetail->fleet_type, 'petrol_standard') !== false) ? 'checked' : '' }}>
                                                                                         <label
                                                                                             for="petrol_standard">Standard</label>
                                                                                     </div>
                                                                                     <div class="check-box"
                                                                                         data-checkbox="2">
-                                                                                        <!-- <input type="checkbox"
-                                                                                            class="colorToggle"
-                                                                                            name="fleet_type[]"
-                                                                                            value="petrol_executive"> -->
-                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="petrol_executive" {{ (strpos($operator->fleetDetail->fleet_type, 'petrol_executive') !== false) ? 'checked' : '' }}>
+                                                                                        <input type="checkbox" class="colorToggle" name="fleet_type[]" value="petrol_executive" {{ (strpos($operator->fleetDetail->fleet_type, 'petrol_executive') !== false) ? 'checked' : '' }}>
 
                                                                                         <label
                                                                                             for="petrol_executive">Executive</label>
                                                                                     </div>
                                                                                     <div class="check-box"
                                                                                         data-checkbox="3">
-                                                                                        <!-- <input type="checkbox"
-                                                                                            class="colorToggle"
-                                                                                            name="fleet_type[]"
-                                                                                            value="petrol_luxury"> -->
-                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="petrol_luxury" {{ (strpos($operator->fleetDetail->fleet_type, 'petrol_luxury') !== false) ? 'checked' : '' }}>
-
+                                                                                        <input type="checkbox" class="colorToggle" name="fleet_type[]" value="petrol_luxury" {{ (strpos($operator->fleetDetail->fleet_type, 'petrol_luxury') !== false) ? 'checked' : '' }}>
                                                                                         <label
                                                                                             for="petrol_luxury">Luxury</label>
                                                                                     </div>
@@ -496,34 +470,19 @@
                                                                                 <div class="box-all">
                                                                                     <div class="check-box"
                                                                                         data-checkbox="1">
-                                                                                        <!-- <input type="checkbox"
-                                                                                            class="colorToggle"
-                                                                                            name="fleet_type[]"
-                                                                                            value="electric_standard"> -->
-                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="electric_standard" {{ (strpos($operator->fleetDetail->fleet_type, 'electric_standard') !== false) ? 'checked' : '' }}>
-
+                                                                                        <input type="checkbox" class="colorToggle" name="fleet_type[]" value="electric_standard" {{ (strpos($operator->fleetDetail->fleet_type, 'electric_standard') !== false) ? 'checked' : '' }}>
                                                                                         <label
                                                                                             for="petrol_standard">Standard</label>
                                                                                     </div>
                                                                                     <div class="check-box"
                                                                                         data-checkbox="2">
-                                                                                        <!-- <input type="checkbox"
-                                                                                            class="colorToggle"
-                                                                                            name="fleet_type[]"
-                                                                                            value="electric_executive"> -->
-                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="electric_executive" {{ (strpos($operator->fleetDetail->fleet_type, 'electric_executive') !== false) ? 'checked' : '' }}>
-
+                                                                                        <input type="checkbox" class="colorToggle" name="fleet_type[]" value="electric_executive" {{ (strpos($operator->fleetDetail->fleet_type, 'electric_executive') !== false) ? 'checked' : '' }}>
                                                                                         <label
                                                                                             for="petrol_executive">Executive</label>
                                                                                     </div>
                                                                                     <div class="check-box"
                                                                                         data-checkbox="3">
-                                                                                        <!-- <input type="checkbox"
-                                                                                            class="colorToggle"
-                                                                                            name="fleet_type[]"
-                                                                                            value="electric_luxury"> -->
-                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="electric_luxury" {{ (strpos($operator->fleetDetail->fleet_type, 'electric_luxury') !== false) ? 'checked' : '' }}>
-
+                                                                                        <input type="checkbox" class="colorToggle" name="fleet_type[]" value="electric_luxury" {{ (strpos($operator->fleetDetail->fleet_type, 'electric_luxury') !== false) ? 'checked' : '' }}>
                                                                                         <label
                                                                                             for="petrol_luxury">Luxury</label>
                                                                                     </div>
@@ -540,22 +499,14 @@
                                                                                 <div class="box-all">
                                                                                     <div class="check-box"
                                                                                         data-checkbox="1">
-                                                                                        <!-- <input type="checkbox"
-                                                                                            class="colorToggle"
-                                                                                            name="fleet_type[]"
-                                                                                            value="wheelchair_standard"> -->
-                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="wheelchair_standard" {{ (strpos($operator->fleetDetail->fleet_type, 'wheelchair_standard') !== false) ? 'checked' : '' }}>
+                                                                                        <input type="checkbox" class="colorToggle" name="fleet_type[]" value="wheelchair_standard" {{ (strpos($operator->fleetDetail->fleet_type, 'wheelchair_standard') !== false) ? 'checked' : '' }}>
 
                                                                                         <label
                                                                                             for="petrol_standard">Standard</label>
                                                                                     </div>
                                                                                     <div class="check-box"
                                                                                         data-checkbox="2">
-                                                                                        <!-- <input type="checkbox"
-                                                                                            class="colorToggle"
-                                                                                            name="fleet_type[]"
-                                                                                            value="wheelchair_executive"> -->
-                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="wheelchair_executive" {{ (strpos($operator->fleetDetail->fleet_type, 'wheelchair_executive') !== false) ? 'checked' : '' }}>
+                                                                                        <input type="checkbox" class="colorToggle" name="fleet_type[]" value="wheelchair_executive" {{ (strpos($operator->fleetDetail->fleet_type, 'wheelchair_executive') !== false) ? 'checked' : '' }}>
 
                                                                                         <label
                                                                                             for="petrol_executive">Executive</label>
@@ -590,14 +541,7 @@
                                                                                 field is required.</span>
                                                                         </div>
                                                                     </div>
-
-
                                                                     
-
-
-
-
-
                                                                     <div class="backbutton">
                                                                         <input type="button" name="previous-step"
                                                                             class="previous-step"
@@ -606,19 +550,8 @@
                                                                             class="next-step" value="Next Step" />
                                                                     </div>
                                                                 </fieldset>
-
-
-
-
-
-
-
+                                                                
                                                                 <fieldset>
-
-
-
-
-
                                                                     <div class="form-heading">
                                                                         <h3> Let’s set up your account</h3>
                                                                     </div>
@@ -688,8 +621,8 @@
                                                                             <label for="revenue" class="mt-2">How
                                                                                 much £ revenue each week
                                                                                 would
-                                                                                you like to earn from
-                                                                                minicabit?<span
+                                                                                you like to earn 
+                                                                                     <span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="revenue"
                                                                                 class="form-control required" value="{{$operator->revenue }}"
@@ -719,23 +652,14 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
-
-
-
-
                         </div><!-- End Bordered Tabs -->
-
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
-
 </main><!-- End #main -->
 
 

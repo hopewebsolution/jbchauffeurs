@@ -36,10 +36,6 @@
         </form>
     </li>
 @endif
-
-  <!-- End Profile Nav -->
- 
-  <!-- End Login Page Nav -->
 </ul>
 
 </aside><!-- End Sidebar-->

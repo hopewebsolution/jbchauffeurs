@@ -7,21 +7,16 @@
             <div class="member-login-center">
                 <div class="login-box form-heading">
                     <h3>Reset Password</h3>
-                    <!-- @if ($errors->has('sendResetLinkEmail'))
-                    <div class="alert alert-danger">
-                        {{ $errors->first('sendResetLinkEmail') }}
-                    </div>
-                @endif -->
                 @if ($errors->has('operatorloginsubmit'))
                     <div class="alert alert-danger">
                         {{ $errors->first('operatorloginsubmit') }}
                     </div>
                 @endif
                 @if(session()->has('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
                     <form action="{{ route('password.email.link') }}" method="post">
                         @csrf
