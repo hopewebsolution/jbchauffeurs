@@ -104,7 +104,9 @@ Route::group(['middleware' =>'countryCheck'],function(){
 		Route::group(['middleware' =>'auth:weboperator'],function(){
 			Route::get('/booking', [OperatorBookingController::class, 'booking'])->name('booking');
 			Route::get('/profile/edit', [OperatorDashboardController::class, 'profileEdit'])->name('profile.edit');
+            Route::post('/profile/update', [OperatorDashboardController::class, 'update'])->name('profile.update');
 			Route::get('/changePassword', [OperatorDashboardController::class, 'changePassword'])->name('changePassword');
+			Route::Post('/changePassword', [OperatorDashboardController::class, 'OperatorChangePassword'])->name('change.password');
 		    Route::get('/operator/dashboard', [OperatorDashboardController::class, 'dashboard'])->name('operator.dashboard');
 	        Route::post('/operator/logout', [OperatorLoginController::class, 'logout'])->name('logout');
 		   
