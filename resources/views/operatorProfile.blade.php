@@ -688,8 +688,8 @@
                                                                             <label for="revenue" class="mt-2">How
                                                                                 much £ revenue each week
                                                                                 would
-                                                                                you like to earn from
-                                                                                minicabit?<span
+                                                                                you like to earn 
+                                                                                     <span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="revenue"
                                                                                 class="form-control required" value="{{$operator->revenue }}"
