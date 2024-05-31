@@ -80,13 +80,15 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
+            @if(Auth::guard('weboperator')->check())
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="{{route('changePassword')}}">
-                <i class="bi bi-lock-fill"></i>
-                <span>Change Password</span>
-              </a>
+                <a class="dropdown-item d-flex align-items-center" href="{{ route('changePassword') }}">
+                    <i class="bi bi-lock-fill"></i>
+                    <span>Change Password</span>
+                </a>
             </li>
+        @endif
+
             <li>
               <hr class="dropdown-divider">
             </li>

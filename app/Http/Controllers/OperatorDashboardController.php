@@ -140,15 +140,12 @@ class OperatorDashboardController extends Controller
         if ($validator->fails()) {
             return  back()->withErrors($validator)->withInput();
         }
-        $user = Auth::user();
-        
+        $user = Auth::guard('weboperator')->user();
         if (!Hash::check($request->current_password, $user->password)) {
             return redirect()->back()->withErrors(['current_password' => 'The current password is incorrect.']);
         }
-        
 
-        $user->password = Hash::make($request->new_password);
-
+        $user->password = Hash::make($request->password);
         $user->save();
 
         return redirect()->back()->with('success', 'Password changed successfully.');
