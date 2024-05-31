@@ -103,7 +103,7 @@ Route::group(['middleware' =>'countryCheck'],function(){
 
 		Route::group(['middleware' =>'auth:weboperator'],function(){
 			Route::get('/booking', [OperatorBookingController::class, 'booking'])->name('booking');
-			Route::get('/profile', [OperatorDashboardController::class, 'profile'])->name('profile');
+			Route::get('/profile/edit', [OperatorDashboardController::class, 'profileEdit'])->name('profile.edit');
 			Route::get('/changePassword', [OperatorDashboardController::class, 'changePassword'])->name('changePassword');
 		    Route::get('/operator/dashboard', [OperatorDashboardController::class, 'dashboard'])->name('operator.dashboard');
 	        Route::post('/operator/logout', [OperatorLoginController::class, 'logout'])->name('logout');

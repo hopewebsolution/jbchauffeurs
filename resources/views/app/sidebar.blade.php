@@ -19,13 +19,13 @@
   </li><!-- End Tables Nav -->
 
 
+  @if(Auth::guard('weboperator')->check())
   <li class="nav-item">
-    <a class="nav-link collapsed" href="{{route('profile')}}">
+    <a class="nav-link collapsed" href="{{route('profile.edit')}}">
       <i class="bi bi-person"></i><span>Profile</span></i>
     </a>
   </li>
   
-  @if(Auth::guard('weboperator')->check())
     <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="bi bi-box-arrow-in-right"></i>

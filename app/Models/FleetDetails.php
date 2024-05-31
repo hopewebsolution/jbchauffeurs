@@ -24,4 +24,9 @@ class FleetDetails extends Model
         'confirm_password',
         'upload_operator_licence'
     ]; 
+
+    public function operator()
+    {
+        return $this->belongsTo(Operator::class);
+    }
 }
