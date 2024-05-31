@@ -114,7 +114,7 @@
                                     <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->upload_public_liability_Insurance}}</div>
                                 </div>
 
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Petrol, Diesel & Hybrid</div>
                                     <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->fleet_type}}</div>
                                 </div>
@@ -127,7 +127,8 @@
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Wheelchair Accessible (WAV)</div>
                                     <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->fleet_type}}</div>
-                                </div>
+                                </div> -->
+
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Fleet size</div>
                                     <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->fleet_size}}</div>
@@ -221,7 +222,7 @@
                                                             </div>
                                                             @endif
                                                             <form id="form" method="POST"
-                                                                action="{{ route('user.makeOperatorRegisters') }}"
+                                                                action="{{ route('profile.update') }}"
                                                                 enctype="multipart/form-data">
                                                                 @csrf
                                                                 <fieldset>
@@ -402,14 +403,21 @@
                                                                                 Operator
                                                                                 Licence   <span
                                                                                     class="text-danger">*</span></label>
+                                                                                    
                                                                             <input type="file"
                                                                                 name="upload_operator_licence"
                                                                                 class="form-control required" value="{{$operator->fleetDetail->upload_operator_licence}}"
                                                                                 placeholder="Upload Operator Licence "
                                                                                 >
+                                                                                @if ($operator->fleetDetail && $operator->fleetDetail->upload_operator_licence)
+                                                                                <div class="mb-3">
+                                                                                <img src="{{ asset('public/assets\front_assets\uploads\OperatorLicence/' . $operator->fleetDetail->upload_operator_licence) }}" alt="Operator Licence" style="max-width: 200px; max-height: 200px;">
+                                                                                </div>
+                                                                                  @endif
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>
                                                                         </div>
+                                                                        
                                                                         <div class="form-group col-md-6 text-left">
                                                                             <label
                                                                                 for="upload_public_liability_Insurance"
@@ -421,9 +429,16 @@
                                                                                 class="form-control required"
                                                                                 placeholder="Upload Public Liability Insurance"
                                                                                 >
+                                                                                
+                                                                                @if ($operator->fleetDetail && $operator->fleetDetail->upload_public_liability_Insurance)
+                                                                                <div class="mb-3">
+                                                                                <img src="{{ asset('public/assets\front_assets\uploads\OperatorLicence/' . $operator->fleetDetail->upload_public_liability_Insurance) }}" alt="Operator Licence" style="max-width: 200px; max-height: 200px;">
+                                                                                </div>
+                                                                                  @endif
+           
+           
                                                                             <span class="invalid-feedback">This
-                                                                                field is required.</span>
-                                                                        </div>
+                                                                                field is required.</span>                                                                        </div>
                                                                     </div>
 
                                                                     <div class="row">
@@ -438,28 +453,33 @@
 
                                                                                     <div class="check-box"
                                                                                         data-checkbox="1">
-                                                                                        <input type="checkbox"
+                                                                                        <!-- <input type="checkbox"
                                                                                             class="colorToggle"
                                                                                             name="fleet_type[]"
-                                                                                            value="petrol_standard">
+                                                                                            value="petrol_standard"> -->
+                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="petrol_standard" {{ (strpos($operator->fleetDetail->fleet_type, 'petrol_standard') !== false) ? 'checked' : '' }}>
                                                                                         <label
                                                                                             for="petrol_standard">Standard</label>
                                                                                     </div>
                                                                                     <div class="check-box"
                                                                                         data-checkbox="2">
-                                                                                        <input type="checkbox"
+                                                                                        <!-- <input type="checkbox"
                                                                                             class="colorToggle"
                                                                                             name="fleet_type[]"
-                                                                                            value="petrol_executive">
+                                                                                            value="petrol_executive"> -->
+                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="petrol_executive" {{ (strpos($operator->fleetDetail->fleet_type, 'petrol_executive') !== false) ? 'checked' : '' }}>
+
                                                                                         <label
                                                                                             for="petrol_executive">Executive</label>
                                                                                     </div>
                                                                                     <div class="check-box"
                                                                                         data-checkbox="3">
-                                                                                        <input type="checkbox"
+                                                                                        <!-- <input type="checkbox"
                                                                                             class="colorToggle"
                                                                                             name="fleet_type[]"
-                                                                                            value="petrol_luxury">
+                                                                                            value="petrol_luxury"> -->
+                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="petrol_luxury" {{ (strpos($operator->fleetDetail->fleet_type, 'petrol_luxury') !== false) ? 'checked' : '' }}>
+
                                                                                         <label
                                                                                             for="petrol_luxury">Luxury</label>
                                                                                     </div>
@@ -476,28 +496,34 @@
                                                                                 <div class="box-all">
                                                                                     <div class="check-box"
                                                                                         data-checkbox="1">
-                                                                                        <input type="checkbox"
+                                                                                        <!-- <input type="checkbox"
                                                                                             class="colorToggle"
                                                                                             name="fleet_type[]"
-                                                                                            value="electric_standard">
+                                                                                            value="electric_standard"> -->
+                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="electric_standard" {{ (strpos($operator->fleetDetail->fleet_type, 'electric_standard') !== false) ? 'checked' : '' }}>
+
                                                                                         <label
                                                                                             for="petrol_standard">Standard</label>
                                                                                     </div>
                                                                                     <div class="check-box"
                                                                                         data-checkbox="2">
-                                                                                        <input type="checkbox"
+                                                                                        <!-- <input type="checkbox"
                                                                                             class="colorToggle"
                                                                                             name="fleet_type[]"
-                                                                                            value="electric_executive">
+                                                                                            value="electric_executive"> -->
+                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="electric_executive" {{ (strpos($operator->fleetDetail->fleet_type, 'electric_executive') !== false) ? 'checked' : '' }}>
+
                                                                                         <label
                                                                                             for="petrol_executive">Executive</label>
                                                                                     </div>
                                                                                     <div class="check-box"
                                                                                         data-checkbox="3">
-                                                                                        <input type="checkbox"
+                                                                                        <!-- <input type="checkbox"
                                                                                             class="colorToggle"
                                                                                             name="fleet_type[]"
-                                                                                            value="electric_luxury">
+                                                                                            value="electric_luxury"> -->
+                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="electric_luxury" {{ (strpos($operator->fleetDetail->fleet_type, 'electric_luxury') !== false) ? 'checked' : '' }}>
+
                                                                                         <label
                                                                                             for="petrol_luxury">Luxury</label>
                                                                                     </div>
@@ -514,19 +540,23 @@
                                                                                 <div class="box-all">
                                                                                     <div class="check-box"
                                                                                         data-checkbox="1">
-                                                                                        <input type="checkbox"
+                                                                                        <!-- <input type="checkbox"
                                                                                             class="colorToggle"
                                                                                             name="fleet_type[]"
-                                                                                            value="wheelchair_standard">
+                                                                                            value="wheelchair_standard"> -->
+                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="wheelchair_standard" {{ (strpos($operator->fleetDetail->fleet_type, 'wheelchair_standard') !== false) ? 'checked' : '' }}>
+
                                                                                         <label
                                                                                             for="petrol_standard">Standard</label>
                                                                                     </div>
                                                                                     <div class="check-box"
                                                                                         data-checkbox="2">
-                                                                                        <input type="checkbox"
+                                                                                        <!-- <input type="checkbox"
                                                                                             class="colorToggle"
                                                                                             name="fleet_type[]"
-                                                                                            value="wheelchair_executive">
+                                                                                            value="wheelchair_executive"> -->
+                                                                                            <input type="checkbox" class="colorToggle" name="fleet_type[]" value="wheelchair_executive" {{ (strpos($operator->fleetDetail->fleet_type, 'wheelchair_executive') !== false) ? 'checked' : '' }}>
+
                                                                                         <label
                                                                                             for="petrol_executive">Executive</label>
                                                                                     </div>
@@ -600,7 +630,7 @@
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="number"
                                                                                 name="authorised_contact_person"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->authorised_contact_person}}"
                                                                                 placeholder="Authorised contact person"
                                                                                 required>
                                                                             <span class="invalid-feedback">This
@@ -614,7 +644,7 @@
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="email"
                                                                                 name="authorised_contact_email_address"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->authorised_contact_email_address }}"
                                                                                 placeholder="Authorised contact’s email address"
                                                                                 required>
                                                                             <span class="invalid-feedback">This
@@ -632,7 +662,7 @@
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="number"
                                                                                 name="authorised_contact_mobile_number"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->authorised_contact_mobile_number }}"
                                                                                 placeholder="Authorised contact’s mobile number "
                                                                                 required>
                                                                             <span class="invalid-feedback">This
@@ -644,7 +674,7 @@
                                                                                 <span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="about_us"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->about_us }}"
                                                                                 placeholder="How did you hear about us? "
                                                                                 required>
                                                                             <span class="invalid-feedback">This
@@ -662,7 +692,7 @@
                                                                                 minicabit?<span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="revenue"
-                                                                                class="form-control required"
+                                                                                class="form-control required" value="{{$operator->revenue }}"
                                                                                 placeholder="How much £ revenue each week would you like to earn from minicabit?"
                                                                                 required>
                                                                             <span class="invalid-feedback">This
@@ -708,8 +738,11 @@
 
 </main><!-- End #main -->
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const checkboxes = document.querySelectorAll('.colorToggle');
@@ -727,19 +760,19 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-$(document).ready(function() {
+jQuery(document).ready(function() {
     var current_fs, next_fs, previous_fs; 
     var animating;
 
-    $(".next-step").click(function() {
-        current_fs = $(this).closest("fieldset");
+    jQuery(".next-step").click(function() {
+        current_fs = jQuery(this).closest("fieldset");
         var valid = true;
         current_fs.find('input:required').each(function() {
-            if ($(this).val() === '') {
-                $(this).addClass('is-invalid');
+            if (jQuery(this).val() === '') {
+                jQuery(this).addClass('is-invalid');
                 valid = false;
             } else {
-                $(this).removeClass('is-invalid');
+                jQuery(this).removeClass('is-invalid');
             }
         });
 
@@ -750,9 +783,9 @@ $(document).ready(function() {
         if (animating) return false;
         animating = true;
 
-        next_fs = $(this).closest("fieldset").next();
+        next_fs = jQuery(this).closest("fieldset").next();
 
-        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+        jQuery("#progressbar li").eq(jQuery("fieldset").index(next_fs)).addClass("active");
 
         next_fs.show();
         current_fs.animate({
@@ -780,14 +813,14 @@ $(document).ready(function() {
         });
     });
 
-    $(".previous-step").click(function() {
+    jQuery(".previous-step").click(function() {
         if (animating) return false;
         animating = true;
 
-        current_fs = $(this).closest("fieldset");
-        previous_fs = $(this).closest("fieldset").prev();
+        current_fs = jQuery(this).closest("fieldset");
+        previous_fs = jQuery(this).closest("fieldset").prev();
 
-        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+        jQuery("#progressbar li").eq(jQuery("fieldset").index(current_fs)).removeClass("active");
 
     
         previous_fs.show();

@@ -130,9 +130,13 @@
   <!-- Vendor JS Files -->
   <script src=""></script>
   <script src="{{ asset('public/assets/operator_dashboard_asset/vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
-  <script src="{{ asset('public/assets/operator_dashboard_asset/js/jquery.js') }}"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script> 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+ <!--- <script src="{{ asset('public/assets/operator_dashboard_asset/js/jquery.js') }}"></script>--->
   <!-- Template Main JS File -->
-  <script src="{{ asset('public/assets/operator_dashboard_asset/js/main.js') }}"></script>
+  <!-- <script src="{{ asset('public/assets/operator_dashboard_asset/js/main.js') }}"></script> -->
 </body>
 
 </html>
