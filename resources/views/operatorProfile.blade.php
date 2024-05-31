@@ -19,8 +19,8 @@
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                        <img src="{{ asset('public/assets/operator_dashboard_asset/img/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
-                        <h2>Kevin Anderson</h2>
+                        <img src="{{ asset('public/assets/operator_dashboard_asset/img/th.jpeg') }}" alt="Profile" class="rounded-circle">
+                        <h2>{{$operator->first_name }} {{$operator->sur_name }}</h2>
 
                     </div>
                 </div>
