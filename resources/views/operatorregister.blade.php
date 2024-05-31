@@ -1,6 +1,20 @@
 @extends('masters/master')
 @section('title', 'Login')
 @section('content')
+<style>
+    .spinner-border {
+        display: none; /* Hide the spinner initially */
+        width: 3rem;
+        height: 3rem;
+        border: 0.25rem solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        animation: spinner-border 0.75s linear infinite;
+    }
+    @keyframes spinner-border {
+        to { transform: rotate(360deg); }
+    }
+</style>
 <div id="midwrap1">
     <div class="container">
         <div class="member-loginsss">
@@ -436,6 +450,7 @@
                                             </fieldset>
 
                                         </form>
+                                        <div class="spinner-border" id="spinner"></div>
                                     </div>
                                 </div>
                             </div>
@@ -557,6 +572,14 @@ $(document).ready(function() {
         });
     });
 });
+</script>
+<script>
+    document.getElementById('form').addEventListener('submit', function(event) {
+        document.getElementById('spinner').style.display = 'inline-block';
+        setTimeout(function() {
+            document.getElementById('spinner').style.display = 'none';
+        }, 15000);
+    });
 </script>
 @endsection
 @push('footer-scripts')
