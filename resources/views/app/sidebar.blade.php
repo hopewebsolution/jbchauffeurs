@@ -35,8 +35,6 @@
             @csrf
         </form>
     </li>
-@else
-    
 @endif
 
   <!-- End Profile Nav -->

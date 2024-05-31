@@ -61,9 +61,9 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
+            @if(Auth::guard('weboperator')->check())
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="{{route('profile.edit')}}">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
@@ -72,7 +72,7 @@
               <hr class="dropdown-divider">
             </li>
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="{{route('user.contactUs')}}">
                 <i class="bi bi-question-circle"></i>
                 <span>Need Help?</span>
               </a>
@@ -80,24 +80,33 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            @if(Auth::guard('weboperator')->check())
-            <li>
-                <a class="dropdown-item d-flex align-items-center" href="{{ route('changePassword') }}">
-                    <i class="bi bi-lock-fill"></i>
-                    <span>Change Password</span>
+             
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="{{route('changePassword')}}">
+                  <i class="bi bi-lock-fill"></i>
+                  <span>Change Password</span>
                 </a>
-            </li>
-        @endif
-
+              </li>
+              
+      
+     
             <li>
               <hr class="dropdown-divider">
             </li>
+
+  
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center"href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
+               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  @csrf
+              </form>
             </li>
+
+            @endif
+
 
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
