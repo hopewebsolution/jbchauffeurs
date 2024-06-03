@@ -12,6 +12,7 @@ class Operator extends Authenticatable
 {
     protected $table = 'operators';
     protected $fillable = [
+        'country',
         'email',
         'password', 
         'office_email',

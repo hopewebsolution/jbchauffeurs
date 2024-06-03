@@ -85,7 +85,6 @@ class HomeController extends Controller{
         $currCountry = request()->segment(1);
         $page_type=$request->page_slug;
         $pageData=Page::where(["country"=>$currCountry,"page_type"=>$page_type])->first();
-       
         if($pageData){
             if($page_type=="home"){
                 return redirect()->route('user.home'); 
@@ -97,7 +96,7 @@ class HomeController extends Controller{
                 return redirect()->route('user.howItWorks');                 
             }else if($page_type=="faq"){
                 return redirect()->route('user.faq');                 
-            }else if($page_type=="operator"){
+            }else if($page_type == "operator"){
                 return redirect()->route('operator.login');                 
             }else if($page_type=="contact-us"){
                 return redirect()->route('user.contactUs');                 

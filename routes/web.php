@@ -93,6 +93,7 @@ Route::group(['middleware' =>'countryCheck'],function(){
 		Route::group(['middleware' =>'guest:weboperator'],function(){
 
 		    Route::get('/operator/login', [OperatorController::class, 'operatorlogin'])->name('operator.login');
+            
 		    Route::post('/operator/login/submit', [OperatorController::class, 'operatorloginsubmit'])->name('operator.login.submit');
             Route::get('/operator/password/reset', [OperatorController::class, 'showLinkRequestFormEmail'])->name('operator.password.request');
 			Route::post('/forgot-password-link', [OperatorController::class, 'sendResetLinkEmail'])->name('password.email.link');
@@ -139,6 +140,7 @@ Route::group(['middleware' =>'countryCheck'],function(){
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\OperatorAdminController;
  
 Route::group(['prefix' =>'admin'],function(){
     $segment = Request::segment('2');
@@ -228,6 +230,13 @@ Route::group(['prefix' =>'admin'],function(){
             Route::get('/pages/edit/{page_id?}',[PageController::class,'addPage'])->name("admin.pages.edit");  
             Route::post('/pages/create/{page_id?}',[PageController::class,'createPage'])->name("admin.pages.create");
  
+
+
+
+             Route::get('/operator',[OperatorAdminController::class,'getAdminAllOperator'])->name("admin.operator");
+            Route::get('/operator/edit/{page_id?}',[OperatorAdminController::class,'addOperator'])->name("admin.operator.edit");
+
+
             Route::get('/bookWithUs',[BookWithUsControlloer::class,'getAdminAllBookWithUs'])->name("admin.bookWithUs");
             Route::get('/bookWithUs/search/{search_key?}',[BookWithUsControlloer::class,'getAdminAllBookWithUs'])->name("admin.bookWithUs.search");
             Route::get('/bookWithUs/add/{id?}',[BookWithUsControlloer::class,'addBookWithUs'])->name("admin.bookWithUs.add");  

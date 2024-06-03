@@ -67,9 +67,10 @@
                                         <form id="form" method="POST" action="{{ route('user.makeOperatorRegisters') }}"
                                             enctype="multipart/form-data">
                                             @csrf
+                                            <input type="hidden" name="country" value="{{ $currCountry }}">
                                             <fieldset>
                                                 <div class="form-heading">
-                                                    <h3> Become part of the Australla cab network</h3>
+                                                    <h3> Become part of the {{$currCountry}} cab network</h3>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-md-6 text-left">

@@ -19,15 +19,20 @@ class OperatorController extends Controller{
     }
 
     public function operatorRegisters(Request $request)
-    {
-        return view('operatorregister');
+    { 
+        $currCountry = request()->segment(1);
+       
+        return view('operatorregister', ['currCountry' => $currCountry]);
+
     }
      
     public function AddRegisters(Request $request)
     {
+        //   dd($request);
         $validatedData = $request->validate([
             'email'    => "required|email|max:100|unique:operators,email,".$request->id.",id",
             'office_email' => 'required|email',
+            'country' => 'required',
             'first_name' => 'required|string|max:255',
             'sur_name' => 'required|string|max:255',
             'cab_operator_name' => 'required|string|max:255',
@@ -50,7 +55,10 @@ class OperatorController extends Controller{
             'upload_operator_licence' => 'required|file|mimes:pdf,jpg,png',
             'upload_public_liability_Insurance' => 'required|file|mimes:pdf,jpg,png',
         ]);
+
+        
         $validatedData['password'] = Hash::make($validatedData['password']);
+        
         if($request->upload_operator_licence){
             $fileName=$this->fileUpload($request,"upload_operator_licence",$this->OperatorLicencePath);
             if($fileName!=""){
@@ -66,7 +74,9 @@ class OperatorController extends Controller{
         }
         
         $operator = Operator::create($validatedData);
+
         $fleetTypes = implode(',', $request->input('fleet_type', []));
+
         FleetDetails::create([
             'operator_id' => $operator->id,
             'licensing_local_authority' =>$validatedData['licensing_local_authority'],
@@ -150,10 +160,10 @@ class OperatorController extends Controller{
 
 
 
-      public function operatorlogin(Request $request){
-        
+      public function operatorlogin(Request $request)
+      {
         return view('operatorlogin');
-    }
+     }
 
     public function operatorloginsubmit(Request $request)
     {
@@ -197,14 +207,6 @@ class OperatorController extends Controller{
     {
         return view('operatordashboard');
     }
-
-
-    public function homedashBoard()
-    {
-        return view('indexdashboard');
-    }
-
-
 
     public function profileEdit()
     {
