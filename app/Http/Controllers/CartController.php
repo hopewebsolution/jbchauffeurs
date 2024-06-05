@@ -140,7 +140,7 @@ class CartController extends Controller{
     
      
     public function addToCart(Request $request){
-        $currCountry = request()->segment(1);
+        $currCountry = request()->segment(2);
         $response=array();
         $success=0;
         $message="Some thing went wrong please try again later.";
@@ -255,5 +255,60 @@ class CartController extends Controller{
         $response['success']=$success;
         $response['message']=$message;
         return response()->json($response);
-    }   
+    }  
+    
+    
+
+
+    public function adminCheckout(Request $request){
+
+        //session()->forget('cart');
+        // dd( $request);
+        $obj=new SettingController();
+        $settings=$obj->AdmingetAllSettings();
+        //  dd( $settings);
+        if($settings->maintenance=="0"){
+            $listing_count= $this->perpage;
+            $currCountry = request()->segment(2);
+//  dd($currCountry);
+            $tripData=null;
+            if($request->session()->has('cart')){
+                $tripData=(object) session('cart');
+                //  dd($tripData);
+                $vehicle=Vehicle::where(['country'=>$currCountry,'id'=>$tripData->vehicle_id])->first();
+                //  dd($vehicle);
+                $baby=$tripData->babySeats;
+                if($request->baby){
+                    $baby=$request->baby;
+                    $tripData->babySeats=$baby;
+                }
+                $cartTotals=$this->cartCalc($tripData);
+                $bundles=[
+                    'tripData'=>$tripData,
+                    'vehicle'=>$vehicle,
+                    'babySeats'=>$this->babySeats,
+                    'fare'=>$cartTotals['fare'],
+                    'babySeatFare'=>$cartTotals['babySeatFare'],
+                    'waitCharge'=>$cartTotals['waitCharge'],
+                    'parking_charge'=>$cartTotals['parking_charge'],
+                    'stopsCost'=>$cartTotals['stopsCost'],
+                    'GST'=>$cartTotals['GST'],
+                    'gstAmount'=>$cartTotals['gstAmount'],
+                    'cardFee'=>$cartTotals['cardFee'],
+                    'total'=>$cartTotals['total'],
+                    'infoTypesAdmin'=>$this->infoTypesAdmin,
+                ];
+                if(Request()->ajax()) {
+                    return response()->json(view('ajaxCheckout',$bundles)->render());
+                }
+
+                return view('Admin.admincheckout',$bundles);
+            }else{
+                // return"no ";
+                return redirect()->route('user.home');      
+            }
+        }else{
+            return view('maintenance');
+        }
+    }
 }

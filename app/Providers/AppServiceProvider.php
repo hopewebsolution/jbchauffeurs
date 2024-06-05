@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $obj=new SettingController();
         $settings=$obj->getAllSettings();
-
+        
         $mode=$settings->paypal_mode;
         $s_client_id=$settings->paypal_sandbox_client_id;
         $s_client_secret=$settings->paypal_sandbox_client_secret;

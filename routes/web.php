@@ -73,10 +73,15 @@ Route::group(['middleware' =>'countryCheck'],function(){
         Route::get('/customer-terms-conditions',[HomeController::class,'customerTerms'])->name('user.customerTerms');
         Route::get('/vehicles',[VehiclesController::class,'listVehicles'])->name('user.listVehicles');
         Route::post('/vehicles',[VehiclesController::class,'getVehicles'])->name('user.getVehicles');
+       
  
         Route::post('/add-car-cart',[VehiclesController::class,'addCarToCart'])->name('user.addCarToCart');
+        
+
+        
         Route::get('/checkout',[CartController::class,'checkout'])->name('user.checkout');
         Route::post('/book-vehicle',[BookingController::class,'placeBooking'])->name('user.placeBooking');
+        
  
  
         Route::group(['middleware' =>'guest:web'],function(){
@@ -144,6 +149,7 @@ use App\Http\Controllers\OperatorAdminController;
  
 Route::group(['prefix' =>'admin'],function(){
     $segment = Request::segment('2');
+    // dd($segment);
     if($segment){
         if(!in_array($segment,['aus','us','uk','nz'])){
             $segment="aus";
@@ -213,6 +219,7 @@ Route::group(['prefix' =>'admin'],function(){
  
             Route::get('/bookings',[BookingController::class,'getAdminAllBookings'])->name("admin.bookings");
             Route::get('/bookings/search/{search_key?}',[BookingController::class,'getAdminAllBookings'])->name("admin.bookings.search");  
+            Route::get('/bookings/add/{page_id?}',[BookingController::class,'addBookings'])->name("admin.bookings.add"); 
             Route::post('/bookings/update-booking',[BookingController::class,'apiUpdateBooking'])->name("admin.bookings.updateBooking");
             Route::post('/bookings/delete',[BookingController::class,'bookingDelete'])->name("admin.bookings.delete");
             Route::get('/booking-details/{booking_id}',[BookingController::class,'bookingDetails'])->name('admin.bookingDetails');
@@ -231,9 +238,13 @@ Route::group(['prefix' =>'admin'],function(){
             Route::post('/pages/create/{page_id?}',[PageController::class,'createPage'])->name("admin.pages.create");
  
 
+            Route::post('/admin-vehicles',[VehiclesController::class,'admingetVehicles'])->name('admin.getVehicles');
+            Route::get('/admin-vehiclesss',[VehiclesController::class,'adminListVehicles'])->name('admin.listVehicles');
 
-
-             Route::get('/operator',[OperatorAdminController::class,'getAdminAllOperator'])->name("admin.operator");
+            Route::get('/admin-checkout',[CartController::class,'adminCheckout'])->name('admin.checkout');
+            Route::post('/admin-book-vehicle',[BookingController::class,'adminPlaceBooking'])->name('admin.placeBooking');
+            Route::post('/admin-add-car-cart',[VehiclesController::class,'adminAddCarToCart'])->name('admin.addCarToCart');
+            Route::get('/operator',[OperatorAdminController::class,'getAdminAllOperator'])->name("admin.operator");
             Route::get('/operator/edit/{page_id?}',[OperatorAdminController::class,'addOperator'])->name("admin.operator.edit");
 
 
