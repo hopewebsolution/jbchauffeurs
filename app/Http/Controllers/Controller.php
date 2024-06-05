@@ -48,6 +48,9 @@ class Controller extends BaseController
         'book-with-register'=>'Register and Continue Your Booking.',
         'book-with-login'=>'Already Registered? Login and Continue Your Booking.',
     ];
+    public $infoTypesAdmin=[
+        'book-with-register'=>'Book without Registering.',
+    ];
     public $page_types=[
         "home"=>"Home",
         "about-us"=>"About Us",

@@ -364,7 +364,7 @@ class BookingController extends Controller{
                     ->with('user')
                     ->with('vehicle')
                     ->orderBy('id','desc')
-                    ->paginate($listing_count);
+                    ->paginate($listing_count);    
         $bundle=['bookings'=>$bookings,'statuss'=>$this->bookingStatus];            
         if(Request()->ajax()){
             return response()->json(view('Admin.bookingsTable',$bundle)->render());
@@ -424,5 +424,189 @@ class BookingController extends Controller{
             'total'=>$cartTotals['total'],
         ];
         return view('Admin.bookingDetails',$bundles);
+    }
+
+
+    public function addBookings(Request $request)
+    { 
+    
+        return view('Admin.addBooking');
+    }
+
+
+
+
+    public function adminPlaceBooking(Request $request)
+    {
+        //  return$request;
+
+        $user_id=null;
+
+        $status="error";
+        // dd($status);
+        $message="Something went wrong !!";
+        $cartObj = new CartController();
+//dd($cartObj);
+        $currCountry = request()->segment(2);
+        $customerInfoType="";
+    //   dd($currCountry);
+        if($request->customerInfoType){
+            $customerInfoType=$request->customerInfoType;
+        }
+        $cartObj->addToCart($request);
+        $tripData=(object) session('cart');
+        $cartTotals=$cartObj->cartCalc($tripData);
+        $total_fare=$cartTotals['total'];
+        // dd($total_fare);
+        //$vehicle=Vehicle::where(['country'=>$currCountry])->first();
+        // dd(Auth::guard('admin')->user());
+        if(Auth::guard('admin')->user()){
+            $status="success";
+        }else if($customerInfoType=="book-with-login"){
+            $userObj =new UserController();
+            
+            $login_email=$request->login_email;
+            $login_password=$request->login_password;
+            $loginReq=new Request();
+            $loginReq->email=$login_email;
+            $loginReq->password=$login_password;
+            if(!$userObj->validateUser($loginReq)){
+                return back()->withErrors(['message'=>'invalid email or password!']);
+            }
+            return redirect()->route('admin.checkout');
+        }else if($customerInfoType=="book-with-register" || $customerInfoType=="book-without-register"){
+            $rules=[
+                'email'=>'required|email|unique:users,email',  
+                'fname'=>'required',
+                'lname'=>'required',  
+                'phone'=>'required',  
+                'mobile'=>'required' , 
+            ];
+            if($customerInfoType=="book-with-register"){
+               $rules['password'] ='min:6|required';
+               $rules['account_type'] ='required';
+            }
+            $validator = Validator::make($request->all(),$rules);
+            if ($validator->fails()) {
+                return  back()
+                        ->withErrors($validator)
+                        ->withInput();
+            }else{
+                $insert_data=array();
+                $account_type="personal";
+                if($request->account_type){
+                    $account_type=$request->account_type;
+                }
+                $password=Hash::make($request->email);
+                if($customerInfoType=="book-with-register"){
+                    $password=Hash::make($request->password);
+                }
+                $insert_data=[
+                    'password'=>$password,
+                    'email'=>$request->email,
+                    'fname'=>$request->fname,
+                    'lname'=>$request->lname,
+                    'phone'=>$request->phone,
+                    'mobile'=>$request->mobile,
+                    'account_type'=>$account_type,
+                ];
+                
+                if($account_type=="business"){
+                    $insert_data['company_name']=$request->company_name;
+                    $insert_data['company_address']=$request->company_address;
+                    $insert_data['company_phone']=$request->company_phone;
+                    $insert_data['website']=$request->website;
+                    $insert_data['business_type']=$request->business_type;
+                    $insert_data['reg_no']=$request->reg_no;
+                    $insert_data['contact_name']=$request->contact_name;
+                    $insert_data['contact_position']=$request->contact_position;
+                }
+                // dd($insert_data);
+                $user =User::create($insert_data);
+                if($user){
+                    if($customerInfoType=="book-with-register"){
+                        try{
+                            Mail::to($this->adminEmail)->send(new AdminNotify($user));
+                        }catch(Exception $e){
+                            echo $e;
+                        }
+                    }
+                    $user_id=$user->id;
+                    Auth::loginUsingId($user_id);
+                    $status='success';
+                }
+            }
+        }
+        $bookngData=null;
+        // dd($status=='success');
+        if($status=='success'){
+            $validator = Validator::make($request->all(),[
+                'pickup_date'=>'required',
+                'pickupTime'=>'required',
+            ]);
+            if ($validator->fails()) {
+                return  back()
+                        ->withErrors($validator)
+                        ->withInput();
+            }else{
+                $pickupDate=$tripData->pickupDate;
+                $pickupTime=$tripData->pickupTime;
+                $pickdate = Carbon::parse($pickupDate." ".$pickupTime);
+                $hours = $pickdate->diffInHours(Carbon::now(),true);
+                if($hours<=12){
+                    return  back()->withErrors($validator)->withInput()->with('error','Booking allowed when is more than 12 hrs from pickup time.');
+                }
+                // $user=Auth::user();
+                // $user= Auth::guard('admin')->user();
+                $user = User::create([
+                    'fname' => $request->fname,
+                    'email' => $request->email,
+                ]);
+                
+                // dd($user);
+                if($user){
+                    $user_id=$user->id;
+                }
+                $bookngData=[
+                    'user_id'=>$user_id,
+                    'vehicle_id'=>$tripData->vehicle_id,
+                    'start'=>$tripData->start,
+                    'route_type'=>$tripData->route_type,
+                    'pickup_date'=>$tripData->pickupDate,
+                    'pickup_time'=>$tripData->pickupTime,
+                    'pickup_address_line'=>$tripData->pickupAddress,
+                    'end'=>$tripData->end,
+                    'dropoff_address_line'=>$tripData->dropAddress,
+                    'passengers'=>$tripData->passengers,
+                    'babySeats'=>$tripData->babySeats,
+                    'luggages'=>$tripData->luggage,
+                    'suitcases'=>$tripData->handBags,
+                    'stops'=>$tripData->stops,
+                    'instructions'=>$tripData->instructions,
+                    'distance'=>$tripData->distance,
+                    'distanceUnit'=>$tripData->distanceUnit,
+                    'country'=>$tripData->country,
+                    'fares'=>$tripData->vehicle,
+                    'total_fare'=>$total_fare,
+                    // 'status'=>'status',
+                ];
+                if($tripData->route_type=="two_way"){
+                    $bookngData['return_pickup_date']=$tripData->returnDetails->pickupDate;
+                    $bookngData['return_pickup_time']=$tripData->returnDetails->pickupTime;
+                    $bookngData['return_dropoff_address']=$tripData->returnDetails->dropAddress;
+                    $bookngData['return_pickup_address']=$tripData->returnDetails->pickupAddress;
+                }
+                $booking=Booking::create($bookngData);
+                // dd($booking);?
+                if($booking){
+                    session()->forget('cart');
+
+                    // return redirect()->back(); 
+                    // return redirect()->route('user.createPayment',['booking_id'=>$booking->id]);
+                    //return redirect()->route('user.printBooking',['booking_id'=>$booking->id]);
+                    return redirect()->route('admin.bookings.add');
+                }
+            }
+        }
     }
 }

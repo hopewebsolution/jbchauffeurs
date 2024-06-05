@@ -98,7 +98,7 @@
                                 <li><a href="{{route('admin.bookings')}}"><i class="fa fa-book"></i> Bookings</a></li>
                                 <li><a href="{{route('admin.faqs')}}"><i class="fa fa-question-circle"></i> Faqs</a></li>
                                 <li><a href="{{route('admin.pages')}}"><i class="fa fa-file"></i> Pages</a></li>
-                                <li><a href="{{route('admin.operator')}}"><i class="fa fa-file"></i> Operator</a></li>
+                                <li><a href="{{route('admin.operator')}}"><i class="fa fa-users"></i> Operator</a></li>
                                 <li><a href="{{route('admin.airports')}}"><i class="fa fa-plane"></i> Airports</a></li>
                                 
                                                             

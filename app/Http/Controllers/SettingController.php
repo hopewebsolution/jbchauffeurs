@@ -25,6 +25,15 @@ class SettingController extends Controller{
         }
         return $settings;
     }
+    public function AdmingetAllSettings(){
+        $currCountry = request()->segment(2);
+        
+        $settings=Setting::where(['country'=>$currCountry])->first();
+        if(!$settings){
+            $settings=new Setting();    
+        }
+        return $settings;
+    }
     public function addSetting(Request $request){
         $currCountry = request()->segment(2);
         $settings=Setting::where(['country'=>$currCountry])->first();

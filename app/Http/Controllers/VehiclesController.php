@@ -83,18 +83,21 @@ class VehiclesController extends Controller{
             return view('maintenance');
         }
     }
+
     public function addCarToCart(Request $request){
         $cartObj=new CartController();
         $currCountry = request()->segment(1);
         $cartObj->addToCart($request);
         return redirect()->route('user.checkout');
     }
+
     public function listVehicles(Request $request){
     	$listing_count= $this->perpage;
     	$currCountry = request()->segment(1);
         $tripData=null;
         if($request->session()->has('cart')){
         	$tripData=(object) session('cart');
+            // dd($tripData);
         	if($tripData->country==$currCountry){
 	        	$vehicles=Vehicle::where(['country'=>$currCountry])
                         /*->with('fixedRate',function ($query) use($tripData) {
@@ -192,4 +195,103 @@ class VehiclesController extends Controller{
             return redirect()->back()->withErrors([$message]);
         }
     } 
+
+
+    public function admingetVehicles(Request $request)
+    {
+//    return $request;
+        $obj=new SettingController();
+        $settings=$obj->AdmingetAllSettings();
+        // dd($settings);
+
+        if($settings->maintenance=="0"){
+            $cartObj=new CartController();
+            $currCountry = request()->segment(2);
+            $start="";
+            $end="";
+            $stops=array();
+            $distance=-1;
+            if($request->start){
+            	$start=$request->start;
+            }
+            if($request->end){
+            	$end=$request->end;
+            }
+            if($request->stops){
+            	$stops=$request->stops;
+            }
+            if($start!="" && $end!=""){
+            	$distanceUnit='M';
+            	if($currCountry=='aus' || $currCountry=='nz'){
+            		$distanceUnit='K';
+            		$request->distanceUnit="KM";
+            	}else{
+            		$request->distanceUnit="Miles";
+            	}
+            	$distance=$this->getDistance($start,$end,$distanceUnit);
+                //$distance=110;
+            }
+            if($distance>0){
+            	//$distance=-1;
+                $request->distance=$distance;
+                $cartObj->addToCart($request);
+                return redirect()->route('admin.listVehicles');
+            }else{
+                return  back()->withErrors(['message'=>'Incorrect location, please select correct locations!!'])->withInput();
+            }
+        }else{
+            return view('maintenance');
+        }
+    }
+
+
+
+
+     public function adminListVehicles(Request $request){
+    	$listing_count= $this->perpage;
+    	$currCountry = request()->segment(2);
+        //  dd($currCountry);
+        $tripData=null;
+        if($request->session()->has('cart')){
+        	$tripData=(object) session('cart');
+            
+        	if($tripData->country==$currCountry){
+	        	$vehicles=Vehicle::where(['country'=>$currCountry])
+                        /*->with('fixedRate',function ($query) use($tripData) {
+                            return $query->where(['start'=>$tripData->start,'end'=>$tripData->end]);
+                        })*/
+	        			->orderBy('position','ASC')
+	                    ->paginate($listing_count);
+                        //  dd($vehicles);
+                $fixedAmount=0;
+
+                $fixedRate=FixedRate::where(['start'=>$tripData->start,'end'=>$tripData->end])->first();
+               
+                if($fixedRate){
+                    $fixedAmount=$fixedRate->amount;
+                }
+                //dd($vehicles);
+               
+	        	 return view('Admin.addvehicles',['tripData'=>$tripData,'vehicles'=>$vehicles,'currCountry'=>$currCountry,'fixedAmount'=>$fixedAmount]);
+        	}else{
+
+            // return view('Admin.addvehicles',['tripData'=>$tripData,'vehicles'=>$vehicles,'currCountry'=>$currCountry,'fixedAmount'=>$fixedAmount]);
+            // return redirect()->back(); 
+        		 return redirect()->route('admin.bookings.add');
+        	}
+    	}else{
+            return view('Admin.addvehicles',['tripData'=>$tripData,'vehicles'=>$vehicles,'currCountry'=>$currCountry,'fixedAmount'=>$fixedAmount]);
+    		// return redirect()->route('user.home');		
+    	}
+    } 
+
+
+    public function adminAddCarToCart(Request $request){
+        $cartObj=new CartController();
+        // dd($cartObj);
+        $currCountry = request()->segment(2);
+        // dd($currCountry);
+        $cartObj->addToCart($request);
+        return redirect()->route('admin.checkout');
+    }
 }
