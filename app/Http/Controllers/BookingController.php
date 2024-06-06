@@ -7,6 +7,7 @@ use Validator;
 use Auth;
 use App\Http\Controllers\CartController;
 use App\Models\Booking;
+use App\Models\Operator;
 use App\Models\User;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use App\Mail\AdminNotify;
 use App\Mail\BookingEmail;
+use App\Mail\OperatorNotification;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 
@@ -353,7 +355,8 @@ class BookingController extends Controller{
             $search_key=$request->search_key;
         }
               
-        $bookings=Booking::where(['country'=>$currCountry])->where('status','!=','pending')
+        // $bookings=Booking::where(['country'=>$currCountry])->where('status','!=','paid')
+        $bookings=Booking::where(['country'=>$currCountry])
                     ->where(function($query) use ($search_key){
                         if($search_key!=""){
                             return $query->orWhere('id','LIKE','%'. $search_key .'%')
@@ -364,7 +367,7 @@ class BookingController extends Controller{
                     ->with('user')
                     ->with('vehicle')
                     ->orderBy('id','desc')
-                    ->paginate($listing_count);    
+                    ->paginate($listing_count);
         $bundle=['bookings'=>$bookings,'statuss'=>$this->bookingStatus];            
         if(Request()->ajax()){
             return response()->json(view('Admin.bookingsTable',$bundle)->render());
@@ -438,28 +441,28 @@ class BookingController extends Controller{
 
     public function adminPlaceBooking(Request $request)
     {
-        //  return$request;
+        
 
         $user_id=null;
 
         $status="error";
-        // dd($status);
+      
         $message="Something went wrong !!";
         $cartObj = new CartController();
-//dd($cartObj);
+        // dd($cartObj);
         $currCountry = request()->segment(2);
         $customerInfoType="";
-    //   dd($currCountry);
+   
         if($request->customerInfoType){
             $customerInfoType=$request->customerInfoType;
         }
         $cartObj->addToCart($request);
+        
         $tripData=(object) session('cart');
         $cartTotals=$cartObj->cartCalc($tripData);
+        
         $total_fare=$cartTotals['total'];
-        // dd($total_fare);
-        //$vehicle=Vehicle::where(['country'=>$currCountry])->first();
-        // dd(Auth::guard('admin')->user());
+       
         if(Auth::guard('admin')->user()){
             $status="success";
         }else if($customerInfoType=="book-with-login"){
@@ -521,7 +524,7 @@ class BookingController extends Controller{
                     $insert_data['contact_name']=$request->contact_name;
                     $insert_data['contact_position']=$request->contact_position;
                 }
-                // dd($insert_data);
+               
                 $user =User::create($insert_data);
                 if($user){
                     if($customerInfoType=="book-with-register"){
@@ -538,7 +541,7 @@ class BookingController extends Controller{
             }
         }
         $bookngData=null;
-        // dd($status=='success');
+        
         if($status=='success'){
             $validator = Validator::make($request->all(),[
                 'pickup_date'=>'required',
@@ -556,14 +559,13 @@ class BookingController extends Controller{
                 if($hours<=12){
                     return  back()->withErrors($validator)->withInput()->with('error','Booking allowed when is more than 12 hrs from pickup time.');
                 }
-                // $user=Auth::user();
-                // $user= Auth::guard('admin')->user();
+              
                 $user = User::create([
                     'fname' => $request->fname,
                     'email' => $request->email,
                 ]);
                 
-                // dd($user);
+               
                 if($user){
                     $user_id=$user->id;
                 }
@@ -588,7 +590,7 @@ class BookingController extends Controller{
                     'country'=>$tripData->country,
                     'fares'=>$tripData->vehicle,
                     'total_fare'=>$total_fare,
-                    // 'status'=>'status',
+                    
                 ];
                 if($tripData->route_type=="two_way"){
                     $bookngData['return_pickup_date']=$tripData->returnDetails->pickupDate;
@@ -596,8 +598,20 @@ class BookingController extends Controller{
                     $bookngData['return_dropoff_address']=$tripData->returnDetails->dropAddress;
                     $bookngData['return_pickup_address']=$tripData->returnDetails->pickupAddress;
                 }
-                $booking=Booking::create($bookngData);
-                // dd($booking);?
+                 $booking=Booking::create($bookngData);
+                 $cartObj=new CartController();
+                 $cartTotals=$cartObj->cartCalc($booking); 
+                 $operators = Operator::where('country', $booking->country)->get();
+                    foreach ($operators as $operator) {
+                        $contact_data = [
+                            "id" => $operator->id,
+                            "first_name" => $operator->first_name,
+                            "email" => $operator->email, 
+                        ];
+
+                        Mail::to($operator->email)->send(new OperatorNotification($booking,$cartTotals, $contact_data));
+                    }
+               
                 if($booking){
                     session()->forget('cart');
 

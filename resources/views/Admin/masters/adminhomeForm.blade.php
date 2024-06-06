@@ -42,7 +42,7 @@
                                 <!-- <i class="fa fa-flag" aria-hidden="true"></i> -->
                                 <!-- <input data-toggle="tooltip" data-placement="top" title="" data-original-title="Enter your loacation" type="text" name="end" id="end" class="customw form-control inputst1 red-tooltip required" placeholder="Drop Off - Airport/Hotel/Address/Cruise Port " /> -->
                                 {!! Form::text('end','',['data-toggle'=>"tooltip",'data-placement'=>"top", 'title'=>"",'data-original-title'=>"Enter your loacation",'id'=>"end", 'class'=>"customw form-control inputst1 red-tooltip required",'placeholder'=>"Drop Off - Airport/Hotel/Address/Cruise Port"]) !!}
-                                <a class="btn btn-plus" data-type="home">+</a>
+                                <!-- <a class="btn btn-plus" data-type="home">+</a> -->
                             </div>
                             <div id="additional-stops-form">
                                 

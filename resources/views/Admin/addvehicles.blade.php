@@ -196,10 +196,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4">
-                    @include('Admin.masters.sidebar')
-                    <div class="clear"></div>
-                </div>
+               
             </div>
         </div>
     </div>

@@ -68,6 +68,8 @@ class Controller extends BaseController
         "cancelled"=>"Cancelled",
         "completed"=>"Completed",
     ];
+   
+
     public $settings=[
         "logo",
         "header_img",
