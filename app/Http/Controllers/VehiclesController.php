@@ -250,10 +250,10 @@ class VehiclesController extends Controller{
      public function adminListVehicles(Request $request){
     	$listing_count= $this->perpage;
     	$currCountry = request()->segment(2);
-        //  dd($currCountry);
         $tripData=null;
         if($request->session()->has('cart')){
-        	$tripData=(object) session('cart');
+            $tripData=(object) session('cart');
+            // dd($tripData);
             
         	if($tripData->country==$currCountry){
 	        	$vehicles=Vehicle::where(['country'=>$currCountry])
@@ -262,7 +262,7 @@ class VehiclesController extends Controller{
                         })*/
 	        			->orderBy('position','ASC')
 	                    ->paginate($listing_count);
-                        //  dd($vehicles);
+                        
                 $fixedAmount=0;
 
                 $fixedRate=FixedRate::where(['start'=>$tripData->start,'end'=>$tripData->end])->first();
@@ -270,7 +270,7 @@ class VehiclesController extends Controller{
                 if($fixedRate){
                     $fixedAmount=$fixedRate->amount;
                 }
-                //dd($vehicles);
+               
                
 	        	 return view('Admin.addvehicles',['tripData'=>$tripData,'vehicles'=>$vehicles,'currCountry'=>$currCountry,'fixedAmount'=>$fixedAmount]);
         	}else{
@@ -290,7 +290,7 @@ class VehiclesController extends Controller{
         $cartObj=new CartController();
         // dd($cartObj);
         $currCountry = request()->segment(2);
-        // dd($currCountry);
+        //  dd($currCountry);
         $cartObj->addToCart($request);
         return redirect()->route('admin.checkout');
     }

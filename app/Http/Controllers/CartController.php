@@ -262,21 +262,22 @@ class CartController extends Controller{
 
     public function adminCheckout(Request $request){
 
-        //session()->forget('cart');
-        // dd( $request);
+
         $obj=new SettingController();
+
         $settings=$obj->AdmingetAllSettings();
-        //  dd( $settings);
+
         if($settings->maintenance=="0"){
             $listing_count= $this->perpage;
             $currCountry = request()->segment(2);
-//  dd($currCountry);
+
             $tripData=null;
             if($request->session()->has('cart')){
                 $tripData=(object) session('cart');
-                //  dd($tripData);
-                $vehicle=Vehicle::where(['country'=>$currCountry,'id'=>$tripData->vehicle_id])->first();
-                //  dd($vehicle);
+
+                // $vehicle=Vehicle::where(['country'=>$currCountry,'id'=>$tripData->vehicle_id])->first();
+                $vehicle=Vehicle::where(['country'=>$currCountry])->first();
+
                 $baby=$tripData->babySeats;
                 if($request->baby){
                     $baby=$request->baby;
@@ -304,7 +305,7 @@ class CartController extends Controller{
 
                 return view('Admin.admincheckout',$bundles);
             }else{
-                // return"no ";
+
                 return redirect()->route('user.home');      
             }
         }else{

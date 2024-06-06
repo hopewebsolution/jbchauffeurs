@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
     </div>
-    @include('admin.masters.'.$formType)
+    @include('Admin.masters.'.$formType)
     <div class="clearfix"></div>
 </div>
 <div class="clear"></div>

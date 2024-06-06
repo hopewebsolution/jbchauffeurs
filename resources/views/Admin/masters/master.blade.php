@@ -74,7 +74,9 @@
                                 <!-- <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li> -->
                                 <li>
                                     <a><i class="fa fa-flag"></i> Change Country <span class="fa fa-chevron-down"></span></a>
+
                                     <ul class="nav child_menu">
+                                     
                                         @if($common->countries)
                                             @foreach($common->countries as $country)
                                                 <li>
@@ -85,6 +87,7 @@
                                             @endforeach
                                         @endif
                                     </ul>
+
                                 </li>
                                 <li><a href="{{ route('admin.users') }}"><i class="fa fa-users"></i> Users</a></li>
                                 <li><a href="{{ route('admin.bookWithUs') }}"><i class="fa fa-ticket"></i>Book With  Us</a></li>

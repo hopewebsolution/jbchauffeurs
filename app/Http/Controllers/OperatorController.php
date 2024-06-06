@@ -313,4 +313,15 @@ class OperatorController extends Controller{
         $user->save();
         return redirect()->back()->with('success', 'Password changed successfully.');
     }
+
+
+    public function acceptBooking()
+    {
+        if (Auth::guard('weboperator')) {
+            return redirect()->route('operator.dashboard');
+        } else {
+            return redirect()->route('operator.login');
+
+        }
+    }
 }
