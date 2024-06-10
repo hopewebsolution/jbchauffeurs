@@ -2,7 +2,7 @@
 @extends('app.master')
 
 @section('content')
-  <main id="main" class="main" style="height: 77vh;">
+  <main id="main" class="main">
 
     <div class="pagetitle">
       <h1>Dashboard</h1>

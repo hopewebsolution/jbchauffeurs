@@ -160,11 +160,20 @@
             <div class="row">
                 <div class="col-md-8 col-sm-8">
                     <div class="leftholder">
-                        @if(session()->has('error'))
+                        <!-- @if(session()->has('error'))
                             <div class="alert alert-danger">
                                 {{ session()->get('error') }}
                             </div>
-                        @endif
+                        @endif -->
+                        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
                         <!-- <div class="pg-title">Make Your Booking</div> -->
                         {!!
                         Form::open(['route'=>['admin.placeBooking'],'class'=>'form-horizontal','novalidate'=>'novalidate','id'=>"validate-form"])

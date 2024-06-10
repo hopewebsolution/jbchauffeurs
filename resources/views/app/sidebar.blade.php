@@ -11,20 +11,28 @@
     </a>
   </li>
   <!-- End Dashboard Nav -->
+  @if(Auth::guard('weboperator')->check())
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="{{route('newbooking')}}">
+      <i class="bi bi-layout-text-window-reverse"></i><span>New Booking</span></i>
+    </a>
+  </li>
 
   <li class="nav-item">
     <a class="nav-link collapsed" href="{{route('booking')}}">
       <i class="bi bi-layout-text-window-reverse"></i><span>Booking</span></i>
     </a>
-  </li><!-- End Tables Nav -->
+  </li>
 
 
-  @if(Auth::guard('weboperator')->check())
+ 
   <li class="nav-item">
     <a class="nav-link collapsed" href="{{route('profile.edit')}}">
       <i class="bi bi-person"></i><span>Profile</span></i>
     </a>
   </li>
+ 
   
     <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -40,3 +48,20 @@
 
 </aside><!-- End Sidebar-->
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('#sidebar-nav .nav-link');
+    function setActiveClass(link) {
+      navLinks.forEach(nav => nav.classList.remove('active'));
+      link.classList.add('active');
+    }
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        setActiveClass(this);
+      });
+      if (window.location.href === link.href) {
+        setActiveClass(link);
+      }
+    });
+  });
+</script>
