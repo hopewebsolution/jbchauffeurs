@@ -1055,7 +1055,8 @@ h6 {
   transition: all 0.3s;
   border-top: 1px solid #cddfff;
   background: #fff;
-  font-weight: 600;
+  font-weight: 600; 
+  margin-top: auto;
 }
  
 .footer .copyright {
@@ -1485,6 +1486,15 @@ h6 {
   border-color: #86b7fe;
   outline: 0;
   box-shadow: none !important;
+}
+
+
+
+.pages{
+      display: flex;
+    flex-direction: column;
+    justify-content: start;
+    min-height: 100vh;
 }
  
 /* Responsive css */

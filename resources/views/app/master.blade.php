@@ -31,7 +31,9 @@
 
 <body>
 
+<div class="pages">
   <!-- ======= Header ======= -->
+   
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
@@ -120,20 +122,19 @@
   @extends('app.sidebar')
   
   <div class="main-content">
+
             @yield('content')
-</div>
-  
+           
+    </div>
+    
+     @extends('app.footer')
+    </div>
 
     
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>Jbchauffeurs</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-     
-    </div>
-  </footer><!-- End Footer -->
+
+
+
+
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
@@ -147,7 +148,7 @@
 
  <!--- <script src="{{ asset('public/assets/operator_dashboard_asset/js/jquery.js') }}"></script>--->
   <!-- Template Main JS File -->
-  <!-- <script src="{{ asset('public/assets/operator_dashboard_asset/js/main.js') }}"></script> -->
+  <script src="{{ asset('public/assets/operator_dashboard_asset/js/main.js') }}"></script>
 </body>
 
 </html>

@@ -20,13 +20,20 @@
 				</tr>
                 <tr>
                 <td>
-                    <a href="{{ route('accept.booking') }}" style="display: inline-block; padding: 5px 10px; background-color: #001e47; color: #fff; text-decoration: none; border-radius: 4px; float: right;">Accept Booking</a>
+					
+@php 
+$appurl = env('APP_URL');
+$currCountry = request()->segment(2);
+
+@endphp
+                    <a href="{{$appurl.'/'.$currCountry.'/booking-details/'.$booking->id}}" style="display: inline-block; padding: 5px 10px; background-color: #001e47; color: #fff; text-decoration: none; border-radius: 4px; float: right;">Accept Booking</a>
                 </td>
             </tr>
 
 
 			</tbody>
 		</table>
+
         <div class="table" style="margin: 20px 0;">
 			        <table style="width: 50%; border:1px solid #eeeeee; float:left; width: 380px; margin-bottom: 20px;">
 			            <tbody><tr style="border:1px solid #eeeeee;  color: #001E47; font-family: 'Droid Serif', serif; font-size: 18px;">

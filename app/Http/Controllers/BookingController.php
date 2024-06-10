@@ -426,7 +426,7 @@ class BookingController extends Controller{
             'cardFee'=>$cartTotals['cardFee'],
             'total'=>$cartTotals['total'],
         ];
-        return view('Admin.bookingDetails',$bundles);
+        return view('bookingDetails',$bundles);
     }
 
 
@@ -441,10 +441,14 @@ class BookingController extends Controller{
 
     public function adminPlaceBooking(Request $request)
     {
-        
+        // return $request;
 
+        $operatorExists = User::where('email', $request->email)->exists();
+        if ($operatorExists) {
+            return back()->withErrors(['error' => 'Email Already Exists'])->withInput();
+        }
         $user_id=null;
-
+        
         $status="error";
       
         $message="Something went wrong !!";
@@ -564,7 +568,7 @@ class BookingController extends Controller{
                     'fname' => $request->fname,
                     'email' => $request->email,
                 ]);
-                
+                // dd($user);
                
                 if($user){
                     $user_id=$user->id;

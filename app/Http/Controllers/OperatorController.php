@@ -166,18 +166,24 @@ class OperatorController extends Controller{
      }
 
     public function operatorloginsubmit(Request $request)
-    {
+    { 
+        // return $request;
+        
+
          $validator = Validator::make($request->all(), [
             'password' => 'required',
             'email'=>'required|email',
         ]);
         if ($validator->fails()) {
             return  back()->withErrors($validator)->withInput();
+
         }
 
-        if(!$this->validateUser($request)){
+        $currCountry = request()->segment(1);
+        if(!$this->validateUser($request,$currCountry)){
             return redirect()->back()->withErrors(['operatorloginsubmit' => 'Invalid email or password!'])->withInput($request->except('password'));
-        }else{
+        }
+        else{
              
             return redirect()->route('operator.dashboard');
 
@@ -185,9 +191,9 @@ class OperatorController extends Controller{
         } 
     }
 
-   public function validateUser(Request $request)
+   public function validateUser(Request $request ,$currCountry)
    {
-        if (!Auth::guard('weboperator')->attempt(['email'=>$request->email,'password'=>$request->password])) {
+        if (!Auth::guard('weboperator')->attempt(['email'=>$request->email,'password'=>$request->password,'country'=>$currCountry])) {
         return false;
         }
         return true;
@@ -317,11 +323,20 @@ class OperatorController extends Controller{
 
     public function acceptBooking()
     {
+         
+        
         if (Auth::guard('weboperator')) {
+            
+
             return redirect()->route('operator.dashboard');
         } else {
             return redirect()->route('operator.login');
 
         }
     }
+
+
+
+
+
 }
