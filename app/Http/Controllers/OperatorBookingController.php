@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\Operator;
+use App\Mail\OperatorInvoice;
+// use Barryvdh\DomPDF\Facade as PDF;
+use PDF;
+use Illuminate\Support\Facades\Mail;
 use Auth;
 class OperatorBookingController extends Controller
 {
@@ -31,8 +36,9 @@ class OperatorBookingController extends Controller
                     ->with('vehicle')
                     ->orderBy('id','desc')
                     ->paginate($listing_count);
-                //    dd($bookings); 
-        return view('booking', compact('bookings'));
+                    $statuss=['statuss'=>$this->userbookingStatus];  
+                //    dd($bundle); 
+        return view('booking', compact('bookings','statuss'));
 
         // return view('booking');
     }
@@ -100,6 +106,42 @@ class OperatorBookingController extends Controller
             'total'=>$cartTotals['total'],
         ];
         return view('bookingDetails',$bundles);
+    }
+
+
+
+    public function updateStatus(Request $request)
+    {
+        $request->validate([
+            'booking_id' => 'required|integer|exists:bookings,id',
+            'status' => 'required|string'
+        ]);
+
+        $booking = Booking::findOrFail($request->booking_id);        
+        $booking->status = $request->status;
+        $booking->save();
+
+        $cartObj=new CartController();
+        $cartTotals=$cartObj->cartCalc($booking); 
+        $operators = Operator::where('country', $booking->country)->get();
+           foreach ($operators as $operator) {
+               $contact_data = [
+                   "id" => $operator->id,
+                   "first_name" => $operator->first_name,
+                   "email" => $operator->email, 
+               ];
+
+               if ($request->status == 'completed') {
+                
+                $pdf = PDF::loadView('invoices.operator_invoice', compact('booking', 'cartTotals', 'contact_data'));               
+                Mail::to($operator->email)->send(new OperatorInvoice($booking, $cartTotals, $contact_data, $pdf));
+
+            
+            }
+              
+           }
+
+        return response()->json(['success' => true, 'message' => 'Status updated.']);
     }
    
 }

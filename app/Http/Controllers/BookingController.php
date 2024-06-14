@@ -52,14 +52,17 @@ class BookingController extends Controller{
     public function paymentSuccess(Request $request){
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
+
         $provider->getAccessToken();
         $response = $provider->capturePaymentOrder($request['token']);
+        //   dd($response);
+
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
-            //dd($response);
             $booking_id=$response['purchase_units'][0]['reference_id'];
             $user=Auth::user();
             $user_id=$user->id;
             $booking=Booking::where(['user_id'=>$user_id,'id'=>$booking_id])->with('vehicle')->first();
+
             if($booking){
                 if($booking->status=='pending'){
                     $booking->status="paid";
@@ -67,6 +70,19 @@ class BookingController extends Controller{
                     $booking->save();
                     $cartObj=new CartController();
                     $cartTotals=$cartObj->cartCalc($booking);
+
+                    $operators = Operator::where('country', $booking->country)->get();
+                       foreach ($operators as $operator) {
+                           $contact_data = [
+                               "id" => $operator->id,
+                               "first_name" => $operator->first_name,
+                               "email" => $operator->email, 
+                           ];
+   
+                           Mail::to($operator->email)->send(new OperatorNotification($booking,$cartTotals, $contact_data));
+                       }
+
+
                     try{
                         Mail::to($booking->user->email)->send(new BookingEmail($booking,$cartTotals));
                     }catch(Exception $e){
@@ -93,25 +109,33 @@ class BookingController extends Controller{
         }
     }
     public function createPayment(Request $request){
+
         $currency_code="USD";
         $cartObj=new CartController();
         $booking_id=$request->booking_id;
         $user=Auth::user();
         $user_id=$user->id;
         $booking=Booking::where(['user_id'=>$user_id,'id'=>$booking_id])->with('vehicle')->first();
+        //   dd($booking);
+
         if($booking){
             if($booking->status=='pending'){
                 $index = array_search($booking->country, array_column($this->countries, 'short'));
+
                 $currCountry=$this->countries[$index];
                 $currency_code=$currCountry['currency_code'];
                 $cartTotals=$cartObj->cartCalc($booking);
                 $total=$cartTotals['total'];
+                // dd($total);
                 $booking->total_fare=$total;
                 $booking->save();
 
                 $provider = new PayPalClient;
+                //  dd($provider);
+
                 $provider->setApiCredentials(config('paypal'));
                 $paypalToken = $provider->getAccessToken();
+                //  dd($paypalToken);
 
                 $response = $provider->createOrder([
                     "intent" => "CAPTURE",
@@ -130,7 +154,7 @@ class BookingController extends Controller{
                         ]
                     ]
                 ]);
-
+// dd( $response['id'] );
                 if(isset($response['id']) && $response['id'] != null){
                     foreach($response['links'] as $links){
                         if ($links['rel'] == 'approve') {
@@ -170,6 +194,7 @@ class BookingController extends Controller{
         $cartTotals=$cartObj->cartCalc($tripData);
         $total_fare=$cartTotals['total'];
         //$vehicle=Vehicle::where(['country'=>$currCountry])->first();
+        // dd(Auth::guard('web')->check());
         
         if(Auth::guard('web')->check()){
             $status="success";
@@ -298,6 +323,7 @@ class BookingController extends Controller{
                     $bookngData['return_pickup_address']=$tripData->returnDetails->pickupAddress;
                 }
                 $booking=Booking::create($bookngData);
+                // dd($booking);
                 if($booking){
                     session()->forget('cart');
                     return redirect()->route('user.createPayment',['booking_id'=>$booking->id]);

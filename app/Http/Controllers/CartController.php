@@ -140,6 +140,123 @@ class CartController extends Controller{
     
      
     public function addToCart(Request $request){
+        $currCountry = request()->segment(1);
+        $response=array();
+        $success=0;
+        $message="Some thing went wrong please try again later.";
+        
+        $cart=$this->getSessionCart();
+        if(!$cart){
+            $cart=[
+                'start'=>'',
+                'end'=>'',
+                'stops'=>null,
+                'vehicle_id'=>0,
+                'vehicle'=>NULL,
+                'charge'=>0,
+                'route_type'=>'one_way',
+                'distance'=>0,
+                'distanceUnit'=>'KM',
+                'country'=>$currCountry,
+                'customerInfoType'=>'book-with-register',
+                'passengers'=>1,
+                'luggage'=>0,
+                'handBags'=>0,
+                'babySeats'=>"no",
+                'pickupAddress'=>"",
+                'pickupDate'=>"",
+                'pickupTime'=>"",
+                'dropAddress'=>"",
+                'instructions'=>"",
+                'returnDetails'=>(object)[
+                    'pickupAddress'=>"",
+                    'pickupDate'=>"",
+                    'pickupTime'=>"",
+                    'dropAddress'=>"",
+                ],
+
+            ];
+        }
+        $vehicle_id=0;
+        $route_type="one_way";
+        $start="";
+        $end="";
+        $stops=array();
+        $cart['country']=$currCountry;
+        if($request->customerInfoType){
+            $cart['customerInfoType']=$request->customerInfoType;
+        }if($request->passengers){
+            $cart['passengers']=$request->passengers;
+        }if($request->luggages){
+            $cart['luggage']=$request->luggages;
+        }if($request->suitecases){
+            $cart['handBags']=$request->suitecases;
+        }if($request->baby){
+            $cart['babySeats']=$request->baby;
+        }if($request->pickup_address){
+            $cart['pickupAddress']=$request->pickup_address;
+        }if($request->pickup_date){
+            $cart['pickupDate']=$request->pickup_date;
+        }if($request->pickupTime){
+            $cart['pickupTime']=$request->pickupTime;
+        }if($request->drop_address){
+            $cart['dropAddress']=$request->drop_address;
+        }if($request->instructions){
+            $cart['instructions']=$request->instructions;
+        }
+        if($request->return_pickup_date){
+            $cart['returnDetails']->pickupDate=$request->return_pickup_date;
+        }if($request->returnPickupTime){
+            $cart['returnDetails']->pickupTime=$request->returnPickupTime;
+        }if($request->return_pickup_address){
+            $cart['returnDetails']->pickupAddress=$request->return_pickup_address;
+        }if($request->return_dropoff_address){
+            $cart['returnDetails']->dropAddress=$request->return_dropoff_address;
+        }
+        if($request->vehicle_id){
+            $vehicle_id=$request->vehicle_id;
+        }
+        if($request->route_type){
+            $route_type=$request->route_type;
+        }
+        if($request->start){
+            $start=$request->start;
+            $cart['start']=$start;
+        }
+        if($request->end){
+            $end=$request->end;
+            $cart['end']=$end;
+        }
+        if($request->stops){
+            $stops=$request->stops;
+            $cart['stops']=$stops;
+        }
+        if($request->distanceUnit){
+            $cart['distanceUnit']=$request->distanceUnit;
+        }
+        if($request->distance) {
+            $distance=$request->distance;
+            if($distance==-1){
+                $distance=0;
+            }
+            $cart['distance']=$distance;
+        }
+        
+        $vehicle=Vehicle::where(['id'=>$vehicle_id])->first();
+        if($vehicle){
+            $cart['vehicle']=$vehicle;
+            $cart['vehicle_id']=$vehicle_id;
+            $cart['charge']=$vehicle->charge;
+            $cart['route_type']=$route_type;
+        }
+        session(['cart'=>$cart]);
+        $success=1;
+        $message="added to cart";
+        $response['success']=$success;
+        $response['message']=$message;
+        return response()->json($response);
+    }  
+    public function adminaddToCart(Request $request){
         $currCountry = request()->segment(2);
         $response=array();
         $success=0;
