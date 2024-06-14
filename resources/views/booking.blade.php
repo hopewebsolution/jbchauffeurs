@@ -68,10 +68,13 @@
                                     <td>${{ $booking->total_fare }}</td>
                                     <td>{{ $booking->created_at->format('d-M-Y') }}</td>
                                    
-                                    <td>
-                                    <span style="color:blue"> {{$booking->status}}</span> 
-                                      
+                                   
+                                    <td class=" last">
+                                        {!! Form::select('status',$statuss,$booking->status,['class'=>'form-control hws_select status_change','booking-id'=>$booking->id]) !!}
                                     </td>
+                                   
+                                      
+                                   
 
                                    
                                     </tr>
@@ -112,4 +115,33 @@
         <li class="page__btn active"><span class="material-icons"><i class="bi bi-arrow-right-short"></i></span></li>
     </ul> -->
 </main>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+            $('.status_change').on('change', function() {
+                var bookingId = $(this).attr('booking-id');
+                var status = $(this).val();
+                $.ajax({
+                    url: "{{ route('update.status') }}",
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        booking_id: bookingId,
+                        status: status
+                    },
+                    success: function(response) {
+                        if(response.success) {
+                            alert(response.message);
+                        } else {
+                            alert('Failed to update status.');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error('Error:', xhr);
+                        alert('An error occurred while updating the status.');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

@@ -68,6 +68,11 @@ class Controller extends BaseController
         "cancelled"=>"Cancelled",
         "completed"=>"Completed",
     ];
+    public $userbookingStatus=[
+        "pending"=>"pending",
+        "intransit"=>"In-Transit",
+        "completed"=>"Completed",
+    ];
    
 
     public $settings=[

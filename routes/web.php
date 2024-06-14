@@ -116,11 +116,11 @@ Route::group(['middleware' =>'countryCheck'],function(){
 			Route::get('/booking', [OperatorBookingController::class, 'booking'])->name('booking');
 			Route::get('/new-booking', [OperatorBookingController::class, 'newBooking'])->name('newbooking');
 			Route::get('/profile/edit', [OperatorController::class, 'profileEdit'])->name('profile.edit');
+            Route::post('/update-status', [OperatorBookingController::class, 'updateStatus'])->name('update.status');
             Route::post('/profile/update', [OperatorController::class, 'update'])->name('profile.update');
 			Route::get('/changePassword', [OperatorController::class, 'changePassword'])->name('changePassword');
 			Route::Post('/updatePassword', [OperatorController::class, 'OperatorChangePassword'])->name('change.password');
 		    Route::get('/operator/dashboard', [OperatorController::class, 'dashboard'])->name('operator.dashboard');
-
 	        Route::post('/operator/logout', [OperatorController::class, 'logout'])->name('logout');
             Route::post('/accept-booking', [OperatorBookingController::class, 'accept'])->name('accept_booking');
 

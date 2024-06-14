@@ -70,11 +70,13 @@ class VehiclesController extends Controller{
             	}
             	$distance=$this->getDistance($start,$end,$distanceUnit);
                 //$distance=110;
+                // dd($distance);
             }
             if($distance>0){
             	//$distance=-1;
                 $request->distance=$distance;
                 $cartObj->addToCart($request);
+                // dd($cartObj->addToCart($request));
                 return redirect()->route('user.listVehicles');
             }else{
                 return  back()->withErrors(['message'=>'Incorrect location, please select correct locations!!'])->withInput();
@@ -98,6 +100,7 @@ class VehiclesController extends Controller{
         if($request->session()->has('cart')){
         	$tripData=(object) session('cart');
             // dd($tripData);
+            // dd($tripData->country==$currCountry);
         	if($tripData->country==$currCountry){
 	        	$vehicles=Vehicle::where(['country'=>$currCountry])
                         /*->with('fixedRate',function ($query) use($tripData) {
@@ -110,7 +113,7 @@ class VehiclesController extends Controller{
                 if($fixedRate){
                     $fixedAmount=$fixedRate->amount;
                 }
-                //dd($vehicles);
+                // dd($vehicles);
 	        	return view('vehicles',['tripData'=>$tripData,'vehicles'=>$vehicles,'currCountry'=>$currCountry,'fixedAmount'=>$fixedAmount]);
         	}else{
         		return redirect()->route('user.home');
@@ -207,6 +210,7 @@ class VehiclesController extends Controller{
         if($settings->maintenance=="0"){
             $cartObj=new CartController();
             $currCountry = request()->segment(2);
+            // dd($currCountry);
             $start="";
             $end="";
             $stops=array();
@@ -234,7 +238,7 @@ class VehiclesController extends Controller{
             if($distance>0){
             	//$distance=-1;
                 $request->distance=$distance;
-                $cartObj->addToCart($request);
+                $cartObj->adminaddToCart($request);
                 return redirect()->route('admin.listVehicles');
             }else{
                 return  back()->withErrors(['message'=>'Incorrect location, please select correct locations!!'])->withInput();
@@ -245,8 +249,7 @@ class VehiclesController extends Controller{
     }
 
 
-
-
+    
      public function adminListVehicles(Request $request){
     	$listing_count= $this->perpage;
     	$currCountry = request()->segment(2);
