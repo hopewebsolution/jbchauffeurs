@@ -322,7 +322,6 @@ class OperatorController extends Controller{
         return redirect()->back()->withErrors(['password' => 'The new password cannot be the same as the current password.']);
     }
 
-
         $user->password = Hash::make($request->password);
         $user->save();
         return redirect()->back()->with('success', 'Password changed successfully.');
