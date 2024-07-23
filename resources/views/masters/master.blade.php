@@ -14,23 +14,23 @@
         -->
         <title>Airport Transfer | @yield('title') </title>
         
-        <link href="{{ asset('assets/front_assets/images/favicon.png')}}" type="image/x-icon" rel="icon">
+        <link href="{{ asset('public/assets/front_assets/images/favicon.png')}}" type="image/x-icon" rel="icon">
         <!--  
         Stylesheets
         ============================================
         -->
         <!-- Default stylesheets-->
-        <link href="{{ asset('assets/front_assets/css/bootstrap.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('assets/front_assets/vendors/bootstrap-select/dist/css/bootstrap-select.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('assets/front_assets/css/style.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('assets/front_assets/css/main.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('assets/front_assets/css/jcarousel.responsive.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('assets/front_assets/css/datepicker.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('public/assets/front_assets/css/bootstrap.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('public/assets/front_assets/vendors/bootstrap-select/dist/css/bootstrap-select.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('public/assets/front_assets/css/style.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('public/assets/front_assets/css/main.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('public/assets/front_assets/css/jcarousel.responsive.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('public/assets/front_assets/css/datepicker.css')}}" rel="stylesheet" type="text/css" />
         
-        <link href="{{ asset('assets/front_assets/customer/css/login.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('assets/front_assets/css/responsive.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('assets/front_assets/vendors/font-awesome/css/font-awesome.css')}}" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="{{ asset('assets/front_assets/css/rslides.css')}}">
+        <link href="{{ asset('public/assets/front_assets/customer/css/login.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('public/assets/front_assets/css/responsive.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('public/assets/front_assets/vendors/font-awesome/css/font-awesome.css')}}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('public/assets/front_assets/css/rslides.css')}}">
         <style type="text/css">
             .page_banner img {
                 width: 100%;
@@ -149,7 +149,7 @@
                             <div class="slct">
                                 <h3 class="choose-country">Choose Country</h3>
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    <img src="{{ asset('assets/front_assets/images')}}/{{$common->currCountry['flag']}}"  alt=""> 
+                                    <img src="{{ asset('public/assets/front_assets/images')}}/{{$common->currCountry['flag']}}"  alt=""> 
                                     {{$common->currCountry['name']}}
                                     <span class="caret">
                                     </span>
@@ -160,7 +160,7 @@
                                         @foreach($common->countries as $country)
                                             <li class="{{($country['short'] == Request::segment(1)) ? 'active' : ''}}">
                                                 <a href="{{url('/')}}/{{$country['short']}}">
-                                                    <img src="{{ asset('assets/front_assets/images/')}}/{{$country['flag']}}" alt="" /> {{$country['name']}}
+                                                    <img src="{{ asset('public/assets/front_assets/images/')}}/{{$country['flag']}}" alt="" /> {{$country['name']}}
                                                 </a>
                                             </li>
                                         @endforeach
@@ -178,9 +178,9 @@
                             <div class="topleft">
                                 <a href="{{route('user.home')}}">
                                     @if($site_settings->logo)
-                                        <img src="{{ asset('assets/images')}}/{{$site_settings->logo}}" alt="jbchauffeurs">
+                                        <img src="{{ asset('public/assets/images')}}/{{$site_settings->logo}}" alt="jbchauffeurs">
                                     @else
-                                        <img src="{{ asset('assets/front_assets/images/logo.png')}}" alt="jbchauffeurs">
+                                        <img src="{{ asset('public/assets/front_assets/images/logo.png')}}" alt="jbchauffeurs">
                                     @endif
                                 </a>
                             </div>
@@ -189,7 +189,7 @@
                             <ul class="topbar-image hidden-sm hidden-xs">
                                 <li>
                                     <div class="top-lft">
-                                        <img src="{{ asset('assets/front_assets/images/img-lft.png')}}" alt="left" width="100%" />
+                                        <img src="{{ asset('public/assets/front_assets/images/img-lft.png')}}" alt="left" width="100%" />
                                     </div> 
                                 </li>
                             </ul>
@@ -197,13 +197,13 @@
 
                         <div class="col-md-4 col-sm-6 text-right hidden-sm hidden-xs">
                             @if($site_settings->header_img)
-                                <img src="{{ asset('assets/images')}}/{{$site_settings->header_img}}" alt="jbchauffeurs" width="auto" class="mid-img">
+                                <img src="{{ asset('public/assets/images')}}/{{$site_settings->header_img}}" alt="jbchauffeurs" width="auto" class="mid-img">
                             @else
                                 <img src="https://www.jbchauffeurs.com/uploads/banner/-78.jpg" alt="" width="auto" class="mid-img"/>
                             @endif
                         </div>
                         <div class="col-md-2 col-sm-6 text-right hidden-sm hidden-xs">
-                            <img src="{{ asset('assets/front_assets/images/img-right.png')}}" alt="right_img" />
+                            <img src="{{ asset('public/assets/front_assets/images/img-right.png')}}" alt="right_img" />
                         </div>
                     </div>
                 </div>
@@ -288,7 +288,7 @@
                         </div>
                         <div class="col-md-4 col-sm-6">
                             <div class="footer-right">
-                                <img src="{{ asset('assets/front_assets/images/cards.png')}}" alt="Payment Accepted" width="50%" />
+                                <img src="{{ asset('public/assets/front_assets/images/cards.png')}}" alt="Payment Accepted" width="50%" />
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -300,19 +300,19 @@
                 </div>
             </div>       
         </div>
-        <script type="text/javascript" src="{{ asset('assets/front_assets/js/jquery.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('assets/front_assets/js/bootstrap.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('assets/front_assets/js/jquery.jcarousel.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('assets/front_assets/js/jcarousel.responsive.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/assets/front_assets/js/jquery.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/assets/front_assets/js/bootstrap.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/assets/front_assets/js/jquery.jcarousel.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/assets/front_assets/js/jcarousel.responsive.js')}}"></script>
 
         <!--<script type="text/javascript" src="scripts/jquery.validate.js"></script>-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
-        <script type="text/javascript" src="{{ asset('assets/front_assets/js/wowslider.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('assets/front_assets/js/jQueryUI.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/assets/front_assets/js/wowslider.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/assets/front_assets/js/jQueryUI.js')}}"></script>
         <!-- bxslider -->
-        <link href="{{ asset('assets/front_assets/css/jquery.bxslider.css')}}" rel="stylesheet">
-        <script src="{{ asset('assets/front_assets/js/jquery.bxslider.min.js')}}"></script>
-        <script src="{{ asset('assets/front_assets/js/rslides.js')}}"></script>
+        <link href="{{ asset('public/assets/front_assets/css/jquery.bxslider.css')}}" rel="stylesheet">
+        <script src="{{ asset('public/assets/front_assets/js/jquery.bxslider.min.js')}}"></script>
+        <script src="{{ asset('public/assets/front_assets/js/rslides.js')}}"></script>
         <script type="text/javascript">
             /*idleMax = 5;// Logout after 5 minutes of IDLE
              idleTime = 0;
@@ -356,7 +356,7 @@
                 });
             });
         </script>
-        <script type="text/javascript" src="{{ asset('assets/front_assets/vendors/bootstrap-select/dist/js/bootstrap-select.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/assets/front_assets/vendors/bootstrap-select/dist/js/bootstrap-select.js')}}"></script>
         @stack('footer-scripts')
 
         <script type="text/javascript">
