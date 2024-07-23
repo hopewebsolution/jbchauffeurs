@@ -300,12 +300,13 @@ class OperatorController extends Controller{
     }
 
 
-
     public function OperatorChangePassword(Request $request)
     { 
+
+
         $validator = Validator::make($request->all(), [
             'current_password' => 'required',
-            'password' => 'required|string|min:6|max:8',
+            'password' => 'required|confirmed|min:4',
             'password_confirmation' => 'required|same:password',
         ]);
         if ($validator->fails()) {
@@ -314,11 +315,19 @@ class OperatorController extends Controller{
         $user = Auth::guard('weboperator')->user();
         if (!Hash::check($request->current_password, $user->password)) {
             return redirect()->back()->withErrors(['current_password' => 'The current password is incorrect.']);
+        
         }
+        // Check if the new password is the same as the current password
+    if (Hash::check($request->password, $user->password)) {
+        return redirect()->back()->withErrors(['password' => 'The new password cannot be the same as the current password.']);
+    }
+
+
         $user->password = Hash::make($request->password);
         $user->save();
         return redirect()->back()->with('success', 'Password changed successfully.');
     }
+
 
 
     public function acceptBooking()
