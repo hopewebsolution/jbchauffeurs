@@ -72,7 +72,7 @@
 </div>
 </main>
 
-<script>
+<!-- <script>
     document.querySelectorAll('.toggle-password').forEach(icon => {
         icon.addEventListener('click', function() {
             const targetId = this.getAttribute('data-target');
@@ -81,5 +81,5 @@
             passwordField.setAttribute('type', type);
         });
     });
-</script>
+</script> -->
 @endsection
