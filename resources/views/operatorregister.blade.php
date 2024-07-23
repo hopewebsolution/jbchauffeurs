@@ -402,9 +402,8 @@
                                                         <input type="text" placeholder="Authorised contact person"
                                                             class="form-control required" required
                                                             name="authorised_contact_person" value=""
-                                                            
+                                                            minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}"
                                                             class="ys-field">
-                                                            <!-- minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}" -->
                                                         <span class="invalid-feedback">This field is required.</span>
                                                     </div>
                                                     <div class="form-group col-md-6 text-left">
