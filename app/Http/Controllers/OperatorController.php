@@ -45,7 +45,7 @@ class OperatorController extends Controller{
             'licence_expiry_date' => 'required|date',
             'fleet_size' => 'required|string|max:255',
             'dispatch_system' => 'required|string|max:255',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string',
             'password_confirmation' => 'required|same:password',
             'authorised_contact_person' => 'required|string|max:255',
             'authorised_contact_email_address' => 'required|email',
