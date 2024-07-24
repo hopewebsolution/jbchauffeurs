@@ -20,7 +20,7 @@
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
                         <img src="{{ asset('public/assets/operator_dashboard_asset/img/avatar1.avif') }}" alt="Profile" class="rounded-circle">
-                        <h2>{{$operator->first_name }} {{$operator->sur_name }}</h2>
+                        <h2>{{ ucfirst(strtolower($operator->first_name)) }} {{ ucfirst(strtolower($operator->sur_name)) }}</h2>
 
                     </div>
                 </div>
