@@ -609,21 +609,34 @@
                     }
 
                     // Validate website format
+                    // var website = $("input[name='website']").val();
+                    // if (website.trim() === '') {
+                    //     $("input[name='website']").addClass('is-invalid');
+                    //     $("input[name='website']").next('.invalid-feedback').text(
+                    //         'This field is required.').show();
+                    //     valid = false;
+                    // } else if (!isValidUrl(website)) {
+                    //     $("input[name='website']").addClass('is-invalid');
+                    //     $("input[name='website']").next('.invalid-feedback').text(
+                    //         'Please enter a valid URL.').show();
+                    //     valid = false;
+                    // } else {
+                    //     $("input[name='website']").removeClass('is-invalid');
+                    //     $("input[name='website']").next('.invalid-feedback').hide();
+                    // }
                     var website = $("input[name='website']").val();
-                    if (website.trim() === '') {
-                        $("input[name='website']").addClass('is-invalid');
-                        $("input[name='website']").next('.invalid-feedback').text(
-                            'This field is required.').show();
-                        valid = false;
-                    } else if (!isValidUrl(website)) {
-                        $("input[name='website']").addClass('is-invalid');
-                        $("input[name='website']").next('.invalid-feedback').text(
-                            'Please enter a valid URL.').show();
-                        valid = false;
-                    } else {
-                        $("input[name='website']").removeClass('is-invalid');
-                        $("input[name='website']").next('.invalid-feedback').hide();
-                    }
+    if (website.trim() === '') {
+        $("input[name='website']").addClass('is-invalid');
+        $("input[name='website']").next('.invalid-feedback').text('This field is required.').show();
+        valid = false;
+    } else if (!isValidName(website)) {
+        $("input[name='website']").addClass('is-invalid');
+        $("input[name='website']").next('.invalid-feedback').text('Please enter a valid name.').show();
+        valid = false;
+    } else {
+        $("input[name='website']").removeClass('is-invalid');
+        $("input[name='website']").next('.invalid-feedback').hide();
+    }
 
                     // Validate phone number format
                     var phoneNumber = $("input[name='office_phone_number']").val();
@@ -896,10 +909,14 @@
                 }
 
                 // Function to validate URL format
-                function isValidUrl(url) {
-                    var urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-                    return urlRegex.test(url);
-                }
+                // function isValidUrl(url) {
+                //     var urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+                //     return urlRegex.test(url);
+                // }
+                function isValidName(name) {
+    var namePattern = /^[a-zA-Z\s]+$/;
+    return namePattern.test(name);
+}
 
                 // Function to validate phone number format
                 function isValidPhoneNumber(phoneNumber) {
