@@ -250,7 +250,7 @@ class OperatorController extends Controller{
             'authorised_contact_email_address' => 'required|email',
             'authorised_contact_mobile_number' => 'required|string|max:20',
             'about_us' => 'required|string|max:255',
-            'revenue' => 'required|string|max:255',
+            'revenue' => 'required|string',
             'upload_operator_licence' => 'nullable|file|mimes:pdf,jpg,png',
             'upload_public_liability_Insurance' => 'nullable|file|mimes:pdf,jpg,png',
         ]);
