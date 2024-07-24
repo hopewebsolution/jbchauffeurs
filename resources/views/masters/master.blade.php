@@ -234,7 +234,7 @@
                         <li><a href="{{route('user.faq')}}" class="menulink">FAQ</a></li>
                         <li><a href="{{route('user.contactUs')}}" class="menulink" >Contact us</a></li>
                     </ul>
-    
+
                     <div class="clear"></div>
                 </div>
             </div>
