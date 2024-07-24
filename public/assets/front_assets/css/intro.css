@@ -1,0 +1,135 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face {
+    font-family: "KABELDMI";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../fonts/KABELDMI.TTF") format("truetype");
+}
+body
+{
+	margin:0px;
+	padding:0;	
+}
+#introbody
+{
+/*	background:#ffffff url(../images/bg.jpg) repeat-x;*/
+        border-top: 10px solid #576C31;
+        background-color: #EDEDED;
+	text-align:justify;
+	margin:0px;
+	padding:0;
+	color:#556b2f;
+	font-size:19px;	
+	font-family: 'KABELDMI';
+	line-height:20px;
+}
+.intro-bg {
+    background: rgba(116,144,70,1);
+background: -moz-linear-gradient(top, rgba(116,144,70,1) 0%, rgba(86,107,48,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(116,144,70,1)), color-stop(100%, rgba(86,107,48,1)));
+background: -webkit-linear-gradient(top, rgba(116,144,70,1) 0%, rgba(86,107,48,1) 100%);
+background: -o-linear-gradient(top, rgba(116,144,70,1) 0%, rgba(86,107,48,1) 100%);
+background: -ms-linear-gradient(top, rgba(116,144,70,1) 0%, rgba(86,107,48,1) 100%);
+background: linear-gradient(to bottom, rgba(116,144,70,1) 0%, rgba(86,107,48,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#749046', endColorstr='#566b30', GradientType=0 );
+min-height: 290px;
+padding: 20px 0;
+}
+#introwrap {
+	width:822px;
+	margin:0 auto;	
+}
+.intro-entry {
+    margin-top: -95px;
+}
+#introheader{
+/*	background:url(../images/header-bg.jpg) no-repeat bottom;*/
+	padding:7px 0 0 0;	
+	height:145px;
+	text-align:center;
+        background-size: cover;
+}
+
+/*#introheader img
+{
+	margin:18px 0 0 0;
+        
+}*/
+
+.flags ul {
+    padding: 0;
+    text-align: center;
+}
+.flags ul li {
+    display: inline-block;
+    list-style: none;
+    width: 121px;
+    text-align: center;
+   margin: 0 30px;
+}
+.flag-img {
+     margin: 0 auto;
+}
+.flag-img img {
+    width: 100%;
+}
+@media (max-width: 480px) {
+#introwrap {
+    width: 275px;
+    margin:0 auto;	
+}
+.intro-bg img {
+    width: 100%;
+}
+}
+
+@media (min-width: 481px) and (max-width:760px) {
+
+    
+#introwrap {
+    width: 480px;
+    margin:0 auto;	
+}
+
+}
+@media (min-width:760px) and (max-width:800px) {
+    
+#introwrap {
+    width: 710px;
+    margin:0 auto;	
+}
+ .intro-bg img {
+    width: 100%;
+}   
+}
+
+.under-construction-text, .coming-soon  {
+    font-size: 34px;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    color: #303030;
+    line-height: 35px;
+}
+.coming-soon {
+    margin: 20px 0;
+}
+.under-construction-text span, .coming-soon {
+    color: #ffffff;
+}
+.construction {
+    margin-top: -70px;
+}
+.construction .flags ul li {
+    width: 120px;
+    margin: 0 33px;
+}
+.enter-page {
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    color: #D2E20A;
+    line-height: 53px;
+}
+.construction-bg .intro-bg {
+    min-height: 270px;
+}
