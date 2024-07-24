@@ -914,7 +914,7 @@
                     today.setHours(0, 0, 0, 0); // Set to midnight to only compare dates
                     return selectedDate >= today;
                 }
-            });
+        
 
 
 
