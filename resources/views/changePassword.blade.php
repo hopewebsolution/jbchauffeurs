@@ -7,11 +7,7 @@
             <div class="member-login-center">
                 <div class="login-box form-heading">
                     <h3>Change Password</h3>
-                    <!-- @if($errors->has('current_password'))
-    <div class="alert alert-danger">
-        {{ $errors->first('current_password') }}
-    </div>
-@endif -->
+                    
                  @if(session()->has('success'))
     <div class="alert alert-success">
         {{ session('success') }}
@@ -65,4 +61,11 @@
     </div>
 </div>
 </main>
+<script>
+    document.querySelector('.toggle-password').addEventListener('click', function() {
+        const passwordField = document.querySelector('#account-id');
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+    });
+</script>
 @endsection
