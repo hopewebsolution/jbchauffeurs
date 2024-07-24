@@ -52,13 +52,13 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{{ asset('public/assets/operator_dashboard_asset/img/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            <img src="{{ asset('public/assets/operator_dashboard_asset/img/image1.png') }}" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::guard('weboperator')->user()->first_name }} {{ Auth::guard('weboperator')->user()->sur_name}}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
+              <h6>{{ Auth::guard('weboperator')->user()->first_name }} {{ Auth::guard('weboperator')->user()->sur_name}}</h6>
             </li>
             <li>
               <hr class="dropdown-divider">
