@@ -19,18 +19,14 @@
 					<td>{{ $contact_data['email'] }}</td>
 				</tr>
                 <tr>
-                <td>
-					
-@php 
-$appurl = env('APP_URL');
-$currCountry = request()->segment(2);
-
-@endphp
-                    <a href="{{$appurl.'/'.$currCountry.'/booking-details/'.$booking->id}}" style="display: inline-block; padding: 5px 10px; background-color: #001e47; color: #fff; text-decoration: none; border-radius: 4px; float: right;">Accept Booking</a>
-                </td>
-            </tr>
-
-
+                    <td>
+                        @php
+                        $appurl = env('APP_URL');
+                        $currCountry = isset($booking->country) ? $booking->country : ((request()->segment(1) != 'admin') ? request()->segment(1) : request()->segment(2));
+                        @endphp
+                        <a href="{{$appurl.'/'. $booking->country.'/booking-details/'.$booking->id}}" style="display: inline-block; padding: 5px 10px; background-color: #001e47; color: #fff; text-decoration: none; border-radius: 4px; float: right;">Accept Booking</a>
+                    </td>
+                </tr>
 			</tbody>
 		</table>
 
@@ -39,7 +35,7 @@ $currCountry = request()->segment(2);
 			            <tbody><tr style="border:1px solid #eeeeee;  color: #001E47; font-family: 'Droid Serif', serif; font-size: 18px;">
 			                <th colspan="2" style="text-align:left; padding: 5px; border-bottom: 1px solid #ccc;">Passenger Details</th>
 			            </tr>
-			            
+
 			            <tr>
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;">No. of Passengers</td>
 			                <td style="padding: 5px;">{{$booking->passengers}}</td>
@@ -61,7 +57,7 @@ $currCountry = request()->segment(2);
 			                <td style="padding: 5px;">{{$booking->babySeats}}</td>
 			            </tr>
 			        </tbody></table>
-			        
+
 			        <table style="width: 50%; border:1px solid #eeeeee; float:left; width: 380px; margin-bottom: 20px;">
 			            <tbody><tr style="border:1px solid #eeeeee;  color: #001E47; font-family: 'Droid Serif', serif; font-size: 18px;">
 			                <th colspan="2" style="text-align:left; padding: 5px; border-bottom: 1px solid #ccc;">&nbsp;</th>
@@ -102,17 +98,17 @@ $currCountry = request()->segment(2);
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;">Distance</td>
 			                <td style="padding: 5px;">{{$booking->distance}} {{$booking->distanceUnit}}</td>
 			            </tr>
-			            
+
 			            <tr>
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;">Special Instructions</td>
 			                <td style="padding: 5px;">{{$booking->instructions}}</td>
-			            </tr>   
+			            </tr>
 			        </tbody></table>
 			        <div class="clear" style="clear:both;"></div>
-			                        
+
 			    </div>
 
-			        
+
 			    <div class="table" style="margin: 30px 0;">
 			        <table style="width: 50%; border:1px solid #eeeeee; float:left; width: 380px; margin-bottom: 20px;">
 			            <tbody><tr style="border:1px solid #eeeeee;  color: #001E47; font-family: 'Droid Serif', serif; font-size: 18px;">
@@ -130,7 +126,7 @@ $currCountry = request()->segment(2);
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;">Pickup Address Location</td>
 			                <td style="padding: 5px;">{{$booking->pickup_address_line}}</td>
 			            </tr>
-			            
+
 			            <tr>
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;">Drop Off Address</td>
 			                <td style="padding: 5px;">{{$booking->end}}</td>
@@ -139,8 +135,8 @@ $currCountry = request()->segment(2);
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;">Drop Off Address Location</td>
 			                <td style="padding: 5px;">{{$booking->dropoff_address_line}}</td>
 			            </tr>
-			            
-			                        
+
+
 			        </tbody></table>
 			        @if($booking->route_type=="two_way")
 			        <table style="width: 50%; border:1px solid #eeeeee; float:left; width: 380px; margin-bottom: 20px;">
@@ -161,7 +157,7 @@ $currCountry = request()->segment(2);
 			            </tr>
 			        </tbody></table>
 			        @endif
-			        
+
 			        <div class="clear" style="clear:both;"></div>
 			    </div>
 		<div style="clear:both"></div>

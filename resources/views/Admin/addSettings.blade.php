@@ -11,7 +11,7 @@
           <div class="alert alert-danger">
             @foreach ($errors->all() as $error)
               <li>{{ $error }}</li>
-            @endforeach   
+            @endforeach
           </div>
         @endif
         <div class="row">
@@ -42,7 +42,7 @@
                         {!! Form::select('maintenance',['0'=>'No','1'=>'YES'],$settings->maintenance, ['class'=>'form-control','id'=>'maintenance','required'=>'required']) !!}
                         <span class="hws_error text-danger text-right">{{ $errors->first('maintenance') }}</span>
                       </div>
-                      
+
                       <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="footer_text" class="hws_form_label">Footer Text:<span class="text-danger small">* </span></label>
                         {!! Form::textarea('footer_text',$settings->footer_text,['class'=>'form-control','required'=>'required','rows'=>'3']) !!}
@@ -53,8 +53,8 @@
                         {!! Form::text('book_with_title',$settings->book_with_title,['class'=>'form-control','required'=>'required']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('book_with_title') }}</span>
                       </div>
-                    
-                      
+
+
                     </div>
 
                   </div>
@@ -95,7 +95,7 @@
                         {!! Form::text('paypal_live_client_secret',$settings->paypal_live_client_secret,['class'=>'form-control','required'=>'required']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('paypal_live_client_secret') }}</span>
                       </div>
-                      
+
                     </div>
                   </div>
               </div>
@@ -187,6 +187,14 @@
                         {!! Form::number('cardFee',$settings->cardFee,['class'=>'form-control','required'=>'required','step'=>'0.1']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('cardFee') }}</span>
                       </div>
+
+                      {{-- Admin Commission --}}
+                      <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
+                        <label for="admin_commission" class="hws_form_label">Admin Commission (%):<span class="text-danger small">* </span></label>
+                        {!! Form::number('admin_commission',$settings->admin_commission,['class'=>'form-control','required'=>'required','step'=>'1']) !!}
+                        <span class="hws_error text-right text-danger">{{ $errors->first('admin_commission') }}</span>
+                      </div>
+
                     </div>
                   </div>
               </div>
@@ -232,7 +240,7 @@
           </div>
         </div>
       {!! Form::close() !!}
-    </div> 
+    </div>
   </div>
   <!-- /page content -->
 @endsection

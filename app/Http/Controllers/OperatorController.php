@@ -1,36 +1,48 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
+
+use Auth;
+use Validator;
+use Carbon\Carbon;
+use App\Models\Booking;
 use App\Models\Operator;
-use App\Models\PasswordReset;
-use App\Models\FleetDetails;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\AdminNotify;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
-use Validator;
-use Auth;
+use App\Models\FleetDetails;
+use Illuminate\Http\Request;
+use App\Models\PasswordReset;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
-class OperatorController extends Controller{    
-    public function __construct(){
-
+class OperatorController extends Controller
+{
+    public function __construct()
+    {
     }
 
     public function operatorRegisters(Request $request)
-    { 
+    {
         $currCountry = request()->segment(1);
-       
-        return view('operatorregister', ['currCountry' => $currCountry]);
+        $countries = $this->countries;
 
+        $countriesCollection = collect($countries);
+        $filteredCountries = $countriesCollection->where('short', $currCountry);
+        $filteredCountriesArray = $filteredCountries->values()->first();
+
+        $data = [
+            'currCountry' => $currCountry,
+            'countryDetails' => $filteredCountriesArray
+        ];
+
+        return view('operatorregister', $data);
     }
-     
+
     public function AddRegisters(Request $request)
     {
         //   dd($request);
         $validatedData = $request->validate([
-            'email'    => "required|email|max:100|unique:operators,email,".$request->id.",id",
+            'email'    => "required|email|max:100|unique:operators,email," . $request->id . ",id",
             'office_email' => 'required|email',
             'country' => 'required',
             'first_name' => 'required|string|max:255',
@@ -56,38 +68,39 @@ class OperatorController extends Controller{
             'upload_public_liability_Insurance' => 'required|file|mimes:pdf,jpg,png',
         ]);
 
-        
+
         $validatedData['password'] = Hash::make($validatedData['password']);
-        
-        if($request->upload_operator_licence){
-            $fileName=$this->fileUpload($request,"upload_operator_licence",$this->OperatorLicencePath);
-            if($fileName!=""){
-                $validatedData['upload_operator_licence']=$fileName;
-            } 
+
+        if ($request->upload_operator_licence) {
+            $fileName = $this->fileUpload($request, "upload_operator_licence", $this->OperatorLicencePath);
+            if ($fileName != "") {
+                $validatedData['upload_operator_licence'] = $fileName;
+            }
         }
 
-        if($request->upload_public_liability_Insurance){
-            $fileName=$this->fileUpload($request,"upload_public_liability_Insurance",$this->OperatorLicencePath);
-            if($fileName!=""){
-                $validatedData['upload_public_liability_Insurance']=$fileName;
-            } 
+        if ($request->upload_public_liability_Insurance) {
+            $fileName = $this->fileUpload($request, "upload_public_liability_Insurance", $this->OperatorLicencePath);
+            if ($fileName != "") {
+                $validatedData['upload_public_liability_Insurance'] = $fileName;
+            }
         }
-        
+
         $operator = Operator::create($validatedData);
 
         $fleetTypes = implode(',', $request->input('fleet_type', []));
 
         FleetDetails::create([
             'operator_id' => $operator->id,
-            'licensing_local_authority' =>$validatedData['licensing_local_authority'],
-            'private_hire_operator_licence_number' =>$validatedData['private_hire_operator_licence_number'],
+            'licensing_local_authority' => $validatedData['licensing_local_authority'],
+            'private_hire_operator_licence_number' => $validatedData['private_hire_operator_licence_number'],
             'licence_expiry_date' => $validatedData['licence_expiry_date'],
-            'upload_operator_licence' =>$validatedData['upload_operator_licence'],
-            'upload_public_liability_Insurance' =>$validatedData['upload_public_liability_Insurance'],
+            'upload_operator_licence' => $validatedData['upload_operator_licence'],
+            'upload_public_liability_Insurance' => $validatedData['upload_public_liability_Insurance'],
             'fleet_size' => $validatedData['fleet_size'],
             'fleet_type' => $fleetTypes,
-            'dispatch_system' =>$validatedData['dispatch_system'],
+            'dispatch_system' => $validatedData['dispatch_system'],
         ]);
+
         return redirect()->back()->with('success', 'Registration Successful!');
     }
 
@@ -100,13 +113,13 @@ class OperatorController extends Controller{
     public function sendResetLinkEmail(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email'=>'required|email',
+            'email' => 'required|email',
         ]);
         if ($validator->fails()) {
             return  back()->withErrors($validator)->withInput();
         }
 
-        $login = Operator ::where('email',$request->email)->get();
+        $login = Operator::where('email', $request->email)->get();
         $login = Operator::where('email', $request->email)->get();
 
         if ($login->isEmpty()) {
@@ -117,84 +130,79 @@ class OperatorController extends Controller{
                 'token' => $token,
                 'email' => $request->email,
                 'created_at' => Carbon::now(),
-            
+
             ]);
             Mail::send('operator-otp-emailPage', ['token' => $token], function ($message) use ($request) {
                 $message->to($request->email);
                 $message->subject('Operator Reset Password');
             });
             return back()->with('success', 'Please check your email ');
-           
         }
     }
 
     public function forgetPasswordLink($token)
     {
-         return view('otp-forget-page', ['token' => $token]);
+        return view('otp-forget-page', ['token' => $token]);
     }
 
     public function forgetPasswordstore(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email'=>'required|email',
+            'email' => 'required|email',
             'password' => 'required|string|min:4|max:8|',
             'password_confirmation' => 'required|same:password',
         ]);
         if ($validator->fails()) {
             return  back()->withErrors($validator)->withInput();
         }
-            $updatePassword = PasswordReset::where([
-                'email' => $request->email,
-                'token' => $request->token
-            ])->first();
-            if (!$updatePassword) {
-                return redirect()->back()->withErrors(['operatorloginsubmit' => 'Invalid email Please correct email'])->withInput($request->except('password'));
-            } else {
-                $operator = Operator::where('email', $request->email)->first();
-                $operator->password = Hash::make($request->password);
-                $operator->save();
-                PasswordReset::where('email', $request->email)->delete();
-                return redirect()->route('operator.login')->with('success', 'Your password has been reset successfully!');
-            }
-      }
+        $updatePassword = PasswordReset::where([
+            'email' => $request->email,
+            'token' => $request->token
+        ])->first();
+        if (!$updatePassword) {
+            return redirect()->back()->withErrors(['operatorloginsubmit' => 'Invalid email Please correct email'])->withInput($request->except('password'));
+        } else {
+            $operator = Operator::where('email', $request->email)->first();
+            $operator->password = Hash::make($request->password);
+            $operator->save();
+            PasswordReset::where('email', $request->email)->delete();
+            return redirect()->route('operator.login')->with('success', 'Your password has been reset successfully!');
+        }
+    }
 
 
 
-      public function operatorlogin(Request $request)
-      {
+    public function operatorlogin(Request $request)
+    {
         return view('operatorlogin');
-     }
+    }
 
     public function operatorloginsubmit(Request $request)
-    { 
+    {
         // return $request;
-        
 
-         $validator = Validator::make($request->all(), [
+
+        $validator = Validator::make($request->all(), [
             'password' => 'required',
-            'email'=>'required|email',
+            'email' => 'required|email',
         ]);
         if ($validator->fails()) {
             return  back()->withErrors($validator)->withInput();
-
         }
 
         $currCountry = request()->segment(1);
-        if(!$this->validateUser($request,$currCountry)){
+        if (!$this->validateUser($request, $currCountry)) {
             return redirect()->back()->withErrors(['operatorloginsubmit' => 'Invalid email or password!'])->withInput($request->except('password'));
-        }
-        else{
-             
-            return redirect()->route('operator.dashboard');
+        } else {
 
-            
-        } 
+            return redirect()->route('operator.dashboard');
+        }
     }
 
-   public function validateUser(Request $request ,$currCountry)
-   {
-        if (!Auth::guard('weboperator')->attempt(['email'=>$request->email,'password'=>$request->password,'country'=>$currCountry])) {
-        return false;
+    public function validateUser(Request $request, $currCountry)
+    {
+        if (!Auth::guard('weboperator')->attempt(['email' => $request->email, 'password' => $request->password, 'country' => $currCountry])) {
+            return false;
         }
         return true;
     }
@@ -205,19 +213,78 @@ class OperatorController extends Controller{
         Auth::guard('weboperator')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('operator.login'); 
+        return redirect()->route('operator.login');
     }
-        
 
-    public function dashboard()
+
+    public function dashboard(Request $request)
     {
-        return view('operatordashboard');
+        $user = Auth::guard('weboperator')->user();
+
+        //
+        $bookingCountAll = Booking::where(['operator_id' => $user->id]);
+        $bookingInTransit = Booking::where(['operator_id' => $user->id])->where('status', 'intransit')->where('pickup_date', Carbon::today())->count();
+        $bookingCountPending = Booking::where(['operator_id' => $user->id])->where('status', 'pending')->where('pickup_date', Carbon::today())->count();
+        $bookingCountCompleted = Booking::where(['operator_id' => $user->id])->where('status', 'completed');
+        $bookingAmount = Booking::where(['operator_id' => $user->id])->where('status', 'completed');
+
+
+        if (isset($request->booking_days)) {
+            $bookingDays = $request->booking_days;
+
+            if ($bookingDays == 'month') {
+                $bookingCountAll->whereMonth('pickup_date', Carbon::now()->month);
+            }
+            if ($bookingDays == 'year') {
+                $bookingCountAll->whereYear('pickup_date', Carbon::now()->year);
+            }
+            if ($bookingDays == 'today') {
+                $bookingCountAll->where('pickup_date', Carbon::today());
+            }
+        }
+
+        if ($request->earning_days) {
+            if ($request->earning_days == 'month') {
+                $bookingAmount->whereMonth('pickup_date', Carbon::now()->month);
+            }
+            if ($request->earning_days == 'year') {
+                $bookingAmount->whereYear('pickup_date', Carbon::now()->year);
+            }
+            if ($request->earning_days == 'today') {
+                $bookingAmount->where('pickup_date', Carbon::today());
+            }
+        }
+
+        if ($request->completed_booking_days) {
+            if ($request->completed_booking_days == 'month') {
+                $bookingCountCompleted->whereMonth('pickup_date', Carbon::now()->month);
+            }
+            if ($request->completed_booking_days == 'year') {
+                $bookingCountCompleted->whereYear('pickup_date', Carbon::now()->year);
+            }
+            if ($request->completed_booking_days == 'today') {
+                $bookingCountCompleted->where('pickup_date', Carbon::today());
+            }
+        }
+
+
+
+        $data = [
+            'bookingCountAll' => $bookingCountAll->count(),
+            'bookingAmount' => $bookingAmount->sum('operator_earning'),
+            'bookingInTransit' => $bookingInTransit,
+            'bookingCountPending' => $bookingCountPending,
+            'bookingCountCompleted' => $bookingCountCompleted->count(),
+            'user' => $user
+        ];
+
+        return view('operatordashboard', $data);
     }
 
     public function profileEdit()
     {
         $userId = Auth::guard('weboperator')->user()->id;
-        $operator = Operator::with('fleetDetail')->where('id',$userId)->first();
+        $operator = Operator::with('fleetDetail')->where('id', $userId)->first();
         return view('operatorProfile', compact('operator'));
     }
 
@@ -296,13 +363,12 @@ class OperatorController extends Controller{
             ]);
         }
         return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
-        
     }
 
 
 
     public function OperatorChangePassword(Request $request)
-    { 
+    {
         $validator = Validator::make($request->all(), [
             'current_password' => 'required',
             'password' => 'required|string|min:6|max:8',
@@ -323,20 +389,14 @@ class OperatorController extends Controller{
 
     public function acceptBooking()
     {
-         
-        
+
+
         if (Auth::guard('weboperator')) {
-            
+
 
             return redirect()->route('operator.dashboard');
         } else {
             return redirect()->route('operator.login');
-
         }
     }
-
-
-
-
-
 }
