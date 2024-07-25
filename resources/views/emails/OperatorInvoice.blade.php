@@ -19,7 +19,7 @@
 					<td>{{ $contact_data['email'] }}</td>
 				</tr>
                 <tr>
-          
+
             </tr>
 
 
@@ -31,7 +31,7 @@
 			            <tbody><tr style="border:1px solid #eeeeee;  color: #001E47; font-family: 'Droid Serif', serif; font-size: 18px;">
 			                <th colspan="2" style="text-align:left; padding: 5px; border-bottom: 1px solid #ccc;">Passenger Details</th>
 			            </tr>
-			            
+
 			            <tr>
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;">No. of Passengers</td>
 			                <td style="padding: 5px;">{{$booking->passengers}}</td>
@@ -53,7 +53,7 @@
 			                <td style="padding: 5px;">{{$booking->babySeats}}</td>
 			            </tr>
 			        </tbody></table>
-			        
+
 			        <table style="width: 50%; border:1px solid #eeeeee; float:left; width: 380px; margin-bottom: 20px;">
 			            <tbody><tr style="border:1px solid #eeeeee;  color: #001E47; font-family: 'Droid Serif', serif; font-size: 18px;">
 			                <th colspan="2" style="text-align:left; padding: 5px; border-bottom: 1px solid #ccc;">&nbsp;</th>
@@ -64,27 +64,39 @@
 			            </tr>
 			            <tr>
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;"></td>
-			            <td style="padding: 5px;">{{$booking->currency}}{{$cartTotals['fare']}} : Journey Fare<br>
-			                @if($cartTotals['babySeatFare']>0)
-			                    {{$booking->currency}}{{$cartTotals['babySeatFare']}} : Baby Seat<br>
-			                @endif
-			                @if($cartTotals['stopsCost']>0)
-			                    {{$booking->currency}}{{$cartTotals['stopsCost']}} : Additional Stops<br>
-			                @endif
-			                @if($cartTotals['parking_charge']>0)
-			                    {{$booking->currency}}{{$cartTotals['parking_charge']}} : Parking<br>
-			                @endif
-                                <!-- @if($cartTotals['waitCharge']>0)
+                            <td style="padding: 5px;">{{$booking->currency}}{{$cartTotals['fare']}} : Journey Fare<br>
+                                @if($cartTotals['babySeatFare']>0)
+                                    {{$booking->currency}}{{$cartTotals['babySeatFare']}} : Baby Seat<br>
+                                @endif
+                                @if($cartTotals['stopsCost']>0)
+                                    {{$booking->currency}}{{$cartTotals['stopsCost']}} : Additional Stops<br>
+                                @endif
+                                @if($cartTotals['parking_charge']>0)
+                                    {{$booking->currency}}{{$cartTotals['parking_charge']}} : Parking<br>
+                                @endif
+                                @if($cartTotals['waitCharge']>0)
                                     {{$booking->currency}}{{$cartTotals['waitCharge']}} : Waiting<br>
                                 @endif
                                 {{$booking->currency}}{{$cartTotals['gstAmount']}} : {{$site_settings->tax_type}} <br>
-                                {{$booking->currency}}{{$cartTotals['cardFee']}} : Paypal Charge<br> -->
-			                -----------------------<br>
-			            </td>
+                                {{$booking->currency}}{{$cartTotals['cardFee']}} : Paypal Charge<br>
+                                -----------------------<br>
+                                <?php
+                                    $commission = ($cartTotals['total'] * $setting->admin_commission) / 100;
+                                    $cartTotal = $cartTotals['total'] - $commission;
+                                ?>
+                            </td>
 			            </tr>
 			            <tr>
-			                <td style="padding:1px 5px 5px 5px; color: #FF9900; font-weight: bold;">Total Fare</td>
-			                <td><b>{{$booking->currency}}{{$cartTotals['total']}}</b></td>
+			                <td style="padding:1px 5px 5px 5px; color: #FF9900; font-weight: bold;">Commission({{ $setting->admin_commission }}%)</td>
+			                <td><b>{{$booking->currency}}{{$commission}}</b></td>
+			            </tr>
+                        <tr>
+			                <td style="padding:1px 5px 5px 5px; color: #FF9900; font-weight: bold;"></td>
+			                <td>-----------------------</td>
+			            </tr>
+                        <tr>
+			                <td style="padding:1px 5px 5px 5px; color: #FF9900; font-weight: bold;">Your Earning</td>
+			                <td><b>{{$booking->currency}}{{$cartTotal}}</b></td>
 			            </tr>
 			            <!-- <tr>
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;">Payment Type</td>
@@ -94,17 +106,17 @@
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;">Distance</td>
 			                <td style="padding: 5px;">{{$booking->distance}} {{$booking->distanceUnit}}</td>
 			            </tr>
-			            
+
 			            <tr>
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;">Special Instructions</td>
 			                <td style="padding: 5px;">{{$booking->instructions}}</td>
-			            </tr>   
+			            </tr>
 			        </tbody></table>
 			        <div class="clear" style="clear:both;"></div>
-			                        
+
 			    </div>
 
-			        
+
 			    <div class="table" style="margin: 30px 0;">
 			        <table style="width: 50%; border:1px solid #eeeeee; float:left; width: 380px; margin-bottom: 20px;">
 			            <tbody><tr style="border:1px solid #eeeeee;  color: #001E47; font-family: 'Droid Serif', serif; font-size: 18px;">
@@ -122,7 +134,7 @@
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;">Pickup Address Location</td>
 			                <td style="padding: 5px;">{{$booking->pickup_address_line}}</td>
 			            </tr>
-			            
+
 			            <tr>
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;">Drop Off Address</td>
 			                <td style="padding: 5px;">{{$booking->end}}</td>
@@ -131,8 +143,8 @@
 			                <td style="padding: 5px; color: #FF9900; font-weight: bold;">Drop Off Address Location</td>
 			                <td style="padding: 5px;">{{$booking->dropoff_address_line}}</td>
 			            </tr>
-			            
-			                        
+
+
 			        </tbody></table>
 			        @if($booking->route_type=="two_way")
 			        <table style="width: 50%; border:1px solid #eeeeee; float:left; width: 380px; margin-bottom: 20px;">
@@ -153,7 +165,7 @@
 			            </tr>
 			        </tbody></table>
 			        @endif
-			        
+
 			        <div class="clear" style="clear:both;"></div>
 			    </div>
 		<div style="clear:both"></div>

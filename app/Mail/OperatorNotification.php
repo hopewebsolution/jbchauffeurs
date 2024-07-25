@@ -39,6 +39,6 @@ class OperatorNotification extends Mailable
                         'cartTotals' => $this->cartTotals,
                         'contact_data' => $this->contact_data,
                     ]);
-        
+
     }
 }

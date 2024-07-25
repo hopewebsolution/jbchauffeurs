@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Mail;
+
 use App\User;
 use App\Models\Booking;
 use Illuminate\Bus\Queueable;
@@ -14,6 +15,7 @@ class OperatorInvoice extends Mailable
     public $booking;
     public $cartTotals;
     public $contact_data;
+    public $setting;
     public $pdf;
 
     /**
@@ -24,12 +26,13 @@ class OperatorInvoice extends Mailable
      * @param $contact_data
      * @param $pdf
      */
-    public function __construct(Booking $booking, $cartTotals, $contact_data, $pdf)
+    public function __construct(Booking $booking, $cartTotals, $contact_data, $setting, $pdf)
     {
         $this->booking = $booking;
         $this->cartTotals = $cartTotals;
         $this->contact_data = $contact_data;
         $this->pdf = $pdf; // Ensure $pdf is assigned here
+        $this->setting = $setting;
     }
 
     /**
@@ -40,11 +43,9 @@ class OperatorInvoice extends Mailable
     public function build()
     {
         return $this->subject('Operator Invoice Generated')
-                    ->view('emails.OperatorInvoice')
-                    ->attachData($this->pdf->output(), 'operator_invoice.pdf', [
-                        'mime' => 'application/pdf',
-                    ]);
+            ->view('emails.OperatorInvoice')
+            ->attachData($this->pdf->output(), 'operator_invoice.pdf', [
+                'mime' => 'application/pdf',
+            ]);
     }
 }
-
-
