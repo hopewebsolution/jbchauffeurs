@@ -47,7 +47,7 @@
             <td>{{ $operator->created_at->format('d-M-Y') }}</td>
             <td class="last">
                 <a title="Edit" href="{{ route('admin.operator.edit',['page_id'=>$operator->id]) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> </a>
-                <a title="View" href="{{ route('admin.operator.view', $operator->id) }}" class="btn btn-info btn-xs"><i class="fa fa-eye"></i> </a>
+                {{-- <a title="View" href="{{ route('admin.operator.view', $operator->id) }}" class="btn btn-info btn-xs"><i class="fa fa-eye"></i> </a> --}}
                 <a title="Bookings" href="{{ route('admin.bookings', ['operator_id' => $operator->id]) }}" class="btn btn-info btn-xs"><i class="fa fa-calendar"></i> </a>
             </td>
         </tr>
