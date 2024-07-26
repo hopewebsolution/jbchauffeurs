@@ -36,7 +36,7 @@
                 </form>
             </td>
             <td>
-                <form action="{{ route('change-operator-status', $operator->id) }}/" method="post">
+                <form action="{{ route('change-operator-status', $operator->id) }}" method="post">
                     @csrf
                     <select class="form-control submitFromStatuss" name="is_approved">
                         <option value="1" {{ ($operator->is_approved == '1')?'selected':'' }}>Approved</option>
