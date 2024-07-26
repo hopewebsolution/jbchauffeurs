@@ -215,6 +215,7 @@
                         <div width="100%" border="0" cellspacing="5" cellpadding="5">
                             <legend><strong>Passengers Details</strong></legend>
                             <div class="form-group">
+
                                 <label class="col-sm-4 col-xs-6 control-label">No. of Passengers</label>
                                 <div class="col-sm-8 col-xs-6">
                                     {!!
@@ -247,8 +248,7 @@
                             <div class="form-group">
                                 <label class="col-sm-4 col-xs-6 control-label">Baby Seat / Booster:</label>
                                 <div class="col-sm-8 col-xs-6">
-                                    {!! Form::select('baby',$babySeats,$tripData->babySeats,['class'=>'form-control
-                                    select1','id'=>'baby_seat']) !!}
+                                    {!! Form::select('baby',$babySeats,$tripData->babySeats,['class'=>'form-control select1','id'=>'baby_seat']) !!}
                                 </div>
                             </div>
 

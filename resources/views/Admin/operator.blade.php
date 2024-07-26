@@ -27,11 +27,16 @@
           @include('Admin.operatorTable')
         </div>
       </div>
-    </div> 
+    </div>
   </div>
 @endsection
 @push('footer-scripts')
 <script>
+    $(document).ready(function() {
+        $('.submitFromStatuss').change(function() {
+            $(this).closest('form').submit();
+        });
+    });
   $(document).ready(function(){
     $('.searchInput').on('keyup', function(){
       var out_put=$("#ajax_data");
@@ -51,10 +56,10 @@
         out_put.html(data);
       }).fail(function () {
         console.log("unable to get data!");
-      }); 
+      });
     });
-    
+
   });
- 
+
 </script>
 @endpush

@@ -14,7 +14,7 @@ class Operator extends Authenticatable
     protected $fillable = [
         'country',
         'email',
-        'password', 
+        'password',
         'office_email',
         'first_name',
         'postcode',
@@ -27,12 +27,13 @@ class Operator extends Authenticatable
         'authorised_contact_mobile_number',
         'about_us',
         'revenue',
-        'office_phone_number'
-    ]; 
+        'office_phone_number',
+        'status',
+        'is_approved',
+    ];
 
     public function fleetDetail()
     {
         return $this->hasOne(FleetDetails::class);
     }
-
 }

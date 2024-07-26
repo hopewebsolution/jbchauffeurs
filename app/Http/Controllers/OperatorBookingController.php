@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use PDF;
 use Auth;
 use Carbon\Carbon;
-use App\Models\Booking;
+use App\Models\User;
 // use Barryvdh\DomPDF\Facade as PDF;
+use App\Models\Booking;
 use App\Models\Setting;
 use App\Models\Operator;
 use Illuminate\Http\Request;
 use App\Mail\OperatorInvoice;
+use App\Mail\UserBookingCompleted;
 use Illuminate\Support\Facades\Mail;
 
 class OperatorBookingController extends Controller
@@ -100,17 +102,24 @@ class OperatorBookingController extends Controller
 
     public function viewDetails(Request $request, $id)
     {
-        //    dd($id);
+
         $cartObj = new CartController();
         $currCountry = request()->segment(2);
-        //  dd($country);
         $booking_id = $request->booking_id;
         $bookingId = $id;
         $booking = Booking::where('id', $bookingId)
+            ->where(function ($query) use ($currCountry) {
+                $query->where('operator_id', Auth::guard('weboperator')->id())
+                    ->orWhere('operator_id', null);
+            })
             ->with('vehicle')
             ->with('user')
             ->first();
-        //  dd($booking);
+
+        if (!$booking) {
+            return redirect()->route('booking')->with('error', 'Booking not found or already accepted by another operator.');
+        }
+
         $cartTotals = $cartObj->cartCalc($booking);
         $bundles = [
             'booking' => $booking,
@@ -159,11 +168,24 @@ class OperatorBookingController extends Controller
                 "email" => $operator->email,
             ];
 
-            $pdf = PDF::loadView('invoices.operator_invoice', compact('booking', 'cartTotals', 'contact_data', 'setting'));
-            $pdf->setPaper('A4', 'portrait');
-            // Mail::to($operator->email)->send(new OperatorInvoice($booking, $cartTotals, $contact_data, $pdf));
-            Mail::to('tapang786@gmail.com')->send(new OperatorInvoice($booking, $cartTotals, $contact_data, $setting, $pdf));
+            try {
+                //code...
+                $customer = User::where('id', $booking->user_id)->first();
+                if ($customer->email != null) {
+                    Mail::to($customer->email)->send(new UserBookingCompleted($customer, $booking, $cartTotals, $contact_data, $setting));
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+
+            try {
+                $pdf = PDF::loadView('invoices.operator_invoice', compact('booking', 'cartTotals', 'contact_data', 'setting'));
+                $pdf->setPaper('A4', 'portrait');
+                Mail::to($operator->email)->send(new OperatorInvoice($booking, $cartTotals, $contact_data, $setting, $pdf));
+            } catch (\Exception $e) {
+            }
         }
+
         return response()->json(['success' => true, 'message' => 'Status updated.']);
     }
 }

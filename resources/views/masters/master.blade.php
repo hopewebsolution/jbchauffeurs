@@ -8,14 +8,14 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="csrf-token" content="{{ csrf_token() }}" />
-        <!--  
+        <!--
         Document Title
         =============================================
         -->
         <title>Airport Transfer | @yield('title') </title>
-        
+
         <link href="{{ asset('public/assets/front_assets/images/favicon.png')}}" type="image/x-icon" rel="icon">
-        <!--  
+        <!--
         Stylesheets
         ============================================
         -->
@@ -26,7 +26,7 @@
         <link href="{{ asset('public/assets/front_assets/css/main.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('public/assets/front_assets/css/jcarousel.responsive.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('public/assets/front_assets/css/datepicker.css')}}" rel="stylesheet" type="text/css" />
-        
+
         <link href="{{ asset('public/assets/front_assets/customer/css/login.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('public/assets/front_assets/css/responsive.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('public/assets/front_assets/vendors/font-awesome/css/font-awesome.css')}}" rel="stylesheet" type="text/css" />
@@ -112,7 +112,7 @@
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-        
+
           gtag('config', 'G-4G5X5KMNKS');
         </script>
     </head>
@@ -149,7 +149,7 @@
                             <div class="slct">
                                 <h3 class="choose-country">Choose Country</h3>
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    <img src="{{ asset('public/assets/front_assets/images')}}/{{$common->currCountry['flag']}}"  alt=""> 
+                                    <img src="{{ asset('public/assets/front_assets/images')}}/{{$common->currCountry['flag']}}"  alt="">
                                     {{$common->currCountry['name']}}
                                     <span class="caret">
                                     </span>
@@ -173,7 +173,7 @@
             </div>
             <div id="top">
                 <div class="container">
-                    <div class="row">  
+                    <div class="row">
                         <div class="col-sm-5 col-md-3 col-lg-4">
                             <div class="topleft">
                                 <a href="{{route('user.home')}}">
@@ -190,7 +190,7 @@
                                 <li>
                                     <div class="top-lft">
                                         <img src="{{ asset('public/assets/front_assets/images/img-lft.png')}}" alt="left" width="100%" />
-                                    </div> 
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -220,19 +220,24 @@
                     </label>
                     <input type="checkbox" id="show-menu" role="button">
                     <ul id="menu">
-                        <li><a href="{{route('user.home')}}" class="menulink">Home</a></li>
+                        @if($common->header_menus)
+                            @foreach ($common->header_menus as $header_menu)
+                                <li><a href="{{route('user.cmsPage',['page_slug'=>$header_menu->page_type])}}" class="menulink">{{$header_menu->name}}</a></li>
+                            @endforeach
+                        @endif
+                        {{-- <li><a href="{{route('user.home')}}" class="menulink">Home</a></li>
                         <li><a href="{{route('user.about')}}" class="menulink">About Us</a>
-                           
+
                         <li><a href="{{route('user.airportTrans')}}" class="menulink">Airport Transfers </a></li>
-                        <li><a href="{{route('user.howItWorks')}}" class="menulink">How it Works</a></li>
+                        <li><a href="{{route('user.howItWorks')}}" class="menulink">How it Works</a></li> --}}
                         @if(Auth::guard('web')->check())
                             <li><a href="{{route('user.dashboard')}}" class="menulink">Dashboard</a></li>
                         @else
                             {{-- <li><a href="{{route('user.signupForm')}}" class="menulink">Open an Account</a></li> --}}
                         @endif
 
-                        <li><a href="{{route('user.faq')}}" class="menulink">FAQ</a></li>
-                        <li><a href="{{route('user.contactUs')}}" class="menulink" >Contact us</a></li>
+                        {{-- <li><a href="{{route('user.faq')}}" class="menulink">FAQ</a></li>
+                        <li><a href="{{route('user.contactUs')}}" class="menulink" >Contact us</a></li> --}}
                     </ul>
 
                     <div class="clear"></div>
@@ -254,10 +259,10 @@
                         @endif
                         <!-- <li><a href="{{route('user.home')}}" class="menulink">Home</a></li>
                         <li><a href="{{route('user.about')}}" class="menulink">About Us</a>
-                           
+
                         <li><a href="{{route('user.airportTrans')}}" class="menulink">Airport Transfers </a></li>
                         <li><a href="{{route('user.howItWorks')}}" class="menulink">How it Works</a></li>
-                        
+
                         <li><a href="{{route('user.faq')}}" class="menulink">FAQ</a></li>
                         <li><a href="{{route('user.contactUs')}}" class="menulink" style="border: none;">Contact us</a></li>
                         <div class="clear"></div> -->
@@ -267,7 +272,7 @@
             <!-- include ('includes/nav.php')-->
             <div class="clear"></div>
             <div class="main-wrap" id="">
-                @yield('content') 
+                @yield('content')
             </div>
             <div class="clear"></div>
         </div>
@@ -279,10 +284,10 @@
                             <div class="footer-left">
                                 @if($common->footer_menus)
                                     @foreach ($common->footer_menus as $footer_menu)
-                                       <a href="{{route('user.cmsPage',['page_slug'=>$footer_menu->page_type])}}">{{$footer_menu->name}}</a> | 
+                                       <a href="{{route('user.cmsPage',['page_slug'=>$footer_menu->page_type])}}">{{$footer_menu->name}}</a> |
                                     @endforeach
                                 @endif
-                                <!-- <a href="{{route('user.privacyPolicy')}}">Privacy Policy</a> | 
+                                <!-- <a href="{{route('user.privacyPolicy')}}">Privacy Policy</a> |
                                 <a href="{{route('user.terms')}}">Terms &amp; Conditions</a><br> -->
                             </div>
                         </div>
@@ -298,7 +303,7 @@
                         {{$site_settings->footer_text}}
                     </div>
                 </div>
-            </div>       
+            </div>
         </div>
         <script type="text/javascript" src="{{ asset('public/assets/front_assets/js/jquery.js')}}"></script>
         <script type="text/javascript" src="{{ asset('public/assets/front_assets/js/bootstrap.min.js')}}"></script>
@@ -368,6 +373,6 @@
                     });
                 });
             });
-        </script> 
+        </script>
     </body>
 </html>

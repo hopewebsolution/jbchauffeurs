@@ -393,7 +393,7 @@ class BookingController extends Controller
         }
 
         // $bookings=Booking::where(['country'=>$currCountry])->where('status','!=','paid')
-        $bookings = Booking::where(['country' => $currCountry])
+        $query = Booking::where(['country' => $currCountry])
             ->where(function ($query) use ($search_key) {
                 if ($search_key != "") {
                     return $query->orWhere('id', 'LIKE', '%' . $search_key . '%')
@@ -403,8 +403,12 @@ class BookingController extends Controller
             })
             ->with('user')
             ->with('vehicle')
-            ->orderBy('id', 'desc')
-            ->paginate($listing_count);
+            ->orderBy('id', 'desc');
+
+        if (isset($request->operator_id)) {
+            $query->where('operator_id', $request->operator_id);
+        }
+        $bookings = $query->paginate($listing_count);
         $bundle = ['bookings' => $bookings, 'statuss' => $this->bookingStatus];
         if (Request()->ajax()) {
             return response()->json(view('Admin.bookingsTable', $bundle)->render());
@@ -501,6 +505,7 @@ class BookingController extends Controller
         $cartObj->addToCart($request);
 
         $tripData = (object) session('cart');
+        // dd($tripData);
         $cartTotals = $cartObj->cartCalc($tripData);
 
         $total_fare = $cartTotals['total'];
@@ -599,7 +604,7 @@ class BookingController extends Controller
                 $pickdate = Carbon::parse($pickupDate . " " . $pickupTime);
                 $hours = $pickdate->diffInHours(Carbon::now(), true);
                 if ($hours <= 12) {
-                    return  back()->withErrors($validator)->withInput()->with('error', 'Booking allowed when is more than 12 hrs from pickup time.');
+                    return back()->withErrors($validator)->withInput()->with('error', 'Booking allowed when is more than 12 hrs from pickup time.');
                 }
 
                 $user = User::updateOrCreate(['email' => $request->email], [
@@ -660,7 +665,7 @@ class BookingController extends Controller
                     // return redirect()->back();
                     // return redirect()->route('user.createPayment',['booking_id'=>$booking->id]);
                     //return redirect()->route('user.printBooking',['booking_id'=>$booking->id]);
-                    return redirect()->route('admin.bookings.add');
+                    return redirect()->route('admin.bookings')->with('success', 'Booking created successfully.');
                 }
             }
         }

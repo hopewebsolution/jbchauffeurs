@@ -10,7 +10,7 @@
             </ol>
         </nav>
     </div>
-    
+
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -51,7 +51,7 @@
                                         <th scope="col">Total</th>
                                         <th style="min-width:95px;">Date</th>
                                         <th style="width: 135px;">Status</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,22 +67,22 @@
                                     <td>{{ $booking->pickup_date }} {{ $booking->pickup_time }}</td>
                                     <td>${{ $booking->total_fare }}</td>
                                     <td>{{ $booking->created_at->format('d-M-Y') }}</td>
-                                   
-                                   
+
+
                                     <td class=" last">
                                         {!! Form::select('status',$statuss,$booking->status,['class'=>'form-control hws_select status_change','booking-id'=>$booking->id]) !!}
                                     </td>
-                                   
-                                      
-                                   
 
-                                   
+
+
+
+
                                     </tr>
-                                    
-                                    @endforeach 
+
+                                    @endforeach
                                 @else
                                 <tr><td colspan="10" class="text-center">No Record Found</td></tr>
-                                @endif 
+                                @endif
 
                             </tbody>
                         </table>
@@ -96,7 +96,7 @@
         <div class="page_counts">
             Results: {{ $bookings->firstItem() }}
             - {{ $bookings->lastItem() }}
-            of 
+            of
             {{ $bookings->total() }}
         </div>
         <div class="vehi_paginationop">

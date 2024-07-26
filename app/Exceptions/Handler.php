@@ -43,14 +43,14 @@ class Handler extends ExceptionHandler
 
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        $response_data=["success"=>0,"message"=>"invalid token or user session has expired!"];
+        $response_data = ["success" => 0, "message" => "invalid token or user session has expired!"];
         if ($request->expectsJson()) {
             return response()->json($response_data, 401);
         }
-        $guards=$exception->guards();
-        $guard ="";
-        if($guards){
-            $guard =$guards[0];
+        $guards = $exception->guards();
+        $guard = "";
+        if ($guards) {
+            $guard = $guards[0];
         }
         switch ($guard) {
             case 'admin':
@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
                 break;
             case 'api':
                 return response()->json($response_data, 401);
-                break; 
+                break;
             case 'web':
                 $login = 'user.loginForm';
                 break;
@@ -70,5 +70,17 @@ class Handler extends ExceptionHandler
                 break;
         }
         return redirect()->guest(route($login));
+    }
+
+
+    public function render($request, Throwable $exception)
+    {
+        if ($this->isHttpException($exception)) {
+            $statusCode = $exception->getStatusCode();
+            if (view()->exists("errors.{$statusCode}")) {
+                return response()->view("errors.{$statusCode}", [], $statusCode);
+            }
+        }
+        return parent::render($request, $exception);
     }
 }
