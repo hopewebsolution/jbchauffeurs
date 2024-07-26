@@ -3,7 +3,7 @@
 @push('page-scripts')
 @endpush
 @if($operator->id)
-  @section('page_title','View Operator')
+  @section('page_title','Edit Operator')
 @else
   @section('page_title','Add Operator')
 @endif
@@ -11,12 +11,12 @@
   <!-- page content -->
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-      {!! Form::open(['route' =>['admin.pages.create',$page->id],'files' => true]) !!}
+      {!! Form::open(['route' =>['admin.operator.save'],'files' => true]) !!}
         @if ($errors->any())
           <div class="alert alert-danger">
             @foreach ($errors->all() as $error)
               <li>{{ $error }}</li>
-            @endforeach   
+            @endforeach
           </div>
         @endif
         <div class="row">
@@ -24,70 +24,71 @@
               <div class="x_panel">
                   <div class="x_title">
                       <h2 class="sub_title">Operator Content</h2>
-                      <ul class="nav navbar-right panel_toolbox">
+                      {{-- <ul class="nav navbar-right panel_toolbox">
                           <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                           <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                      </ul>
+                      </ul> --}}
                       <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
                     <div class="row">
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="name" class="hws_form_label">Office Email Address:<span class="text-danger small">* </span></label>
-                        {!! Form::text('name',$operator->office_email,['class'=>'form-control','required'=>'required','readonly'=>'readonly']) !!}
+                        {!! Form::text('office_email',$operator->office_email,['class'=>'form-control','required'=>'required']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('office_email') }}</span>
                       </div>
-                      
+                      @csrf
+                      <input type="hidden" name="id" value="{{$operator->id}}">
 
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">First Name:<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->first_name,['class'=>'form-control' ,'readonly'=>'readonly']) !!}
+                        {!! Form::text('first_name',$operator->first_name,['class'=>'form-control' ]) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
 
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Your Surname :<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->sur_name,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('sur_name',$operator->sur_name,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Operator Name :<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->cab_operator_name,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('cab_operator_name',$operator->cab_operator_name,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Legal Company Name :<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->legal_company_name,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('legal_company_name',$operator->legal_company_name,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Office Phone Number :<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->office_phone_number,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('office_phone_number',$operator->office_phone_number,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Postcode<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->postcode,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('postcode',$operator->postcode,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Website<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->website,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('website',$operator->website,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Licensing Local Authority<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->fleetDetail->licensing_local_authority,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('licensing_local_authority',$operator->fleetDetail->licensing_local_authority,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Operator Licence Number<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->fleetDetail->private_hire_operator_licence_number,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('private_hire_operator_licence_number',$operator->fleetDetail->private_hire_operator_licence_number,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Licence Expiry Date<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->fleetDetail->licence_expiry_date,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('licence_expiry_date',$operator->fleetDetail->licence_expiry_date,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
 
@@ -95,48 +96,74 @@
 
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Fleet size<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->fleetDetail->fleet_size,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('fleet_size',$operator->fleetDetail->fleet_size,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Dispatch system<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->fleetDetail->dispatch_system,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('dispatch_system',$operator->fleetDetail->dispatch_system,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Email<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->email,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('email',$operator->email,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
-                    
 
-                   
+
+
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Authorised Contact Person  :<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->authorised_contact_person,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('authorised_contact_person',$operator->authorised_contact_person,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Authorised Contact Email Address:<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->authorised_contact_email_address,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('authorised_contact_email_address',$operator->authorised_contact_email_address,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">Authorised Contact Mobile Number :<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->authorised_contact_mobile_number,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('authorised_contact_mobile_number',$operator->authorised_contact_mobile_number,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">How Did You Hear About Us<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->about_us,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('about_us',$operator->about_us,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
                       <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
                         <label for="title" class="hws_form_label">How Much £ Revenue Each Week Would You Like To Earn<span class="text-danger small">* </span></label>
-                        {!! Form::text('title',$operator->revenue,['class'=>'form-control','readonly'=>'readonly']) !!}
+                        {!! Form::text('revenue',$operator->revenue,['class'=>'form-control']) !!}
                         <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
                       </div>
 
+                      <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
+                        <label for="title" class="hws_form_label">Status<span class="text-danger small">* </span></label>
+                        <select class="form-control submitFromStatuss" name="status">
+                            <option value="1" {{ ($operator->status == '1')?'selected':'' }}>Active</option>
+                            <option value="0" {{ ($operator->status == '0')?'selected':'' }}>Inactive</option>
+                        </select>
+                        <span class="hws_error text-right text-danger">{{ $errors->first('') }}</span>
+                      </div>
+                      <div class="col-md-6 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
+                        <label for="title" class="hws_form_label">Is Approved<span class="text-danger small">* </span></label>
+                        <select class="form-control submitFromStatuss" name="is_approved">
+                            <option value="1" {{ ($operator->is_approved == '1')?'selected':'' }}>Approved</option>
+                            <option value="0" {{ ($operator->is_approved == '0')?'selected':'' }}>Un-Approved</option>
+                        </select>
+                        <span class="hws_error text-right text-danger">{{ $errors->first('title') }}</span>
+                      </div>
+
+
+                      <div class="col-md-12 mb-3 col-sm-12 col-xs-12 form-group has-feedback" style="position: relative;">
+                        <br>
+                        <br>
+                        <br>
+                        {{-- <label for="title" class="hws_form_label">How Much £ Revenue Each Week Would You Like To Earn<span class="text-danger small">* </span></label> --}}
+                        {!! Form::submit('Save',['class'=>'btn btn-primary form-control']) !!}
+
+                      </div>
 
                     </div>
                   </div>
@@ -191,7 +218,7 @@
 
         </div>
       {!! Form::close() !!}
-    </div> 
+    </div>
   </div>
   <!-- /page content -->
 @endsection

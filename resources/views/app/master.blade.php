@@ -33,11 +33,11 @@
 
 <div class="pages">
   <!-- ======= Header ======= -->
-   
+
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="{{ route('operator.dashboard') }}" class="logo d-flex align-items-center">
         <img src="{{ asset('public/assets/operator_dashboard_asset/img/logo.jpg') }}" alt="">
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -82,21 +82,21 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-             
+
               <li>
                 <a class="dropdown-item d-flex align-items-center" href="{{route('changePassword')}}">
                   <i class="bi bi-lock-fill"></i>
                   <span>Change Password</span>
                 </a>
               </li>
-              
-      
-     
+
+
+
             <li>
               <hr class="dropdown-divider">
             </li>
 
-  
+
             <li>
               <a class="dropdown-item d-flex align-items-center"href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="bi bi-box-arrow-right"></i>
@@ -118,19 +118,19 @@
 
   </header><!-- End Header -->
 
-  
+
   @extends('app.sidebar')
-  
+
   <div class="main-content">
 
             @yield('content')
-           
+
     </div>
-    
+
      @extends('app.footer')
     </div>
 
-    
+
 
 
 
@@ -142,7 +142,7 @@
   <!-- Vendor JS Files -->
   <script src=""></script>
   <script src="{{ asset('public/assets/operator_dashboard_asset/vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script> 
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 

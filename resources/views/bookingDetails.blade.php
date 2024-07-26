@@ -1,4 +1,5 @@
-@extends('app.master')
+{{-- @extends('app.master') --}}
+@extends('Admin/masters/master')
 @section('content')
 <main id="main" class="main">
 <div class="row">
@@ -13,11 +14,11 @@
             <div class="wrapper" style="border: 1px solid #cccccc; margin: 0 auto; padding: 15px;">
                 <div class="header" style="background-color: #001E47; padding:10px; height: 50px; font-family: 'Droid Serif', serif;">
                     <div class="biz-name" style="float:left; width: 100%; font-size: 18px; text-transform:uppercase; color: #fff;">
-                        Booking of Jbchauffeurs.com - Booking ID: BK00{{$booking->id}}  
+                        Booking of Jbchauffeurs.com - Booking ID: BK00{{$booking->id}}
                     </div>
                 </div>
-                <div class="clear" style="clear:both;"></div>            
-                                   
+                <div class="clear" style="clear:both;"></div>
+
                 <div class="table" style="margin: 20px 0;">
                     <table style="width: 50%; border:1px solid #eeeeee; float:left; margin-bottom: 20px;">
                         <tbody>
@@ -67,7 +68,7 @@
                             <td style="padding: 5px;">{{$booking->babySeats}}</td>
                         </tr>
                     </tbody></table>
-                    
+
                     <table style="width: 50%; border:1px solid #eeeeee; float:left; margin-bottom: 20px;">
                         <tbody>
                         <tr style="border:1px solid #eeeeee;  color: #001E47; font-family: 'Droid Serif', serif; font-size: 18px;">
@@ -115,7 +116,7 @@
                         <tr>
                             <td style="padding: 5px; color: #FF9900; font-weight: bold;">Special Instructions</td>
                             <td style="padding: 5px;">{{$booking->instructions}}</td>
-                        </tr>   
+                        </tr>
                     </tbody></table>
                     <div class="clear" style="clear:both;"></div>
                 </div>
@@ -138,7 +139,7 @@
                             <td style="padding: 5px; color: #FF9900; font-weight: bold;">Pickup Address Location</td>
                             <td style="padding: 5px;">{{$booking->pickup_address_line}}</td>
                         </tr>
-                        
+
                         <tr>
                             <td style="padding: 5px; color: #FF9900; font-weight: bold;">Drop Off Address</td>
                             <td style="padding: 5px;">{{$booking->end}}</td>
@@ -148,7 +149,7 @@
                             <td style="padding: 5px;">{{$booking->dropoff_address_line}}</td>
                         </tr>
                     </tbody></table>
-                    
+
                     @if($booking->route_type == "two_way")
                     <table style="width: 50%; border:1px solid #eeeeee; float:left; width: 380px; margin-bottom: 20px;">
                         <tbody>
@@ -169,7 +170,7 @@
                         </tr>
                     </tbody></table>
                     @endif
-                    
+
                     <div class="clear" style="clear:both;"></div>
                 </div>
 

@@ -133,7 +133,7 @@
 }
 </style>
 <div id="midwrap1">
-    
+
     <div class="container">
         <div class="cntblock">
             <div class="row">
@@ -161,12 +161,12 @@
                                                 <div class="price_box" width="100%" border="0" cellpadding="0">
                                                     <p>
                                                         <input type="radio" name="route_type" value="one_way" checked id="one_way_{{$vehicle->id}}">
-                                                        <label for="one_way_{{$vehicle->id}}">One Way {{$common->currCountry['currency']}}{{$vehicle->cost($tripData->distance,$vehicle->fares,$fixedAmount)}}</label>
+                                                        <label for="one_way_{{$vehicle->id}}">One Way {{$common->adminCountry['currency']}}{{$vehicle->cost($tripData->distance,$vehicle->fares,$fixedAmount)}}</label>
 
                                                     </p>
                                                     <p>
                                                         <input type="radio" value="two_way" name="route_type" id="two_way_{{$vehicle->id}}">
-                                                        <label for="two_way_{{$vehicle->id}}">Two Way {{$common->currCountry['currency']}}{{$vehicle->cost($tripData->distance,$vehicle->fares,$fixedAmount,2)}}</label>
+                                                        <label for="two_way_{{$vehicle->id}}">Two Way {{$common->adminCountry['currency']}}{{$vehicle->cost($tripData->distance,$vehicle->fares,$fixedAmount,2)}}</label>
                                                     </p>
                                                 </div>
                                                 <div style="margin-top:5px;">
@@ -174,7 +174,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     {!! Form::close() !!}
                                 </div>
                                 <div class="clear"></div>
@@ -182,26 +182,26 @@
                             @else
                             <div class='notification n-information'>No records to display.</div>
                             @endif
-                            <div class="pagi_row">  
-                                <div class="page_counts"> 
+                            <div class="pagi_row">
+                                <div class="page_counts">
                                     Results: {{ $vehicles->firstItem() }}
                                     - {{ $vehicles->lastItem() }}
-                                    of 
+                                    of
                                   {{ $vehicles->total() }}
                                 </div>
-                                <div class="vehi_pagination"> 
+                                <div class="vehi_pagination">
                                     {{ $vehicles->links() }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </div>
 </div>
 @endsection
 @push('footer-scripts')
-    
+
 @endpush

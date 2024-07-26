@@ -257,8 +257,7 @@
                             <div class="form-group">
                                 <label class="col-sm-4 col-xs-6 control-label">Baby Seat / Booster:</label>
                                 <div class="col-sm-8 col-xs-6">
-                                    {!! Form::select('baby',$babySeats,$tripData->babySeats,['class'=>'form-control
-                                    select1','id'=>'baby_seat']) !!}
+                                    {!! Form::select('baby',$babySeats,$tripData->babySeats,['class'=>'form-control select1','id'=>'baby_seat']) !!}
                                 </div>
                             </div>
 
@@ -407,18 +406,24 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </div>
 </div>
+<style>
+    .inputst1 {
+        margin-left: 0px;
+    }
+</style>
 @endsection
 @push('footer-scripts')
 <script type="text/javascript">
 var fare = '{{$fare}}';
 
 $(document).ready(function() {
-    $("#validate-form").validate();
+
+    // $("#validate-form").validate();
     $('#customer-info-form').hide();
     $('#login-form').hide();
     $('#only-for-business').hide();
@@ -432,6 +437,7 @@ $(document).ready(function() {
     $('input[name="account_type"]').change(function() {
         showHiddenBusinessBox();
     });
+
     $("#baby_seat").change(function() {
         var baby_seat = $(this).val();
         var data = {
@@ -439,6 +445,7 @@ $(document).ready(function() {
         }
         updateCheckout(data);
     });
+
     $('input[name="email"]').change(function() {
 
         var email = $('input[name="email"]').val();
@@ -504,7 +511,7 @@ function showHiddenBusinessBox() {
 
 function updateCheckout(data = null) {
     //$(".loader_html").show();
-    var url = "{{ route('user.checkout') }}";
+    var url = "{{ route('admin.checkout') }}";
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -521,5 +528,6 @@ function updateCheckout(data = null) {
         window.href = "";
     });
 }
+
 </script>
 @endpush

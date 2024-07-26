@@ -176,7 +176,7 @@
                                                         <label for="website" class="mt-2">Website<span
                                                                 class="text-danger">*</span></label>
                                                         <input type="text" name="website"
-                                                            class="form-control required" placeholder="Website" required>
+                                                            class="form-control required" pattern="https?://.+\..+" placeholder="Website" required>
                                                         <span class="invalid-feedback">This field is required.</span>
                                                     </div>
                                                 </div>
@@ -562,6 +562,12 @@
             // });
 
 
+            function isValidURL(url) {
+                // Regular expression for validating a URL
+                const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
+                return urlPattern.test(url);
+            }
+
 
             $(document).ready(function() {
                 var current_fs, next_fs, previous_fs;
@@ -622,19 +628,33 @@
                     //     $("input[name='website']").removeClass('is-invalid');
                     //     $("input[name='website']").next('.invalid-feedback').hide();
                     // }
-                    var website = $("input[name='website']").val();
-    if (website.trim() === '') {
-        $("input[name='website']").addClass('is-invalid');
-        $("input[name='website']").next('.invalid-feedback').text('This field is required.').show();
-        valid = false;
-    } else if (!isValidName(website)) {
-        $("input[name='website']").addClass('is-invalid');
-        $("input[name='website']").next('.invalid-feedback').text('Please enter a valid name.').show();
-        valid = false;
-    } else {
-        $("input[name='website']").removeClass('is-invalid');
-        $("input[name='website']").next('.invalid-feedback').hide();
-    }
+
+                    var website = $("input[name='website']").val().trim();
+                    if (website === '') {
+                        $("input[name='website']").addClass('is-invalid');
+                        $("input[name='website']").next('.invalid-feedback').text('This field is required.').show();
+                        valid = false;
+                    } else if (!isValidURL(website)) {
+                        $("input[name='website']").addClass('is-invalid');
+                        $("input[name='website']").next('.invalid-feedback').text('Please enter a valid URL.').show();
+                        valid = false;
+                    } else {
+                        $("input[name='website']").removeClass('is-invalid');
+                        $("input[name='website']").next('.invalid-feedback').hide();
+                    }
+                    // var website = $("input[name='website']").val();
+                    // if (website.trim() === '') {
+                    //     $("input[name='website']").addClass('is-invalid');
+                    //     $("input[name='website']").next('.invalid-feedback').text('This field is required.').show();
+                    //     valid = false;
+                    // } else if (!isValidName(website)) {
+                    //     $("input[name='website']").addClass('is-invalid');
+                    //     $("input[name='website']").next('.invalid-feedback').text('Please enter a valid name.').show();
+                    //     valid = false;
+                    // } else {
+                    //     $("input[name='website']").removeClass('is-invalid');
+                    //     $("input[name='website']").next('.invalid-feedback').hide();
+                    // }
 
                     // Validate phone number format
                     var phoneNumber = $("input[name='office_phone_number']").val();

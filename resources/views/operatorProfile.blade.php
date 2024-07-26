@@ -106,15 +106,51 @@
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Upload Operator Licence</div>
-                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->upload_operator_licence}}</div>
+                                    {{-- <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->upload_operator_licence}}</div> --}}
+                                    <div class="col-lg-9 col-md-8">
+                                        @php
+                                            $file = $operator->fleetDetail->upload_operator_licence;
+                                            $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+                                        @endphp
+
+                                        @if($fileExtension === 'pdf')
+                                            <a href="{{ asset('public/assets/front_assets/uploads/OperatorLicence/' . $file) }}" target="_blank">
+                                                <img src="{{ asset('public/pdf-icon.png') }}" alt="PDF" style="width: 150px; height: auto;">
+                                            </a>
+                                        @elseif(in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
+                                            <a href="{{ asset('public/assets/front_assets/uploads/OperatorLicence/' . $file) }}" target="_blank">
+                                                <img src="{{ asset('public/assets/front_assets/uploads/OperatorLicence/' . $file) }}" alt="Image" style="width: 150px; height: auto;">
+                                            </a>
+                                        @else
+                                            <p>Unsupported file type</p>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Upload Public Liability Insurance </div>
-                                    <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->upload_public_liability_Insurance}}</div>
+                                    {{-- <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->upload_public_liability_Insurance}}</div> --}}
+                                    <div class="col-lg-9 col-md-8">
+                                    @php
+                                        $file = $operator->fleetDetail->upload_public_liability_Insurance;
+                                        $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+                                    @endphp
+
+                                    @if($fileExtension === 'pdf')
+                                        <a href="{{ asset('public/assets/front_assets/uploads/OperatorLicence/' . $file) }}" target="_blank">
+                                            <img src="{{ asset('public/pdf-icon.png') }}" alt="PDF" style="width: 150px; height: auto;">
+                                        </a>
+                                    @elseif(in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
+                                        <a href="{{ asset('public/assets/front_assets/uploads/OperatorLicence/' . $file) }}" target="_blank">
+                                            <img src="{{ asset('public/assets/front_assets/uploads/OperatorLicence/' . $file) }}" alt="Image" style="width: 150px; height: auto;">
+                                        </a>
+                                    @else
+                                        <p>Unsupported file type</p>
+                                    @endif
+                                    </div>
                                 </div>
 
-                              
+
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Fleet size</div>
@@ -123,14 +159,14 @@
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Dispatch system </div>
                                     <div class="col-lg-9 col-md-8">{{$operator->fleetDetail->dispatch_system}}</div>
-                                    
+
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label ">Email</div>
                                     <div class="col-lg-9 col-md-8">{{$operator->email}}</div>
                                 </div>
-                               
-                
+
+
                                 <h5 class="card-title">Fleet</h5>
 
                                 <div class="row">
@@ -249,7 +285,7 @@
                                                                                 Surname <span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="sur_name"
-                                                                                class="form-control required" value="{{$operator->sur_name }}" 
+                                                                                class="form-control required" value="{{$operator->sur_name }}"
                                                                                 placeholder="Your Surname" required>
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>
@@ -380,17 +416,14 @@
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>
                                                                         </div>
-
                                                                     </div>
 
                                                                     <div class="row">
                                                                         <div class="form-group col-md-6 text-left">
                                                                             <label for="upload_operator_licence"
-                                                                                class="mt-2">Upload
-                                                                                Operator
-                                                                                Licence   <span
+                                                                                class="mt-2">Upload Operator Licence   <span
                                                                                     class="text-danger">*</span></label>
-                                                                                    
+
                                                                             <input type="file"
                                                                                 name="upload_operator_licence"
                                                                                 class="form-control required" value="{{$operator->fleetDetail->upload_operator_licence}}"
@@ -404,7 +437,7 @@
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>
                                                                         </div>
-                                                                        
+
                                                                         <div class="form-group col-md-6 text-left">
                                                                             <label
                                                                                 for="upload_public_liability_Insurance"
@@ -416,14 +449,14 @@
                                                                                 class="form-control required"
                                                                                 placeholder="Upload Public Liability Insurance"
                                                                                 >
-                                                                                
+
                                                                                 @if ($operator->fleetDetail && $operator->fleetDetail->upload_public_liability_Insurance)
                                                                                 <div class="mb-3">
                                                                                 <img src="{{ asset('public/assets\front_assets\uploads\OperatorLicence/' . $operator->fleetDetail->upload_public_liability_Insurance) }}" alt="Operator Licence" style="max-width: 200px; max-height: 200px;">
                                                                                 </div>
                                                                                   @endif
-           
-           
+
+
                                                                             <span class="invalid-feedback">This
                                                                                 field is required.</span>                                                                        </div>
                                                                     </div>
@@ -541,7 +574,7 @@
                                                                                 field is required.</span>
                                                                         </div>
                                                                     </div>
-                                                                    
+
                                                                     <div class="backbutton">
                                                                         <input type="button" name="previous-step"
                                                                             class="previous-step"
@@ -550,7 +583,7 @@
                                                                             class="next-step" value="Next Step" />
                                                                     </div>
                                                                 </fieldset>
-                                                                
+
                                                                 <fieldset>
                                                                     <div class="form-heading">
                                                                         <h3> Let’s set up your account</h3>
@@ -621,7 +654,7 @@
                                                                             <label for="revenue" class="mt-2">How
                                                                                 much £ revenue each week
                                                                                 would
-                                                                                you like to earn 
+                                                                                you like to earn
                                                                                      <span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="text" name="revenue"
@@ -685,7 +718,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 jQuery(document).ready(function() {
-    var current_fs, next_fs, previous_fs; 
+    var current_fs, next_fs, previous_fs;
     var animating;
 
     jQuery(".next-step").click(function() {
@@ -721,7 +754,7 @@ jQuery(document).ready(function() {
                 var opacity = 1 - now;
                 current_fs.css({
                     'transform': 'scale(' + scale + ')',
-                    
+
                 });
                 next_fs.css({
                     'left': left,
@@ -746,7 +779,7 @@ jQuery(document).ready(function() {
 
         jQuery("#progressbar li").eq(jQuery("fieldset").index(current_fs)).removeClass("active");
 
-    
+
         previous_fs.show();
         current_fs.animate({
             opacity: 0

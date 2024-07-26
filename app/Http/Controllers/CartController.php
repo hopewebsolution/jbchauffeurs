@@ -28,6 +28,7 @@ class CartController extends Controller
     public function cartCalc($tripData)
     {
         $cartTotal = array();
+
         if ($tripData->vehicle) {
 
             $babySeatFare = 0;
@@ -35,7 +36,14 @@ class CartController extends Controller
             $subtotal = 0;
             $fixedAmount = 0;
             $obj = new SettingController();
-            $settings = $obj->getAllSettings();
+
+            if (request()->segment(1) == 'admin') {
+                $settings = $obj->AdmingetAllSettings();
+            } else {
+                $settings = $obj->getAllSettings();
+            }
+
+
             $fixedRate = FixedRate::where(['start' => $tripData->start, 'end' => $tripData->end])->first();
             $fare = 0;
             if ($fixedRate) {
@@ -411,8 +419,7 @@ class CartController extends Controller
 
     public function adminCheckout(Request $request)
     {
-
-
+        //
         $obj = new SettingController();
 
         $settings = $obj->AdmingetAllSettings();
@@ -422,18 +429,21 @@ class CartController extends Controller
             $currCountry = request()->segment(2);
 
             $tripData = null;
+
             if ($request->session()->has('cart')) {
                 $tripData = (object) session('cart');
 
-                // $vehicle=Vehicle::where(['country'=>$currCountry,'id'=>$tripData->vehicle_id])->first();
-                $vehicle = Vehicle::where(['country' => $currCountry])->first();
+                $vehicle = Vehicle::where(['country' => $currCountry, 'id' => $tripData->vehicle_id])->first();
+                // $vehicle = Vehicle::where(['country' => $currCountry])->first();
 
                 $baby = $tripData->babySeats;
                 if ($request->baby) {
                     $baby = $request->baby;
                     $tripData->babySeats = $baby;
                 }
+
                 $cartTotals = $this->cartCalc($tripData);
+                //
                 $bundles = [
                     'tripData' => $tripData,
                     'vehicle' => $vehicle,
@@ -449,6 +459,7 @@ class CartController extends Controller
                     'total' => $cartTotals['total'],
                     'infoTypesAdmin' => $this->infoTypesAdmin,
                 ];
+
                 if (Request()->ajax()) {
                     return response()->json(view('ajaxCheckout', $bundles)->render());
                 }
