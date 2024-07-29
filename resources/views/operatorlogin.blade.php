@@ -6,20 +6,30 @@
         <div class="col-lg-8 col-md-12">
             <div class="member-login-center">
                 <div class="login-box form-heading">
-              
+
                     <h3>Login</h3>
                     <p class="text-center">Already Registered?</p>
                     @if ($errors->has('operatorloginsubmit'))
-                    <div class="alert alert-danger">
-                        {{ $errors->first('operatorloginsubmit') }}
-                    </div>
-                 @endif
-                 @if(session()->has('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
-                <form method="POST" action="{{ route('operator.login.submit') }}" enctype="multipart/form-data">
+                        <div class="alert alert-danger">
+                            {{ $errors->first('operatorloginsubmit') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            <p style="margin: 0px;">{{ session('error') }}</p>
+                        </div>
+                    @endif
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            <p style="margin: 0px;">{{ session('success') }}</p>
+                        </div>
+                    @endif
+                    @if(session()->has('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    <form method="POST" action="{{ route('operator.login.submit') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group text-left">
                             <label for="account-id">Email</label>
@@ -27,9 +37,9 @@
                             <span class="invalid-feedback">This field is required.</span>
                             @error('email')
                             <strong class="text-danger" style="font-size: 15px;">{{ $message }}</strong>
-                        @enderror                        
+                        @enderror
                         </div>
-                        
+
                         <div class="form-group text-left">
                             <label for="password">Password</label>
                             <div class="password-container">

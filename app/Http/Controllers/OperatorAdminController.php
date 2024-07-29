@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Validator;
 use App\Models\Page;
+use App\Models\Booking;
 use App\Models\Operator;
 use Illuminate\Support\Str;
 use App\Models\FleetDetails;
@@ -61,6 +62,52 @@ class OperatorAdminController extends Controller
         }
 
         return view('Admin.operator', $bundle);
+    }
+
+    public function viewOperator(Request $request, $id)
+    {
+
+        $operator = Operator::where(['id' => $id])->first();
+
+        $currCountry = request()->segment(2);
+        $listing_count = $this->perpage;
+
+        $search_key = "";
+        if ($request->search_key) {
+            $search_key = $request->search_key;
+        }
+
+        // Booking List
+        $query = Booking::where(['country' => $currCountry])
+            ->where(function ($query) use ($search_key) {
+                if ($search_key != "") {
+                    return $query->orWhere('id', 'LIKE', '%' . $search_key . '%')
+                        ->orWhere('start', 'LIKE', '%' . $search_key . '%')
+                        ->orWhere('end', 'LIKE', '%' . $search_key . '%');
+                }
+            })
+            ->where('operator_id', $id)
+            ->with('user')
+            ->with('vehicle')
+            ->orderBy('id', 'desc');
+
+        $bookings = $query->paginate($listing_count);
+        $bundle = ['bookings' => $bookings, 'statuss' => $this->bookingStatus];
+        if (Request()->ajax()) {
+            return response()->json(view('Admin.bookingsTable', $bundle)->render());
+        }
+
+        $data = [
+            'title' => 'Operator Details',
+            'operator' => $operator,
+            'bookings' => $bookings,
+            'statuss' => $this->bookingStatus
+        ];
+        if ($operator) {
+            return view('Admin.viewOperator', $data);
+        } else {
+            return view('Admin.page_404');
+        }
     }
 
     public function changeOperatorStatus(Request $request)

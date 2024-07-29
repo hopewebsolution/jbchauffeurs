@@ -832,6 +832,7 @@
 
 
                 $(".next-step").click(function() {
+
                     current_fs = $(this).closest("fieldset");
                     var valid = true;
 
@@ -932,9 +933,9 @@
                 //     return urlRegex.test(url);
                 // }
                 function isValidName(name) {
-    var namePattern = /^[a-zA-Z\s]+$/;
-    return namePattern.test(name);
-}
+                    var namePattern = /^[a-zA-Z\s]+$/;
+                    return namePattern.test(name);
+                }
 
                 // Function to validate phone number format
                 function isValidPhoneNumber(phoneNumber) {

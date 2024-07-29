@@ -16,6 +16,7 @@ use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use App\Mail\AdminNotify;
 use App\Mail\BookingEmail;
 use App\Mail\OperatorNotification;
+use App\Models\Vehicle;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 
@@ -68,25 +69,43 @@ class BookingController extends Controller
 
             if ($booking) {
                 if ($booking->status == 'pending') {
+
+                    $sendMailToAll = true;
+                    $vehicle = Vehicle::where('id', $booking->vehicle_id)->first();
+                    if (isset($vehicle) && isset($vehicle->operator_id)) {
+                        $booking->operator_id = $vehicle->operator_id;
+                        $sendMailToAll = false;
+                    }
+
                     $booking->status = "paid";
                     $booking->fares = $booking->vehicle;
                     $booking->save();
                     $cartObj = new CartController();
                     $cartTotals = $cartObj->cartCalc($booking);
 
-                    $operators = Operator::where('country', $booking->country)->get();
-                    // $operatorEmails = array();
+                    if ($sendMailToAll) {
+                        //
+                        $operators = Operator::where('country', $booking->country)->get();
 
-                    foreach ($operators as $key => $operator) {
+                        foreach ($operators as $key => $operator) {
+                            $contact_data = [
+                                "id" => $operator->id,
+                                "first_name" => $operator->first_name,
+                                "email" => $operator->email,
+                            ];
+                            Mail::to($operator->email)->send(new OperatorNotification($booking, $cartTotals, $contact_data));
+                        }
+                    } else {
+                        //
+                        $operator = Operator::where('id', $booking->operator_id)->first();
                         $contact_data = [
                             "id" => $operator->id,
                             "first_name" => $operator->first_name,
                             "email" => $operator->email,
                         ];
-                        // $operatorEmails[] = $operator->email;
-
                         Mail::to($operator->email)->send(new OperatorNotification($booking, $cartTotals, $contact_data));
                     }
+
 
                     try {
                         // Mail to user
@@ -648,9 +667,29 @@ class BookingController extends Controller
                 $booking = Booking::create($bookngData);
                 $cartObj = new CartController();
                 $cartTotals = $cartObj->cartCalc($booking);
-                $operators = Operator::where('country', $booking->country)->get();
-                // dd($operators);
-                foreach ($operators as $operator) {
+
+                $sendMailToAll = true;
+                $vehicle = Vehicle::where('id', $booking->vehicle_id)->first();
+                if (isset($vehicle) && isset($vehicle->operator_id)) {
+                    $booking->operator_id = $vehicle->operator_id;
+                    $sendMailToAll = false;
+                    $booking->save();
+                }
+
+                if ($sendMailToAll) {
+                    $operators = Operator::where('country', $booking->country)->get();
+                    // dd($operators);
+                    foreach ($operators as $operator) {
+                        $contact_data = [
+                            "id" => $operator->id,
+                            "first_name" => $operator->first_name,
+                            "email" => $operator->email,
+                        ];
+                        Mail::to($operator->email)->send(new OperatorNotification($booking, $cartTotals, $contact_data));
+                    }
+                } else {
+                    //
+                    $operator = Operator::where('id', $booking->operator_id)->first();
                     $contact_data = [
                         "id" => $operator->id,
                         "first_name" => $operator->first_name,
@@ -658,6 +697,7 @@ class BookingController extends Controller
                     ];
                     Mail::to($operator->email)->send(new OperatorNotification($booking, $cartTotals, $contact_data));
                 }
+
 
                 if ($booking) {
                     session()->forget('cart');

@@ -149,8 +149,8 @@
                             <div class="slct">
                                 <h3 class="choose-country">Choose Country</h3>
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    <img src="{{ asset('public/assets/front_assets/images')}}/{{$common->currCountry['flag']}}"  alt="">
-                                    {{$common->currCountry['name']}}
+                                    <img src="{{ asset('public/assets/front_assets/images')}}/{{$common->currCountry['flag'] ?? ''}}"  alt="">
+                                    {{$common->currCountry['name'] ?? '' }}
                                     <span class="caret">
                                     </span>
                                 </button>
