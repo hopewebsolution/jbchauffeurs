@@ -99,6 +99,8 @@ Route::group(['middleware' => 'countryCheck'], function () {
         Route::group(['middleware' => 'guest:weboperator'], function () {
 
             Route::get('/operator/login', [OperatorController::class, 'operatorlogin'])->name('operator.login');
+            Route::get('/verify-email', [OperatorController::class, 'operatorVerifyEmail'])->name('operator.verify-email'); // Verify email
+
             Route::get('/accept-booking', [OperatorController::class, 'acceptBooking'])->name('accept.booking');
 
 
@@ -108,9 +110,6 @@ Route::group(['middleware' => 'countryCheck'], function () {
             Route::get('/forget-password-link/{token}', [OperatorController::class, 'forgetPasswordLink'])->name('forget.password.link');
             Route::post('/forget-password-store', [OperatorController::class, 'forgetPasswordstore'])->name('forget.password.store');
         });
-
-
-
 
         Route::group(['middleware' => 'auth:weboperator'], function () {
             Route::get('/booking', [OperatorBookingController::class, 'booking'])->name('booking');
@@ -125,10 +124,15 @@ Route::group(['middleware' => 'countryCheck'], function () {
             Route::post('/accept-booking', [OperatorBookingController::class, 'accept'])->name('accept_booking');
 
             Route::get('/booking-details/{Bid}', [OperatorBookingController::class, 'viewDetails'])->name('bookingviewDetails');
+
+            Route::get('/operator/vehicles', [OperatorController::class, 'operatorVehicles'])->name('operator.vehicles');
+            Route::get('/operator/vehicles/create', [OperatorController::class, 'operatorVehiclesCreate'])->name('operator.vehicles.create');
+            Route::get('/operator/vehicles/edit/{id}', [OperatorController::class, 'operatorVehiclesEdit'])->name('operator.vehicles.edit');
+            Route::get('/operator/vehicles/delete/{id}', [OperatorController::class, 'operatorVehiclesDelete'])->name('operator.vehicles.delete');
+            Route::post('/operator/vehicles/store', [OperatorController::class, 'operatorVehiclesStore'])->name('operator.vehicles.store');
         });
 
         /* Operator Route  End  */
-
 
         Route::group(['middleware' => 'auth:web'], function () {
 

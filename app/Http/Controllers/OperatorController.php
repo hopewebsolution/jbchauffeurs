@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Validator;
 use Carbon\Carbon;
 use App\Models\Booking;
+use App\Models\Vehicle;
 use App\Models\Operator;
 use App\Mail\AdminNotify;
+use App\Mail\WelcomeEmail;
 use Illuminate\Support\Str;
 use App\Models\FleetDetails;
 use Illuminate\Http\Request;
 use App\Models\PasswordReset;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -68,40 +70,53 @@ class OperatorController extends Controller
             'upload_public_liability_Insurance' => 'required|file|mimes:pdf,jpg,png',
         ]);
 
-
         $validatedData['password'] = Hash::make($validatedData['password']);
 
-        if ($request->upload_operator_licence) {
-            $fileName = $this->fileUpload($request, "upload_operator_licence", $this->OperatorLicencePath);
-            if ($fileName != "") {
-                $validatedData['upload_operator_licence'] = $fileName;
+        try {
+
+            if ($request->upload_operator_licence) {
+                $fileName = $this->fileUpload($request, "upload_operator_licence", $this->OperatorLicencePath);
+                if ($fileName != "") {
+                    $validatedData['upload_operator_licence'] = $fileName;
+                }
             }
-        }
 
-        if ($request->upload_public_liability_Insurance) {
-            $fileName = $this->fileUpload($request, "upload_public_liability_Insurance", $this->OperatorLicencePath);
-            if ($fileName != "") {
-                $validatedData['upload_public_liability_Insurance'] = $fileName;
+            if ($request->upload_public_liability_Insurance) {
+                $fileName = $this->fileUpload($request, "upload_public_liability_Insurance", $this->OperatorLicencePath);
+                if ($fileName != "") {
+                    $validatedData['upload_public_liability_Insurance'] = $fileName;
+                }
             }
+
+            $operator = Operator::create($validatedData);
+
+            $fleetTypes = implode(',', $request->input('fleet_type', []));
+
+            FleetDetails::create([
+                'operator_id' => $operator->id,
+                'licensing_local_authority' => $validatedData['licensing_local_authority'],
+                'private_hire_operator_licence_number' => $validatedData['private_hire_operator_licence_number'],
+                'licence_expiry_date' => $validatedData['licence_expiry_date'],
+                'upload_operator_licence' => $validatedData['upload_operator_licence'],
+                'upload_public_liability_Insurance' => $validatedData['upload_public_liability_Insurance'],
+                'fleet_size' => $validatedData['fleet_size'],
+                'fleet_type' => $fleetTypes,
+                'dispatch_system' => $validatedData['dispatch_system'],
+            ]);
+
+            // send email
+            try {
+                $this->sendVerificationEmail($operator);
+            } catch (\Exception $e) {
+
+                return redirect()->back()->with('error', 'Error while registration!');
+            }
+
+            return redirect()->back()->with('success', 'Registration Successful!');
+            //
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error while registration!');
         }
-
-        $operator = Operator::create($validatedData);
-
-        $fleetTypes = implode(',', $request->input('fleet_type', []));
-
-        FleetDetails::create([
-            'operator_id' => $operator->id,
-            'licensing_local_authority' => $validatedData['licensing_local_authority'],
-            'private_hire_operator_licence_number' => $validatedData['private_hire_operator_licence_number'],
-            'licence_expiry_date' => $validatedData['licence_expiry_date'],
-            'upload_operator_licence' => $validatedData['upload_operator_licence'],
-            'upload_public_liability_Insurance' => $validatedData['upload_public_liability_Insurance'],
-            'fleet_size' => $validatedData['fleet_size'],
-            'fleet_type' => $fleetTypes,
-            'dispatch_system' => $validatedData['dispatch_system'],
-        ]);
-
-        return redirect()->back()->with('success', 'Registration Successful!');
     }
 
 
@@ -180,8 +195,6 @@ class OperatorController extends Controller
     public function operatorloginsubmit(Request $request)
     {
         // return $request;
-
-
         $validator = Validator::make($request->all(), [
             'password' => 'required',
             'email' => 'required|email',
@@ -191,11 +204,39 @@ class OperatorController extends Controller
         }
 
         $currCountry = request()->segment(1);
+
         if (!$this->validateUser($request, $currCountry)) {
             return redirect()->back()->withErrors(['operatorloginsubmit' => 'Invalid email or password!'])->withInput($request->except('password'));
         } else {
 
+            $operator = Operator::where(['email' => $request->email, 'country' => $currCountry])->first();
+            if (!$operator->status) {
+                Auth::guard('weboperator')->logout();
+                return redirect()->back()->with('error', 'You not allow to login! Please contact with admin!');
+            }
+            if (!$operator->is_approved) {
+                Auth::guard('weboperator')->logout();
+                return redirect()->back()->with('error', 'Your account is not approved at! Please contact with admin!');
+            }
+
             return redirect()->route('operator.dashboard');
+        }
+    }
+
+    public function operatorVerifyEmail(Request $request)
+    {
+        if (now()->timestamp > $request->expires) {
+            // The timestamp has expired
+            // return redirect()->route('operator.login')->with('error', 'Validation link has expired. Please try again!');
+        }
+
+        $operator = Operator::where('id', $request->id)->first();
+        if ($operator) {
+            $operator->status = '1';
+            $operator->save();
+            return redirect()->route('operator.login')->with('success', 'Email verified successfully. Please login now!');
+        } else {
+            return redirect()->route('operator.login')->with('error', 'Invalid Link. Please try again!');
         }
     }
 
@@ -398,5 +439,99 @@ class OperatorController extends Controller
         } else {
             return redirect()->route('operator.login');
         }
+    }
+
+
+    public function operatorVehicles(Request $request)
+    {
+
+        $listing_count = $this->perpage;
+        $currCountry = request()->segment(1);
+        $tripData = null;
+        $data = [];
+
+        $vehicles = Vehicle::where(['country' => $currCountry])
+            ->where('operator_id', Auth::guard('weboperator')->user()->id)
+            ->orderBy('position', 'DESC')
+            ->paginate($listing_count);
+
+        $data['vehicles'] = $vehicles;
+        $data['title'] = 'Vehicles';
+        $data['currCountry'] = $currCountry;
+
+        return view('operator.vehicles', $data);
+
+
+        $vehicles = Vehicle::where('operator_id', Auth::guard('weboperator')->user()->id)->get();
+        return view('operator.vehicles', $data);
+    }
+
+
+    public function operatorVehiclesCreate(Request $request)
+    {
+        $data = [];
+        $data['title'] = 'Create Vehicles';
+        return view('operator.add', $data);
+    }
+
+    public function operatorVehiclesEdit($id)
+    {
+        $data = [];
+        $data['title'] = 'Edit Vehicles';
+        $data['vehicle'] = Vehicle::find($id);
+        return view('operator.add', $data);
+    }
+
+
+    public function operatorVehiclesStore(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'passengers' => 'required',
+            'suitecases' => 'required',
+            'luggages' => 'required',
+            'fixed_rate' => 'required',
+            'per_stop'  => 'required',
+            'baby_seat' => 'required',
+            'parking_charge' => 'required',
+            'position' => 'required',
+        ]);
+
+        $operator = Auth::guard('weboperator')->user();
+        $currCountry = request()->segment(1);
+
+        $data = [
+            'operator_id' => $operator->id,
+            'name' => $request->name,
+            'country' => $currCountry,
+            'passengers' => $request->passengers,
+            'suitecases' => $request->suitecases,
+            'luggages' => $request->luggages,
+            'fixed_rate' => $request->fixed_rate,
+            'per_stop'  => $request->per_stop,
+            'baby_seat' => $request->baby_seat,
+            'parking_charge' => $request->parking_charge,
+            'position' => $request->position,
+        ];
+
+        if ($request->has('image')) {
+            $fileName = $this->fileUpload($request, "image", $this->vehiclePath);
+            if ($fileName != "") {
+                $data['image'] = $fileName;
+            }
+        }
+
+        Vehicle::updateOrCreate([
+            'id' => $request->id,
+        ], $data);
+
+        $message = isset($request->id) ? 'Vehicle updated successfully.' : 'Vehicle added successfully.';
+        return redirect()->route('operator.vehicles')->with('success', $message);
+    }
+
+    public function operatorVehiclesDelete($id)
+    {
+        Vehicle::where('id', $id)->delete();
+        return redirect()->route('operator.vehicles')->with('success', 'Vehicle deleted successfully.');
     }
 }

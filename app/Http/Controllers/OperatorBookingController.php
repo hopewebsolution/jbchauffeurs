@@ -131,7 +131,7 @@ class OperatorBookingController extends Controller
             'cardFee' => $cartTotals['cardFee'],
             'total' => $cartTotals['total'],
         ];
-        return view('bookingDetails', $bundles);
+        return view('operator-booking-details', $bundles);
     }
 
 
