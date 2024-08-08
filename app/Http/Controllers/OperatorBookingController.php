@@ -57,13 +57,13 @@ class OperatorBookingController extends Controller
     public function newBooking(Request $request)
     {
         $currCountry = request()->segment(1);
+        $user = Auth::guard('weboperator')->user();
         $listing_count = $this->perpage;
         $search_key = "";
         if ($request->search_key) {
             $search_key = $request->search_key;
         }
-        // $bookings=Booking::where(['country'=>$currCountry])->where('status','!=','pending')
-        $bookings = Booking::where(['country' => $currCountry])->where('status', 'pending')->where('operator_id', null)
+        $bookings = Booking::where(['country' => $user->country])->where('status', 'pending')->where('operator_id', null)
             ->where(function ($query) use ($search_key) {
                 if ($search_key != "") {
                     return $query->orWhere('id', 'LIKE', '%' . $search_key . '%')
