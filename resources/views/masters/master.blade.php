@@ -318,7 +318,36 @@
         <link href="{{ asset('public/assets/front_assets/css/jquery.bxslider.css')}}" rel="stylesheet">
         <script src="{{ asset('public/assets/front_assets/js/jquery.bxslider.min.js')}}"></script>
         <script src="{{ asset('public/assets/front_assets/js/rslides.js')}}"></script>
+
+
         <script type="text/javascript">
+            (function($,W,D){
+                var JQUERY4U = {};
+                JQUERY4U.UTIL = {       
+                    setupFormValidation: function() {
+                        $("#form").validate({
+                            rules: {
+                                /* office_email:{
+                                    required: true,
+                                },	 						
+                                revenue:{
+                                    required: true,
+                                }*/									
+                            },
+                            messages: { 
+                                			
+                            },
+                            submitHandler: function(form) {
+                                form.submit();
+                            }
+                        });
+                    }
+                }
+                $(D).ready(function($) {
+                    JQUERY4U.UTIL.setupFormValidation();
+                });
+            })(jQuery, window, document); 
+
             /*idleMax = 5;// Logout after 5 minutes of IDLE
              idleTime = 0;
              $(document).ready(function () {

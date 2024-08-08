@@ -1,4 +1,3 @@
-[11:29 AM] Ashok Yadav
 /*Display the dropdown on hover*/
 ul li a:hover+.hidden,
 .hidden:hover {
@@ -85,7 +84,7 @@ input[type=checkbox]:checked~#menu {
 }
  
 label.error {
-    display: none !important;
+    color: #ff0000;
 }
  
 #distance {
@@ -381,9 +380,8 @@ label.error {
     background-color: #008000
 }
  
-.member-login-center .invalid-feedback {
+.member-login-center #form label.error {
     color: red;
-    display: none;
     font-size: 12px;
     margin-top: 5px;
 }

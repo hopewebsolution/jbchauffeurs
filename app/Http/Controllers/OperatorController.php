@@ -25,25 +25,12 @@ class OperatorController extends Controller
 
     public function operatorRegisters(Request $request)
     {
-        $currCountry = request()->segment(1);
-        $countries = $this->countries;
-
-        $countriesCollection = collect($countries);
-        $filteredCountries = $countriesCollection->where('short', $currCountry);
-        $filteredCountriesArray = $filteredCountries->values()->first();
-
-        $data = [
-            'currCountry' => $currCountry,
-            'countryDetails' => $filteredCountriesArray
-        ];
-
-        return view('operatorregister', $data);
+        return view('operatorregister');
     }
 
     public function AddRegisters(Request $request)
     {
-        //   dd($request);
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(),[
             'email'    => "required|email|max:100|unique:operators,email," . $request->id . ",id",
             'office_email' => 'required|email',
             'country' => 'required',
@@ -69,53 +56,52 @@ class OperatorController extends Controller
             'upload_operator_licence' => 'required|file|mimes:pdf,jpg,png',
             'upload_public_liability_Insurance' => 'required|file|mimes:pdf,jpg,png',
         ]);
-
-        $validatedData['password'] = Hash::make($validatedData['password']);
-
-        try {
-
-            if ($request->upload_operator_licence) {
-                $fileName = $this->fileUpload($request, "upload_operator_licence", $this->OperatorLicencePath);
-                if ($fileName != "") {
-                    $validatedData['upload_operator_licence'] = $fileName;
-                }
-            }
-
-            if ($request->upload_public_liability_Insurance) {
-                $fileName = $this->fileUpload($request, "upload_public_liability_Insurance", $this->OperatorLicencePath);
-                if ($fileName != "") {
-                    $validatedData['upload_public_liability_Insurance'] = $fileName;
-                }
-            }
-
-            $operator = Operator::create($validatedData);
-
-            $fleetTypes = implode(',', $request->input('fleet_type', []));
-
-            FleetDetails::create([
-                'operator_id' => $operator->id,
-                'licensing_local_authority' => $validatedData['licensing_local_authority'],
-                'private_hire_operator_licence_number' => $validatedData['private_hire_operator_licence_number'],
-                'licence_expiry_date' => $validatedData['licence_expiry_date'],
-                'upload_operator_licence' => $validatedData['upload_operator_licence'],
-                'upload_public_liability_Insurance' => $validatedData['upload_public_liability_Insurance'],
-                'fleet_size' => $validatedData['fleet_size'],
-                'fleet_type' => $fleetTypes,
-                'dispatch_system' => $validatedData['dispatch_system'],
-            ]);
-
-            // send email
+        //
+        if($validator->fails()){
+            return  back()->withErrors($validator)->withInput();
+        }else{
             try {
-                $this->sendVerificationEmail($operator);
-            } catch (\Exception $e) {
+                $validatedData=$request->all();
+                $validatedData['password'] = Hash::make($validatedData['password']);
+                if($request->upload_operator_licence){
+                    $fileName = $this->fileUpload($request, "upload_operator_licence", $this->OperatorLicencePath);
+                    if ($fileName != "") {
+                        $validatedData['upload_operator_licence'] = $fileName;
+                    }
+                }
 
+                if ($request->upload_public_liability_Insurance) {
+                    $fileName = $this->fileUpload($request, "upload_public_liability_Insurance", $this->OperatorLicencePath);
+                    if ($fileName != "") {
+                        $validatedData['upload_public_liability_Insurance'] = $fileName;
+                    }
+                }
+
+                $operator = Operator::create($validatedData);
+                $fleetTypes = implode(',', $request->input('fleet_type', []));
+
+                FleetDetails::create([
+                    'operator_id' => $operator->id,
+                    'licensing_local_authority' => $validatedData['licensing_local_authority'],
+                    'private_hire_operator_licence_number' => $validatedData['private_hire_operator_licence_number'],
+                    'licence_expiry_date' => $validatedData['licence_expiry_date'],
+                    'upload_operator_licence' => $validatedData['upload_operator_licence'],
+                    'upload_public_liability_Insurance' => $validatedData['upload_public_liability_Insurance'],
+                    'fleet_size' => $validatedData['fleet_size'],
+                    'fleet_type' => $fleetTypes,
+                    'dispatch_system' => $validatedData['dispatch_system'],
+                ]);
+
+                // send email
+                try {
+                    $this->sendVerificationEmail($operator);
+                } catch (\Exception $e) {
+                    return redirect()->back()->with('error', 'Error while registration!');
+                }
+                return redirect()->route('operator.login')->with('success', 'Thank you for registration! Please check your email to verify your account.');
+            } catch (\Exception $e) {
                 return redirect()->back()->with('error', 'Error while registration!');
             }
-
-            return redirect()->back()->with('success', 'Registration Successful!');
-            //
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error while registration!');
         }
     }
 
@@ -212,11 +198,11 @@ class OperatorController extends Controller
             $operator = Operator::where(['email' => $request->email, 'country' => $currCountry])->first();
             if (!$operator->status) {
                 Auth::guard('weboperator')->logout();
-                return redirect()->back()->with('error', 'You not allow to login! Please contact with admin!');
+                return redirect()->back()->with('error', 'Your email is not verified. Please check your inbox for a verification link.');
             }
             if (!$operator->is_approved) {
                 Auth::guard('weboperator')->logout();
-                return redirect()->back()->with('error', 'Your account is not approved at! Please contact with admin!');
+                return redirect()->back()->with('error', 'Your account is not approved at! Please contact with Support!');
             }
 
             return redirect()->route('operator.dashboard');
