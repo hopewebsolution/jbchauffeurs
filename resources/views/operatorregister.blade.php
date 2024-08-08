@@ -402,7 +402,7 @@
                                                         <input type="text"
                                                             placeholder="Authorised contact’s mobile number "
                                                             class="form-control required" required
-                                                            name="authorised_contact_mobile_number" value=""
+                                                            name="authorised_contact_mobile_number"
                                                             minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}"
                                                             class="ys-field" value="{{old('authorised_contact_mobile_number')}}">  
                                                     </div>
