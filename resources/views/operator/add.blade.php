@@ -27,7 +27,7 @@
                             <div class="row mb-3">
                                 <div class="mt-3 col-md-12">
                                     <div class="form-group">
-                                        <label for="name" class="col-md-4 col-lg-3 col-form-label">Name</label>
+                                        <label for="name" class="col-form-label">Name</label>
                                         <input name="name" type="text" class="form-control" id="name" value="{{ isset($vehicle->name)?$vehicle->name:old('name') }}">
                                         @if($errors->has('name' ))
                                             <p class="help-block">
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="mt-3 col-md-6">
                                     <div class="form-group">
-                                        <label for="passengers" class="col-md-4 col-lg-3 col-form-label">Passengers</label>
+                                        <label for="passengers" class="col-form-label">Passengers</label>
                                         <input name="passengers" type="number" class="form-control" id="passengers" value="{{ isset($vehicle->passengers)?$vehicle->passengers:old('passengers') }}">
                                         @if($errors->has('passengers' ))
                                             <p class="help-block">
@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="mt-3 col-md-6">
                                     <div class="form-group">
-                                        <label for="suitecases" class="col-md-4 col-lg-3 col-form-label">Hand Bags</label>
+                                        <label for="suitecases" class="col-form-label">Hand Bags</label>
                                         <input name="suitecases" type="number" class="form-control" id="suitecases" value="{{ isset($vehicle->suitecases)?$vehicle->suitecases:old('suitecases') }}">
                                         @if($errors->has('suitecases' ))
                                             <p class="help-block">
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="mt-3 col-md-6">
                                     <div class="form-group">
-                                        <label for="luggages" class="col-md-4 col-lg-3 col-form-label">Luggages</label>
+                                        <label for="luggages" class="col-form-label">Luggages</label>
                                         <input name="luggages" type="number" class="form-control" id="luggages" value="{{ isset($vehicle->luggages)?$vehicle->luggages:old('luggages') }}">
                                         @if($errors->has('luggages' ))
                                             <p class="help-block">
@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="mt-3 col-md-6">
                                     <div class="form-group">
-                                        <label for="per_stop" class="col-md-4 col-lg-3 col-form-label">Additional Stop:</label>
+                                        <label for="per_stop" class="col-form-label">Additional Stop:</label>
                                         <input name="per_stop" type="number" class="form-control" id="per_stop" value="{{ isset($vehicle->per_stop)?$vehicle->per_stop:old('per_stop') }}">
                                         @if($errors->has('per_stop' ))
                                             <p class="help-block">
@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="mt-3 col-md-6">
                                     <div class="form-group">
-                                        <label for="baby_seat" class="col-md-4 col-lg-3 col-form-label">Baby Seat</label>
+                                        <label for="baby_seat" class="col-form-label">Baby Seat</label>
                                         <input name="baby_seat" type="number" class="form-control" id="baby_seat" value="{{ isset($vehicle->baby_seat)?$vehicle->baby_seat:old('baby_seat') }}">
                                         @if($errors->has('baby_seat' ))
                                             <p class="help-block">
@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="mt-3 col-md-6">
                                     <div class="form-group">
-                                        <label for="parking_charge" class="col-md-4 col-lg-3 col-form-label">Parking</label>
+                                        <label for="parking_charge" class="col-form-label">Parking</label>
                                         <input name="parking_charge" type="number" class="form-control" id="parking_charge" value="{{ isset($vehicle->parking_charge)?$vehicle->parking_charge:old('parking_charge') }}">
                                         @if($errors->has('parking_charge' ))
                                             <p class="help-block">
@@ -104,7 +104,7 @@
                                 </div>
                                 <div class="mt-3 col-md-6">
                                     <div class="form-group">
-                                        <label for="fixed_rate" class="col-md-4 col-lg-3 col-form-label">Fixed Rate(0-300%)</label>
+                                        <label for="fixed_rate" class="col-form-label">Fixed Rate(0-300%)</label>
                                         <input name="fixed_rate" type="number" class="form-control" id="fixed_rate" value="{{ isset($vehicle->fixed_rate)?$vehicle->fixed_rate:old('fixed_rate') }}">
                                         @if($errors->has('fixed_rate' ))
                                             <p class="help-block">
@@ -115,7 +115,7 @@
                                 </div>
                                 <div class="mt-3 col-md-6">
                                     <div class="form-group">
-                                        <label for="position" class="col-md-4 col-lg-3 col-form-label">Order</label>
+                                        <label for="position" class="col-form-label">Order</label>
                                         <input name="position" type="number" class="form-control" id="position" value="{{ isset($vehicle->position)?$vehicle->position:old('position') }}">
                                         @if($errors->has('position' ))
                                             <p class="help-block">
@@ -126,7 +126,7 @@
                                 </div>
                                 <div class="mt-3 col-md-6">
                                     <div class="form-group">
-                                        <label for="image" class="col-md-4 col-lg-3 col-form-label">Image</label>
+                                        <label for="image" class="col-form-label">Image</label>
                                         <input name="image" type="file" class="form-control" id="image" >
                                         @if($errors->has('image' ))
                                             <p class="help-block">

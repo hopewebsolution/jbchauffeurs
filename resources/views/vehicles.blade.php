@@ -2,7 +2,7 @@
 @section('title', 'Vehicles')
 @section('content')
 <div id="midwrap1">
-    
+
     <div class="container">
         <div class="cntblock">
             <div class="row">
@@ -43,7 +43,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     {!! Form::close() !!}
                                 </div>
                                 <div class="clear"></div>
@@ -51,14 +51,14 @@
                             @else
                             <div class='notification n-information'>No records to display.</div>
                             @endif
-                            <div class="pagi_row">  
-                                <div class="page_counts"> 
+                            <div class="pagi_row">
+                                <div class="page_counts">
                                     Results: {{ $vehicles->firstItem() }}
                                     - {{ $vehicles->lastItem() }}
-                                    of 
+                                    of
                                   {{ $vehicles->total() }}
                                 </div>
-                                <div class="vehi_pagination"> 
+                                <div class="vehi_pagination">
                                     {{ $vehicles->links() }}
                                 </div>
                             </div>
@@ -75,5 +75,5 @@
 </div>
 @endsection
 @push('footer-scripts')
-    
+
 @endpush
