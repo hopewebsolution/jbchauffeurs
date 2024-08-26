@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
+use Svg\Tag\Rect;
 use Carbon\Carbon;
+use App\Models\Fare;
 use App\Models\Booking;
 use App\Models\Vehicle;
 use App\Models\Operator;
@@ -16,12 +17,11 @@ use App\Models\PasswordReset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class OperatorController extends Controller
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function operatorRegisters(Request $request)
     {
@@ -30,7 +30,7 @@ class OperatorController extends Controller
 
     public function AddRegisters(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'email'    => "required|email|max:100|unique:operators,email," . $request->id . ",id",
             'office_email' => 'required|email',
             'country' => 'required',
@@ -57,13 +57,13 @@ class OperatorController extends Controller
             'upload_public_liability_Insurance' => 'required|file|mimes:pdf,jpg,png',
         ]);
         //
-        if($validator->fails()){
+        if ($validator->fails()) {
             return  back()->withErrors($validator)->withInput();
-        }else{
+        } else {
             try {
-                $validatedData=$request->all();
+                $validatedData = $request->all();
                 $validatedData['password'] = Hash::make($validatedData['password']);
-                if($request->upload_operator_licence){
+                if ($request->upload_operator_licence) {
                     $fileName = $this->fileUpload($request, "upload_operator_licence", $this->OperatorLicencePath);
                     if ($fileName != "") {
                         $validatedData['upload_operator_licence'] = $fileName;
@@ -519,5 +519,91 @@ class OperatorController extends Controller
     {
         Vehicle::where('id', $id)->delete();
         return redirect()->route('operator.vehicles')->with('success', 'Vehicle deleted successfully.');
+    }
+
+
+    public function operatorFares(Request $request)
+    {
+        $listing_count = $this->perpage;
+        $currCountry = request()->segment(1);
+
+        $data = [];
+        $vehicles = Vehicle::where(['country' => $currCountry])->where('operator_id', Auth::guard('weboperator')->user()->id)->pluck('id')->toArray();
+        $fares = Fare::whereIn('vehicle_id', $vehicles)
+            ->orderBy('created_at', 'DESC')
+            ->paginate($listing_count);
+
+        $data['fares'] = $fares;
+        $data['title'] = 'Fares';
+        $data['currCountry'] = $currCountry;
+
+        return view('operator.fares.fares', $data);
+    }
+
+    public function operatorFaresCreate(Request $request)
+    {
+        $currCountry = request()->segment(1);
+        $data = ['title' => 'Create Fares'];
+        $data['vehicles'] = Vehicle::where('country', $currCountry)->where('operator_id', Auth::guard('weboperator')->user()->id)->get();
+
+        return view('operator.fares.add-fare', $data);
+    }
+
+    public function operatorFaresStore(Request $request)
+    {
+        //
+        $validator = Validator::make($request->all(), [
+            'vehicle_id' => 'required',
+            'start' => 'required|numeric|min:0|lt:end',
+            'end' => 'required|numeric|gt:start',
+            'rate' => 'required',
+        ], [
+            'vehicle_id.required' => 'Please select vehicle.',
+            'start.required' => 'Please enter start value.',
+            'start.numeric' => 'Please enter valid start value.',
+            'start.lt' => 'Start value should be less than end value.',
+            'end.required' => 'Please enter end value.',
+            'end.numeric' => 'Please enter valid end value.',
+            'end.gt' => 'End value should be greater than start value.',
+            'rate.required' => 'Please enter rate.',
+            'rate.numeric' => 'Please enter valid rate.',
+            'start.min' => 'Start value should be greater than or equal to 0.',
+        ]);
+
+        if ($validator->fails()) {
+            return  back()->withErrors($validator)->withInput();
+        }
+
+        Fare::updateOrCreate([
+            'id' => $request->id,
+        ], [
+            'vehicle_id' => $request->vehicle_id,
+            'start' => $request->start,
+            'end' => $request->end,
+            'rate' => $request->rate,
+        ]);
+
+        $message = isset($request->id) ? 'Fare updated successfully.' : 'Fare added successfully.';
+        return redirect()->route('operator.fares')->with('success', $message);
+    }
+
+    public function operatorFaresEdit(Request $request, $id)
+    {
+        $data['fare'] = Fare::where('id', $id)->first();
+        $data['title'] = 'Edit Fares';
+        $currCountry = request()->segment(1);
+        $data['vehicles'] = Vehicle::where('country', $currCountry)->where('operator_id', Auth::guard('weboperator')->user()->id)->get();
+        return view('operator.fares.add-fare', $data);
+    }
+
+    public function operatorFaresDelete($id)
+    {
+        $fare = Fare::where('id', $id)->first();
+        if ($fare) {
+            $fare->delete();
+        } else {
+            return redirect()->route('operator.fares')->with('error', 'Fare not found.');
+        }
+        return redirect()->route('operator.fares')->with('success', 'Fare deleted successfully.');
     }
 }

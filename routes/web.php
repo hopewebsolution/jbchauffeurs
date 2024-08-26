@@ -130,6 +130,12 @@ Route::group(['middleware' => 'countryCheck'], function () {
             Route::get('/operator/vehicles/edit/{id}', [OperatorController::class, 'operatorVehiclesEdit'])->name('operator.vehicles.edit');
             Route::get('/operator/vehicles/delete/{id}', [OperatorController::class, 'operatorVehiclesDelete'])->name('operator.vehicles.delete');
             Route::post('/operator/vehicles/store', [OperatorController::class, 'operatorVehiclesStore'])->name('operator.vehicles.store');
+
+            Route::get('/operator/fares', [OperatorController::class, 'operatorFares'])->name('operator.fares');
+            Route::get('/operator/fares/create', [OperatorController::class, 'operatorFaresCreate'])->name('operator.fares.create');
+            Route::post('/operator/fares/store', [OperatorController::class, 'operatorFaresStore'])->name('operator.fares.store');
+            Route::get('/operator/fares/edit/{id}', [OperatorController::class, 'operatorFaresEdit'])->name('operator.fares.edit');
+            Route::get('/operator/fares/delete/{id}', [OperatorController::class, 'operatorFaresDelete'])->name('operator.fares.delete');
         });
 
         /* Operator Route  End  */

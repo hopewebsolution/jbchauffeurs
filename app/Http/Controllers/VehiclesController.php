@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\File;
 
 class VehiclesController extends Controller
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
     public function deleteVehicle(Request $request)
     {
         $response = array();
@@ -102,6 +100,7 @@ class VehiclesController extends Controller
         $listing_count = $this->perpage;
         $currCountry = request()->segment(1);
         $tripData = null;
+        //
         if ($request->session()->has('cart')) {
             $tripData = (object) session('cart');
             // dd($tripData);
@@ -115,6 +114,7 @@ class VehiclesController extends Controller
                     ->paginate($listing_count);
                 $fixedAmount = 0;
                 $fixedRate = FixedRate::where(['start' => $tripData->start, 'end' => $tripData->end])->first();
+
                 if ($fixedRate) {
                     $fixedAmount = $fixedRate->amount;
                 }
