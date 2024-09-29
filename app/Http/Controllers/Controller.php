@@ -57,6 +57,8 @@ class Controller extends BaseController
     ];
     public $page_types = [
         "home" => "Home",
+        "customer" => "Customer Login",
+        "operator" => "Operators Login",
         "about-us" => "About Us",
         "airports" => "Airport Transfers",
         "how-it-works" => "How It Works",

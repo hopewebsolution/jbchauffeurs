@@ -199,7 +199,7 @@
                             @if($site_settings->header_img)
                                 <img src="{{ asset('public/assets/images')}}/{{$site_settings->header_img}}" alt="jbchauffeurs" width="auto" class="mid-img">
                             @else
-                                <img src="https://www.jbchauffeurs.com/uploads/banner/-78.jpg" alt="" width="auto" class="mid-img"/>
+                                <img src="{{ asset('public/assets/front_assets/uploads/banner/-78.jpg')}}" alt="" width="auto" class="mid-img"/>
                             @endif
                         </div>
                         <div class="col-md-2 col-sm-6 text-right hidden-sm hidden-xs">
