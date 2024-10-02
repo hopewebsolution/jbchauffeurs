@@ -61,6 +61,7 @@
                     <p class="signup-prompt">Don’t have an account? <a href="{{ route('user.makeOperatorRegisters') }}"
                             class="join-now">Join now</a></p>
                 </div>
+                <h6><a href="{{route('operator.howItWorks')}}">Operator How it works</a></h6>
             </div>
         </div>
     </div>

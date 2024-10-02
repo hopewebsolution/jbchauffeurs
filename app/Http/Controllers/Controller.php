@@ -67,6 +67,7 @@ class Controller extends BaseController
         "terms-conditions" => "Terms & Conditions",
         "customer-terms" => "Customer Registration T&C",
         "privacy" => "Privacy Policy",
+        'how-it-work' => 'Operator How it works',
     ];
     public $bookingStatus = [
         "pending" => "pending",

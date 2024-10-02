@@ -247,6 +247,7 @@
             <div class="navigation-destop">
                 <div class="container">
                     <ul id="nav">
+
                         @if($common->header_menus)
                             @foreach ($common->header_menus as $header_menu)
                                 <li><a href="{{route('user.cmsPage',['page_slug'=>$header_menu->page_type])}}" class="menulink">{{$header_menu->name}}</a></li>
@@ -323,19 +324,19 @@
         <script type="text/javascript">
             (function($,W,D){
                 var JQUERY4U = {};
-                JQUERY4U.UTIL = {       
+                JQUERY4U.UTIL = {
                     setupFormValidation: function() {
                         $("#form").validate({
                             rules: {
                                 /* office_email:{
                                     required: true,
-                                },	 						
+                                },
                                 revenue:{
                                     required: true,
-                                }*/									
+                                }*/
                             },
-                            messages: { 
-                                			
+                            messages: {
+
                             },
                             submitHandler: function(form) {
                                 form.submit();
@@ -346,7 +347,7 @@
                 $(D).ready(function($) {
                     JQUERY4U.UTIL.setupFormValidation();
                 });
-            })(jQuery, window, document); 
+            })(jQuery, window, document);
 
             /*idleMax = 5;// Logout after 5 minutes of IDLE
              idleTime = 0;
