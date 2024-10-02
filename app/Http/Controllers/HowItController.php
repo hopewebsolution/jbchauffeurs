@@ -18,6 +18,7 @@ class HowItController extends Controller{
 
     }
     public function howItWorks(Request $request){
+
         $listing_count= $this->perpage;
         $currCountry = request()->segment(1);
         $services=Service::where(['country'=>$currCountry,'is_home'=>'0'])
