@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HowItController;
+use App\Http\Controllers\OperatorHowItController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\AirportController;
 use App\Http\Controllers\UserController;
@@ -32,6 +33,7 @@ use App\Http\Controllers\FixedRateController;
 use App\Http\Controllers\FareController;
 use App\Http\Controllers\SidebarBlocksController;
 use App\Http\Controllers\BookWithUsControlloer;
+use App\Models\Operator;
 
 /*Route::get('password/reset', [ForgotPasswordController::class,'showLinkRequestForm'])->name('user.forgetPwd');
 Route::post('password/email', [ForgotPasswordController::class,'sendResetLinkEmail']);
@@ -54,6 +56,9 @@ Route::group(['middleware' => 'countryCheck'], function () {
         Route::get('/airport-transfers', [AirportController::class, 'airportTrans'])->name('user.airportTrans');
         Route::get('/airport-details/{airport_id}/{url_slug?}', [AirportController::class, 'airportTransDetails'])->name('user.airportTransDetails');
         Route::get('/how-it-works', [HowItController::class, 'howItWorks'])->name('user.howItWorks');
+        Route::get('operator/how-it-works', [OperatorHowItController::class, 'operatorhowItWorks'])->name('operator.howItWorks');
+
+
         Route::get('/service-details/{service_id}/{slug?}', [ServiceController::class, 'serviceDetails'])->name('user.serviceDetails');
         Route::get('/faq', [FaqController::class, 'faqs'])->name('user.faq');
         Route::get('/contact-us', [ContactUsController::class, 'contactUs'])->name('user.contactUs');
