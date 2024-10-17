@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Page;
-use Validator;
 use Auth;
+use Validator;
+use App\Models\Page;
+use App\Models\PageSection;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -62,7 +64,7 @@ class PageController extends Controller
         }
         $page = new Page();
         if ($page_id) {
-            $page = Page::where(['id' => $page_id])->first();
+            $page = Page::with('sections')->where(['id' => $page_id])->first();
         }
         if ($page) {
             $page_types = $this->page_types;
@@ -89,39 +91,126 @@ class PageController extends Controller
 
         $success = 0;
         $message = "unable to Add Page, Something went wrong!";
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'page_type' => 'required|unique:pages,page_type,' . $page_id . ',id,country,' . $currCountry,
-        ]);
+        if($request->page_type != "custom_page") {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'page_type' => 'required|unique:pages,page_type,' . $page_id . ',id,country,' . $currCountry,
+            ]);
+        } else {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'page_type' => 'required',
+            ]);
+        }
+
+
+
+        // dd($request);
+
         if ($validator->fails()) {
             $success = 0;
             return  back()->withErrors($validator)->withInput();
         } else {
-            $insert_data = $request->except(['imageName', 'bannerImage']);
-            $insert_data['country'] = $currCountry;
-            if (!$request->bannerImage) {
-                $insert_data['image'] = null;
-            }
-            if (!$request->imageName) {
-                $insert_data['side_app_image'] = null;
-            }
-            if ($request->image) {
-                $fileName = $this->fileUpload($request, "image", $this->pagePath);
-                if ($fileName != "") {
-                    $insert_data['image'] = $fileName;
+            // try {
+                //code...
+                DB::beginTransaction();
+                $insert_data = $request->except(['old_section_image', 'imageName', 'bannerImage', 'section_type', 'section_heading', 'section_id', 'section_type', 'section_image', 'section_btn_text', 'section_btn_link', 'section_content', 'use_section']);
+                $insert_data['country'] = $currCountry;
+
+                if (!$request->bannerImage) {
+                    $insert_data['image'] = null;
                 }
-            }
-            if ($request->side_app_image) {
-                $fileName = $this->fileUpload($request, "side_app_image", $this->pagePath);
-                if ($fileName != "") {
-                    $insert_data['side_app_image'] = $fileName;
+                if (!$request->imageName) {
+                    $insert_data['side_app_image'] = null;
                 }
-            }
-            $page = Page::updateOrCreate(['id' => $page_id], $insert_data);
-            if ($page) {
-                $success = 1;
-                $message = "Page added successfully !";
-            }
+
+                if ($request->image) {
+                    $fileName = $this->fileUpload($request, "image", $this->pagePath);
+                    if ($fileName != "") {
+                        $insert_data['image'] = $fileName;
+                    }
+                }
+
+                if ($request->side_app_image) {
+                    $fileName = $this->fileUpload($request, "side_app_image", $this->pagePath);
+                    if ($fileName != "") {
+                        $insert_data['side_app_image'] = $fileName;
+                    }
+                }
+
+                $page = Page::updateOrCreate(['id' => $page_id], $insert_data);
+
+
+
+                if($request->page_type == 'custom_page') {
+
+                    $page->slug = Str::slug($page->name, '-');
+                    $page->save();
+
+                    $section_type = $request->section_type;
+                    $section_id = $request->section_id;
+                    $use_section = $request->use_section;
+                    $section_heading = $request->section_heading;
+                    $section_btn_text = $request->section_btn_text;
+                    $section_btn_link = $request->section_btn_link;
+                    $section_content = $request->section_content;
+
+                    PageSection::where(['page_id' => $page->id])->delete();
+
+                    // if ($request->hasFile('section_image')) {
+                    //     $section_images = $request->file('section_image');
+                    // }
+
+                    foreach ($section_type as $key => $value) {
+                        # code...
+                        if($use_section[$key] == 1) {
+                            $section = [
+                                'page_id' => $page->id,
+                                'section_type' => $value,
+                                'section_heading' => $section_heading[$key],
+                                'section_btn_text' => $section_btn_text[$key],
+                                'section_btn_link' => $section_btn_link[$key],
+                                'section_content' => $section_content[$key],
+                                'use_section' => $use_section[$key],
+                            ];
+
+                            $fileName = '';
+                            if ($request->has('section_image')) {
+                                //
+
+                                $section_image = $request->file('section_image');
+                                if(isset($section_image[$key])){
+                                    $fileName = time() . '_' . uniqid() . '.' . $section_image[$key]->getClientOriginalExtension();
+                                    $destinationPath = public_path($this->pagePath);
+                                    $section_image[$key]->move($destinationPath, $fileName);
+
+                                    $section['section_image'] = $fileName;
+                                } else {
+                                    $section['section_image'] = $request->old_section_image[$key];
+                                }
+                            } else {
+                                $section['section_image'] = $request->old_section_image[$key];
+                            }
+
+                            PageSection::updateOrCreate(['id' => $section_id[$key]], $section);
+                        }
+                    }
+
+                }
+
+
+                if ($page) {
+                    $success = 1;
+                    $message = "Page added successfully !";
+                }
+
+                DB::commit();
+            // } catch (\Throwable $th) {
+            //     //throw $th;
+            //     DB::rollBack();
+            //     $success = 0;
+            //     $message = $th->getMessage();
+            // }
         }
         if ($success) {
             return redirect()->route('admin.pages')->with('success', $message);

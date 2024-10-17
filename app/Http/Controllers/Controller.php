@@ -56,6 +56,7 @@ class Controller extends BaseController
         'book-with-register' => 'Book without Registering.',
     ];
     public $page_types = [
+        'custom_page' => 'Custom Page',
         "home" => "Home",
         "customer" => "Customer Login",
         "operator" => "Operators Login",
@@ -80,7 +81,6 @@ class Controller extends BaseController
         "intransit" => "In-Transit",
         "completed" => "Completed",
     ];
-
 
     public $settings = [
         "logo",
