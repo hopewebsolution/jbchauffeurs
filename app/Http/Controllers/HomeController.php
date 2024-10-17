@@ -86,6 +86,8 @@ class HomeController extends Controller
     }
     public function cmsPage(Request $request)
     {
+
+
         $currCountry = request()->segment(1);
         $page_type = $request->page_slug;
         $pageData = Page::where(["country" => $currCountry, "page_type" => $page_type])->first();
@@ -98,6 +100,8 @@ class HomeController extends Controller
                 return redirect()->route('user.airportTrans');
             } else if ($page_type == "how-it-works") {
                 return redirect()->route('user.howItWorks');
+            } else if ($page_type == "how-it-work") {
+                return redirect()->route('operator.howItWorks');
             } else if ($page_type == "faq") {
                 return redirect()->route('user.faq');
             } else if ($page_type == "operator") {

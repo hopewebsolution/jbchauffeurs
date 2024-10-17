@@ -199,7 +199,7 @@
                             @if($site_settings->header_img)
                                 <img src="{{ asset('public/assets/images')}}/{{$site_settings->header_img}}" alt="jbchauffeurs" width="auto" class="mid-img">
                             @else
-                                <img src="https://www.jbchauffeurs.com/uploads/banner/-78.jpg" alt="" width="auto" class="mid-img"/>
+                                <img src="{{ asset('public/assets/front_assets/uploads/banner/-78.jpg')}}" alt="" width="auto" class="mid-img"/>
                             @endif
                         </div>
                         <div class="col-md-2 col-sm-6 text-right hidden-sm hidden-xs">
@@ -247,6 +247,7 @@
             <div class="navigation-destop">
                 <div class="container">
                     <ul id="nav">
+
                         @if($common->header_menus)
                             @foreach ($common->header_menus as $header_menu)
                                 <li><a href="{{route('user.cmsPage',['page_slug'=>$header_menu->page_type])}}" class="menulink">{{$header_menu->name}}</a></li>
@@ -323,19 +324,19 @@
         <script type="text/javascript">
             (function($,W,D){
                 var JQUERY4U = {};
-                JQUERY4U.UTIL = {       
+                JQUERY4U.UTIL = {
                     setupFormValidation: function() {
                         $("#form").validate({
                             rules: {
                                 /* office_email:{
                                     required: true,
-                                },	 						
+                                },
                                 revenue:{
                                     required: true,
-                                }*/									
+                                }*/
                             },
-                            messages: { 
-                                			
+                            messages: {
+
                             },
                             submitHandler: function(form) {
                                 form.submit();
@@ -346,7 +347,7 @@
                 $(D).ready(function($) {
                     JQUERY4U.UTIL.setupFormValidation();
                 });
-            })(jQuery, window, document); 
+            })(jQuery, window, document);
 
             /*idleMax = 5;// Logout after 5 minutes of IDLE
              idleTime = 0;
