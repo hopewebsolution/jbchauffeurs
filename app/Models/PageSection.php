@@ -19,7 +19,7 @@ class PageSection extends Model{
         'section_btn_link'
     ];
 
-    public $path= "/assets/front_assets/uploads/pages/";
+    public $path= "/public/assets/front_assets/uploads/pages/";
 
     public function page()
     {
