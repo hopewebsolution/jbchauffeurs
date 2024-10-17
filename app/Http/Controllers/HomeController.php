@@ -90,7 +90,18 @@ class HomeController extends Controller
 
         $currCountry = request()->segment(1);
         $page_type = $request->page_slug;
-        $pageData = Page::where(["country" => $currCountry, "page_type" => $page_type])->first();
+
+        $page = Page::with('sections')->where(["country" => $currCountry])->where(function($q) use ($page_type) {
+            $q->where('page_type', $page_type)->orWhere('slug', $page_type);
+        })->first();
+
+        if($page && $page->page_type == "custom_page" && $page->slug == $page_type) {
+            $pageData = $page;
+        } else {
+            $pageData = Page::with('sections')->where(["country" => $currCountry, "page_type" => $page_type])->first();
+        }
+
+
         if ($pageData) {
             if ($page_type == "home") {
                 return redirect()->route('user.home');
