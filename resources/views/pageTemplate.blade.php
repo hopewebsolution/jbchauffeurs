@@ -44,5 +44,10 @@
         .cus_btn {
             margin-top: 20px;
         }
+
+        .cus_row_block {
+            display: flex;
+            align-items: center;
+        }
     </style>
 @endpush
