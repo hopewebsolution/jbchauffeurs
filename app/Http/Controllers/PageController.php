@@ -189,7 +189,10 @@ class PageController extends Controller
                                     $section['section_image'] = $request->old_section_image[$key];
                                 }
                             } else {
-                                $section['section_image'] = $request->old_section_image[$key];
+                                if(isset($request->old_section_image[$key])) {
+                                    $section['section_image'] = $request->old_section_image[$key];
+                                }
+
                             }
 
                             PageSection::updateOrCreate(['id' => $section_id[$key]], $section);

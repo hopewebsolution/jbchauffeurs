@@ -54,6 +54,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12 form-group">
         <label for="section_content" class="section_content">Section Content:<span
                 class="text-danger small">*</span></label>
-        <textarea id="section_content" name="section_content[]" class="form-control editor">{!! isset($section) ? $section->section_content : '' !!}</textarea>
+        <textarea id="section_content" name="section_content[]"
+            class="form-control {{ isset($section) && $section->id ? 'ckeditor' : 'ckeditor-new' }}">{!! isset($section) ? $section->section_content : '' !!}</textarea>
     </div>
 </div>

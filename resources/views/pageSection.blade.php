@@ -12,7 +12,9 @@
 
             <div class="col-sm-12 col-md-6 right-side">
                 <div class="image-content">
-                    <img src="{{ $section->image ?? '' }}" alt="Home page image">
+                    @if ($section->image)
+                        <img src="{{ $section->image ?? '' }}" alt="Home page image">
+                    @endif
                 </div>
             </div>
         </div>
@@ -22,7 +24,9 @@
         <div class="row block white reverse-block">
             <div class="col-sm-12 col-md-6 left-side centered">
                 <div class="image-content">
-                    <img src="{{ $section->image ?? '' }}" alt="Home page image">
+                    @if ($section->image)
+                        <img src="{{ $section->image ?? '' }}" alt="Home page image">
+                    @endif
                 </div>
             </div>
 
