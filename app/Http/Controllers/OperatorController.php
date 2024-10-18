@@ -12,6 +12,7 @@ use App\Mail\AdminNotify;
 use App\Mail\WelcomeEmail;
 use Illuminate\Support\Str;
 use App\Models\FleetDetails;
+use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Models\PasswordReset;
 use Illuminate\Support\Facades\Auth;
@@ -175,7 +176,9 @@ class OperatorController extends Controller
 
     public function operatorlogin(Request $request)
     {
-        return view('operatorlogin');
+        $page = Page::where(['page_type' => 'operator', 'country' => request()->segment(1)])->first();
+
+        return view('operatorlogin', compact('page'));
     }
 
     public function operatorloginsubmit(Request $request)

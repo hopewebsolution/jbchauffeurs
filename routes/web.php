@@ -70,9 +70,6 @@ Route::group(['middleware' => 'countryCheck'], function () {
         Route::get('/operator-registers', [OperatorController::class, 'operatorRegisters'])->name('user.operatorRegisters');
 
 
-
-
-
         Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('user.privacyPolicy');
         Route::get('/terms-conditions', [HomeController::class, 'termsConditions'])->name('user.terms');
         Route::get('/page/{page_slug}', [HomeController::class, 'cmsPage'])->name('user.cmsPage');

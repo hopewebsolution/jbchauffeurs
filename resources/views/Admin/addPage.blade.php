@@ -1,6 +1,7 @@
 @extends('Admin/masters/master')
 @section('title', 'Add Page')
 @push('page-scripts')
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 @endpush
 @if ($page->id)
     @section('page_title', 'Edit Page')
@@ -227,8 +228,15 @@
     <!-- /page content -->
 @endsection
 @push('footer-scripts')
+    <style>
+        .cke_notification {
+            display: none !important;
+        }
+    </style>
     <script>
         $(document).ready(function() {
+            // Initialize CKEditor for the existing editor(s)
+            CKEDITOR.replace('ckeditor');
 
             $(document).on('change', '#page_type', function() {
                 // Remove the closest parent with the 'row' class
@@ -266,6 +274,12 @@
                     clone_section.find('.section_type').attr('value', selectedSection);
 
                     $('.clone_here').append(clone_section); // Append the cloned section to the container
+
+
+                    var editorId = 'editor-' + new Date()
+                        .getTime(); // Generate a unique ID based on timestamp
+                    clone_section.find('textarea.ckeditor-new').attr('id', editorId);
+                    CKEDITOR.replace(editorId);
 
                     // Reset the select field after cloning
                     $('#section_type').val(''); // Reset dropdown to the default "Select Section" value
