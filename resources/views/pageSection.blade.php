@@ -4,12 +4,12 @@
             <div class="col-sm-12 col-md-6 left-side">
                 <div class="text-content">
                     @if (isset($section->section_heading))
-                        <h1 class="cus_h1">{{ $section->section_heading ?? '' }}</h1>
+                        <h1 class="cus_h1 sec_title">{{ $section->section_heading ?? '' }}</h1>
                     @endif
                     <div>{!! $section->section_content ?? '' !!}</div>
                     @if (isset($section->section_btn_text))
                         <a href="{{ $section->section_btn_link ?? '' }}"
-                            class="btn btn-danger cus_btn">{{ $section->section_btn_text ?? '' }}</a>
+                            class="btn btn-danger cus_btn join_btn">{{ $section->section_btn_text ?? '' }}</a>
                     @endif
                 </div>
             </div>
@@ -37,12 +37,12 @@
             <div class="col-sm-12 col-md-6 right-side">
                 <div class="text-content">
                     @if (isset($section->section_heading))
-                        <h1 class="cus_h1">{{ $section->section_heading ?? '' }}</h1>
+                        <h1 class="cus_h1 sec_title">{{ $section->section_heading ?? '' }}</h1>
                     @endif
                     <div>{!! $section->section_content ?? '' !!}</div>
                     @if (isset($section->section_btn_text))
                         <a href="{{ $section->section_btn_link ?? '' }}"
-                            class="btn btn-danger cus_btn">{{ $section->section_btn_text ?? '' }}</a>
+                            class="btn btn-danger cus_btn join_btn">{{ $section->section_btn_text ?? '' }}</a>
                     @endif
                 </div>
             </div>

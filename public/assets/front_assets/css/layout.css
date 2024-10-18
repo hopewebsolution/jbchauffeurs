@@ -30,7 +30,15 @@ h5,
 h6 {
     font-weight: normal;
 }
-
+.cus_row_block {
+    display: flex;
+    align-items: center;
+}
+.join_btn{
+    width: 100%;
+    max-width: 200px;
+    padding: 11px 12px;
+}
 @font-face {
     font-family: 'bellcent_add_btaddress';
     src: url('../fonts/belceadr-webfont.eot');
@@ -1586,6 +1594,9 @@ div.error {
 }
 @media(max-width: 767px)
 {
+    .cus_row_block {
+        flex-direction: column;
+    }
     .form-head-bg h2 {
     font-family: 'KABELDMI';
     /* background: #eabd00; */
