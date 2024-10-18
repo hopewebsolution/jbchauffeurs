@@ -39,6 +39,12 @@ h6 {
     max-width: 200px;
     padding: 11px 12px;
 }
+.sec_title {
+    margin: 0 0 30px 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+}
 @font-face {
     font-family: 'bellcent_add_btaddress';
     src: url('../fonts/belceadr-webfont.eot');
