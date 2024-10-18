@@ -290,7 +290,7 @@ ul#nav li a.selected {
     border-radius: 0;
     left: auto !important;
 }
-.cntblock h1 {
+.cntblock .pg-title h1 {
     font-size: 25px;
     font-family: 'KABELDMI';
     color: #000;

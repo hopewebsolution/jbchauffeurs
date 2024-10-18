@@ -35,19 +35,5 @@
     </div>
 @endsection
 @push('footer-scripts')
-    <style>
-        h1.cus_h1 {
-            margin-top: 0;
-            height: auto !important;
-        }
-
-        .cus_btn {
-            margin-top: 20px;
-        }
-
-        .cus_row_block {
-            display: flex;
-            align-items: center;
-        }
-    </style>
+    
 @endpush
