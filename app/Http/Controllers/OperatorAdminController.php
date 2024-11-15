@@ -18,9 +18,7 @@ class OperatorAdminController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
     public function getMenus()
     {
         $currCountry = request()->segment(1);
@@ -268,5 +266,16 @@ class OperatorAdminController extends Controller
         } else {
             return redirect()->back()->withErrors([$message]);
         }
+    }
+
+    public function deleteOperator(Request $request)
+    {
+        $operator = Operator::find($request->id);
+
+        if ($operator->delete()) {
+            return response()->json(['success' => '1', 'message' => 'Operator Deleted Successfully']);
+        }
+
+        return response()->json(['success' => '0', 'message' => 'Something went wrong']);
     }
 }
