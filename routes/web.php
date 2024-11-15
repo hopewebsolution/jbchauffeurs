@@ -271,6 +271,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('/operator/edit/{page_id?}', [OperatorAdminController::class, 'addOperator'])->name("admin.operator.edit");
             Route::post('/operator/save/', [OperatorAdminController::class, 'saveOperator'])->name("admin.operator.save");
             Route::get('/operator/view/{id}', [OperatorAdminController::class, 'viewOperator'])->name("admin.operator.view");
+            Route::post('/operator/delete', [OperatorAdminController::class, 'deleteOperator'])->name("admin.operator.delete");
             Route::post('/change-operator-status/{id}', [OperatorAdminController::class, 'changeOperatorStatus'])->name("change-operator-status");
 
             Route::get('/bookWithUs', [BookWithUsControlloer::class, 'getAdminAllBookWithUs'])->name("admin.bookWithUs");
