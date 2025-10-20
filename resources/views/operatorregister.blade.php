@@ -147,7 +147,7 @@
                                                         <input type="number" placeholder="Office phone number"
                                                             class="form-control required" required
                                                             name="office_phone_number" minlength="10"
-                                                            maxlength="10" pattern="[1-9]{1}[0-9]{9}" class="ys-field" value="{{old('office_phone_number')}}">
+                                                            maxlength="14" pattern="[1-9]{1}[0-9]{9}" class="ys-field" value="{{old('office_phone_number')}}">  
 
                                                         
                                                     </div>
